@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-600;
+  }
+  
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+@layer components {
+  .progress-bar {
+    @apply w-full bg-gray-700 rounded-full h-2 overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full transition-all duration-500 ease-out;
+  }
+  
+  .lesson-card {
+    @apply bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer;
+  }
+  
+  .lesson-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .completed-lesson {
+    @apply border-green-500 bg-gradient-to-br from-gray-800 to-green-900/20;
+  }
+  
+  .sidebar-item {
+    @apply w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200;
+  }
+  
+  .sidebar-item:hover {
+    @apply bg-gray-800 text-purple-300 transform translate-x-1;
+  }
+  
+  .sidebar-item.active {
+    @apply bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25;
+  }
+}
