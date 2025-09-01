@@ -5,11 +5,9 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// TODO: Replace with your Supabase Project URL, e.g. "https://abc123.supabase.co"
-const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "";
 
-// TODO: Replace with your Supabase public anon key
-const SUPABASE_ANON_KEY = 'YOUR_PUBLIC_ANON_KEY';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? "";
 
 // Create a single Supabase client instance for the app
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

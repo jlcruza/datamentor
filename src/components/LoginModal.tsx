@@ -21,11 +21,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  // Configure redirect URLs in Supabase Auth settings or set placeholders here.
-  // - For email confirmation after sign up, Supabase may send a confirmation link.
-  // - For password reset, Supabase requires a redirect URL to handle the "set new password" flow.
-  const EMAIL_CONFIRM_REDIRECT = 'https://your-app-url.com/auth/callback'; // TODO: replace with your app URL
-  const RESET_PASSWORD_REDIRECT = 'https://your-app-url.com/auth/reset-complete'; // TODO: replace with your app URL
+  const EMAIL_CONFIRM_REDIRECT = `${import.meta.env.VITE_APP_BASE_URL}/auth/callback`;
+  const RESET_PASSWORD_REDIRECT = `${import.meta.env.VITE_APP_BASE_URL}/auth/reset-complete`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
