@@ -26,7 +26,7 @@ WHERE gpa > 3.0;
 ## Practice Questions
 1. What does SQL stand for?
 2. Which SQL command is used to retrieve data?
-3. Write a query to select all columns from a table called Employees.
+3. Write a query to select all columns from a table called `Employees`.
 
 ## Key Takeaways
 SQL is the universal language for interacting with relational databases, using simple and structured commands.
