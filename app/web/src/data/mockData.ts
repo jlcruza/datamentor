@@ -1,4 +1,4 @@
-import type { User, Lesson } from '../App';
+import type { User, Lesson } from '../App.tsx';
 
 export const mockUser: User = {
   id: '1',

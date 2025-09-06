@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, LogIn, UserPlus, Mail } from 'lucide-react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient.ts';
 
 interface LoginModalProps {
   onLogin: (email: string, password: string) => void;

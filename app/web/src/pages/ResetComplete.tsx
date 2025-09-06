@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient.ts';
 
 // Handles redirects from Supabase for password recovery.
 // When the user arrives here via the reset link, Supabase provides a temporary session.

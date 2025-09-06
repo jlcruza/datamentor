@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
+import Header from './components/Header.tsx';
+import Sidebar from './components/Sidebar.tsx';
 import LearningContent from './features/LearningContent.tsx';
 import QueryPractice from './features/QueryPractice.tsx';
 import AIAssistant from './features/AIAssistant.tsx';
-import LoginModal from './components/LoginModal';
-import { mockLessons } from './data/mockData';
-import { supabase } from './lib/supabaseClient';
+import LoginModal from './components/LoginModal.tsx';
+import { mockLessons } from './data/mockData.ts';
+import { supabase } from './lib/supabaseClient.ts';
 
 export type User = {
   id: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BookOpen, Database, MessageCircle, ChevronRight, TrendingUp } from 'lucide-react';
-import { ProgressManager } from '../types/progress';
-import type { Lesson } from '../App';
+import { ProgressManager } from '../types/progress.ts';
+import type { Lesson } from '../App.tsx';
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 

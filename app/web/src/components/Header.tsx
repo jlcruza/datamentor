@@ -1,6 +1,6 @@
 import React from 'react';
 import { Database, LogIn, LogOut, User } from 'lucide-react';
-import type { User as UserType } from '../App';
+import type { User as UserType } from '../App.tsx';
 
 interface HeaderProps {
   user: UserType | null;

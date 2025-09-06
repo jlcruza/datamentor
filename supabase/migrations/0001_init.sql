@@ -1,47 +1,47 @@
 CREATE TABLE IF NOT EXISTS difficulty(
-    difficulty_id   INT             NOT NULL    PRIMARY KEY,
-    difficulty_name VARCHAR(255)    NOT NULL,
+                                         difficulty_id   INT             NOT NULL    PRIMARY KEY,
+                                         difficulty_name VARCHAR(255)    NOT NULL,
     created_date    TIMESTAMP       NOT NULL    DEFAULT NOW(),
     modified_date   TIMESTAMP       NOT NULL    DEFAULT NOW()
-);
+    );
 
 CREATE TABLE IF NOT EXISTS modules(
-    module_id       INT             NOT NULL    PRIMARY KEY,
-    module_name     VARCHAR(255)    NOT NULL,
+                                      module_id       INT             NOT NULL    PRIMARY KEY,
+                                      module_name     VARCHAR(255)    NOT NULL,
     created_date    TIMESTAMP       NOT NULL    DEFAULT NOW(),
     modified_date   TIMESTAMP       NOT NULL    DEFAULT NOW()
-);
+    );
 
 CREATE TABLE IF NOT EXISTS lessons(
-    lesson_id       INT             NOT NULL    PRIMARY KEY,
-    lesson_name     VARCHAR(255)    NOT NULL,
+                                      lesson_id       INT             NOT NULL    PRIMARY KEY,
+                                      lesson_name     VARCHAR(255)    NOT NULL,
     module_id       INT             REFERENCES  modules(module_id),
     difficulty_id   INT             REFERENCES  difficulty(difficulty_id),
     content_path    TEXT            NOT NULL,
     created_date    TIMESTAMP       NOT NULL    DEFAULT NOW(),
     modified_date   TIMESTAMP       NOT NULL    DEFAULT NOW()
-);
+    );
 
 CREATE TABLE IF NOT EXISTS students(
-    student_id          VARCHAR(255)    NOT NULL        PRIMARY KEY,
+                                       student_id          VARCHAR(255)    NOT NULL        PRIMARY KEY,
     student_first_name  VARCHAR(255)    NOT NULL,
     student_last_name   VARCHAR(255)    NOT NULL,
     created_date        TIMESTAMP       NOT NULL        DEFAULT NOW(),
     modified_date       TIMESTAMP       NOT NULL        DEFAULT NOW()
-);
+    );
 
 CREATE TABLE IF NOT EXISTS progress(
-    progress_id         SERIAL          PRIMARY KEY,
-    student_id          VARCHAR(255)    REFERENCES students(student_id),
+                                       progress_id         SERIAL          PRIMARY KEY,
+                                       student_id          VARCHAR(255)    REFERENCES students(student_id),
     lesson_id           INT             REFERENCES lessons(lesson_id),
     completed           BOOLEAN         NOT NULL DEFAULT FALSE,
     created_date        TIMESTAMP       NOT NULL DEFAULT NOW(),
     modified_date       TIMESTAMP       NOT NULL DEFAULT NOW()
-);
+    );
 
 CREATE TABLE IF NOT EXISTS exercises(
-    exercise_id         SERIAL          PRIMARY KEY,
-    lesson_id           INT             REFERENCES lessons(lesson_id),
+                                        exercise_id         SERIAL          PRIMARY KEY,
+                                        lesson_id           INT             REFERENCES lessons(lesson_id),
     question            VARCHAR(255)    NOT NULL,
     option_a            VARCHAR(255)    NOT NULL,
     option_b            VARCHAR(255)    NOT NULL,
@@ -51,20 +51,20 @@ CREATE TABLE IF NOT EXISTS exercises(
     reason              VARCHAR(255)    NOT NULL,
     created_date        TIMESTAMP       NOT NULL DEFAULT NOW(),
     modified_date       TIMESTAMP       NOT NULL DEFAULT NOW()
-);
+    );
 
 INSERT INTO difficulty (difficulty_id, difficulty_name) VALUES
-    (1, 'beginner'),
-    (2, 'intermediate'),
-    (3, 'advanced');
+                                                            (1, 'beginner'),
+                                                            (2, 'intermediate'),
+                                                            (3, 'advanced');
 
 INSERT INTO modules (module_id, module_name) VALUES
-    (1, 'Introduction to Databases'),
-    (2, 'Core SQL Skills'),
-    (3, 'Data Modeling and Design'),
-    (4, 'Intermediate SQL'),
-    (5, 'Advance SQL'),
-    (6, 'About NoSQL');
+                                                 (1, 'Introduction to Databases'),
+                                                 (2, 'Core SQL Skills'),
+                                                 (3, 'Data Modeling and Design'),
+                                                 (4, 'Intermediate SQL'),
+                                                 (5, 'Advance SQL'),
+                                                 (6, 'About NoSQL');
 
 -- Lessons for Module 1: Introduction to Databases
 INSERT INTO lessons (lesson_id, lesson_name, module_id, difficulty_id, content_path)

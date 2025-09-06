@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Play, RotateCcw, Database, CheckCircle, XCircle, Info } from 'lucide-react';
-import { executeQuery } from '../data/sampleDatabase';
+import { executeQuery } from '../data/sampleDatabase.ts';
 import DatabaseSchemaViewer from "../components/DatabaseSchemaViewer.tsx";
 
 const QueryPractice: React.FC = () => {
