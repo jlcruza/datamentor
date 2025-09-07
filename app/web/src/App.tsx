@@ -5,25 +5,9 @@ import LearningContent from './features/LearningContent.tsx';
 import QueryPractice from './features/QueryPractice.tsx';
 import AIAssistant from './features/AIAssistant.tsx';
 import LoginModal from './components/LoginModal.tsx';
-import { mockLessons } from './data/mockData.ts';
-import { supabase } from './lib/supabaseClient.ts';
-
-export type User = {
-  id: string;
-  email: string;
-  name: string;
-};
-
-export type Lesson = {
-  id: string;
-  title: string;
-  description: string;
-  content: string;
-  category: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  createdAt: string;
-  updatedAt: string;
-};
+import {LearningContentDto} from './repository/db_types/learningContentDto.ts';
+import {LearningContentService} from './services/LearningContentService.ts';
+import useSupabaseAuth from './hooks/useSupabaseAuth.ts';
 
 export interface ChatMessage {
     id: string;
@@ -32,80 +16,28 @@ export interface ChatMessage {
     timestamp: Date;
 }
 
-export interface Question {
-    id: string;
-    question: string;
-    options: string[];
-    correctAnswer: number;
-    explanation: string;
-}
-
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
 function App() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('learn');
-  const [user, setUser] = useState<User | null>(null);
-  const [initializing, setInitializing] = useState(true); // Avoid flicker while checking existing session
-  const lessons = mockLessons; // Built-in lessons
+  const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
+  const [lessons, setLessons] = useState<LearningContentDto[]>([]);
 
-  // Map Supabase user to the app's User type
-  const mapSupabaseUser = (supabaseUser: any): User => {
-    return {
-      id: supabaseUser.id,
-      email: supabaseUser.email ?? '',
-      // Prefer full_name stored at sign up; fallback to email
-      name: supabaseUser.user_metadata?.full_name ?? supabaseUser.email ?? 'User',
-    };
-  };
-
+  // Load lessons on mount; service already handles errors and returns []
   useEffect(() => {
     let isMounted = true;
-
-    // 1) Check if there is already an active session on load
-    const init = async () => {
-      const { data } = await supabase.auth.getSession();
-      const session = data.session;
-      if (!isMounted) return;
-
-      if (session?.user) {
-        setUser(mapSupabaseUser(session.user));
-      } else {
-        setUser(null);
-      }
-      setInitializing(false);
-    };
-
-    init();
-
-    // 2) Subscribe to auth state changes (sign in/out, token refresh, etc.)
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!isMounted) return;
-      if (session?.user) {
-        setUser(mapSupabaseUser(session.user));
-      } else {
-        setUser(null);
-      }
-    });
-
+    (async () => {
+      const data = await LearningContentService.getAllLearningContent();
+      if (isMounted) setLessons(data);
+    })();
     return () => {
       isMounted = false;
-      listener.subscription.unsubscribe();
     };
   }, []);
 
-  // Called by LoginModal after it completes a Supabase sign in
-  const handleLogin = async () => {
-    // Read current user from Supabase and update local state
-    const { data } = await supabase.auth.getUser();
-    if (data.user) {
-      setUser(mapSupabaseUser(data.user));
-    }
-  };
-
+  // Wrap logout to also reset the active section (UI concern)
   const handleLogout = async () => {
-    // Sign out from Supabase and clear local state
-    await supabase.auth.signOut();
-    setUser(null);
+    await signOut();
     setActiveSection('learn');
   };
 
@@ -134,13 +66,13 @@ function App() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'learn':
-        return <LearningContent lessons={lessons} />;
+        return <LearningContent lessons={lessons} user={user}/>;
       case 'practice':
         return <QueryPractice />;
       case 'chat':
         return <AIAssistant />;
       default:
-        return <LearningContent lessons={lessons} />;
+        return <LearningContent lessons={lessons} user={user}/>;
     }
   };
 

@@ -1,12 +1,11 @@
-import {ProgressManager} from "../types/progress.ts";
 import {BarChart3, CheckCircle, Clock} from "lucide-react";
 import React from "react";
-import {Lesson} from "../App.tsx";
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
 type LessonCardProps = {
-    lesson: Lesson;
+    lesson: LearningContentDto ;
     getDifficultyColor: (difficulty: string) => string;
-    onSelectLesson: (lesson: Lesson) => void; // parent passes setSelectedLesson method
+    onSelectLesson: (lesson: LearningContentDto) => void; // parent passes setSelectedLesson method
 };
 
 const LessonCard: React.FC<LessonCardProps> = ({
@@ -17,20 +16,20 @@ const LessonCard: React.FC<LessonCardProps> = ({
 
     return (
         <div
-            key={lesson.id}
-            className={`lesson-card ${ProgressManager.isLessonComplete(lesson.id) ? 'completed-lesson' : ''}`}
+            key={lesson.lesson_id}
+            className={`lesson-card ${lesson.completed ? 'completed-lesson' : ''}`}
             onClick={() => onSelectLesson(lesson)}
         >
             <div className="flex items-start justify-between mb-3">
                 <h3 className="font-semibold text-white text-lg leading-tight flex-1">
-                    {lesson.title}
+                    {lesson.lesson_name}
                 </h3>
                 <div className="flex items-center space-x-2 ml-3">
-                    {ProgressManager.isLessonComplete(lesson.id) && (
+                    {lesson.completed && (
                         <CheckCircle className="h-5 w-5 text-green-400" />
                     )}
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(lesson.difficulty)}`}>
-                      {lesson.difficulty}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(lesson.difficulty_name)}`}>
+                      {lesson.difficulty_name}
                     </span>
                 </div>
             </div>
@@ -42,7 +41,7 @@ const LessonCard: React.FC<LessonCardProps> = ({
             <div className="flex items-center justify-between text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
                     <BarChart3 className="h-4 w-4" />
-                    <span>{lesson.category}</span>
+                    <span>{lesson.module_name}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Clock className="h-4 w-4" />

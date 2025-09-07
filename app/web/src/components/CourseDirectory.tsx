@@ -1,12 +1,11 @@
 import {BookOpen, CheckCircle, ChevronDown, ChevronRight} from "lucide-react";
-import {ProgressManager} from "../types/progress.ts";
 import React, {useState} from "react";
-import {Lesson} from "../App.tsx";
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
 type CourseDirectoryProps = {
     categories: string[];
-    lessons: Lesson[];
-    onSelectLesson: (lesson: Lesson) => void; // parent passes setSelectedLesson method
+    lessons: LearningContentDto[];
+    onSelectLesson: (lesson: LearningContentDto) => void; // parent passes setSelectedLesson method
 };
 
 const CourseDirectory: React.FC<CourseDirectoryProps> = (
@@ -51,15 +50,15 @@ const CourseDirectory: React.FC<CourseDirectoryProps> = (
                     {expandedCategories[category] && (
                         <div className="ml-4 mt-1 space-y-1">
                             {lessons
-                                .filter(lesson => lesson.category === category)
+                                .filter(lesson => lesson.module_name === category)
                                 .map(lesson => (
                                     <button
-                                        key={lesson.id}
+                                        key={lesson.lesson_id}
                                         onClick={() => onSelectLesson(lesson)}
                                         className="flex items-center justify-between w-full text-left p-2 text-sm text-gray-400 hover:text-purple-400 hover:bg-gray-700 rounded-md transition-colors"
                                     >
-                                        <span>{lesson.title}</span>
-                                        {ProgressManager.isLessonComplete(lesson.id) && (
+                                        <span>{lesson.lesson_name}</span>
+                                        {lesson.completed && (
                                             <CheckCircle className="h-4 w-4 text-green-400" />
                                         )}
                                     </button>

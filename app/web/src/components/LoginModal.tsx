@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, LogIn, UserPlus, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient.ts';
+import {VITE_APP_BASE_URL} from "../constants/environmentConfigs.ts";
 
 interface LoginModalProps {
   onLogin: (email: string, password: string) => void;
@@ -21,8 +22,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const EMAIL_CONFIRM_REDIRECT = `${import.meta.env.VITE_APP_BASE_URL}/auth/callback`;
-  const RESET_PASSWORD_REDIRECT = `${import.meta.env.VITE_APP_BASE_URL}/auth/reset-complete`;
+  const EMAIL_CONFIRM_REDIRECT = `${VITE_APP_BASE_URL}/auth/callback`;
+  const RESET_PASSWORD_REDIRECT = `${VITE_APP_BASE_URL}/auth/reset-complete`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
           return;
         }
 
-        // Create account with Supabase (password-based only)
+        // Create an account with Supabase (password-based only)
         const { data, error } = await supabase.auth.signUp({
           email,
           password,

@@ -1,10 +1,12 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React from "react";
-import {Lesson} from "../App.tsx";
+import React, {useEffect, useState} from "react";
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
+import {supabase} from "../lib/supabaseClient.ts";
+import {VITA_SUPABASE_BUCKET_NAME} from "../constants/environmentConfigs.ts"
 
 type CustomReactViewerProps = {
-    selectedLesson: Lesson;
+    selectedLesson: LearningContentDto;
 };
 
 const CustomReactViewer: React.FC<CustomReactViewerProps> = (
@@ -12,6 +14,21 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
         selectedLesson,
     }
 ) => {
+    const [md, setMd] = useState<string>('');
+
+    useEffect(() => {
+        let isMounted = true;
+        (async () => {
+            // Public bucket: you can either build a public URL and fetch(),
+            // or use storage.download which returns a Blob.
+            const { data, error } = await supabase.storage.from(VITA_SUPABASE_BUCKET_NAME).download(selectedLesson.content_path);
+            if (!error && data && isMounted) {
+                const text = await data.text();
+                setMd(text);
+            }
+        })();
+        return () => { isMounted = false; };
+    });
 
 
     return (
@@ -62,7 +79,7 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                     ),
                 }}
             >
-                {selectedLesson.content}
+                {md}
             </ReactMarkdown>
         </div>
     )

@@ -1,23 +1,22 @@
 import React from 'react';
 import { BookOpen, Database, MessageCircle, ChevronRight, TrendingUp } from 'lucide-react';
-import { ProgressManager } from '../types/progress.ts';
-import type { Lesson } from '../App.tsx';
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
 interface SidebarProps {
   activeSection: ActiveSection;
   onSectionChange: (section: ActiveSection) => void;
-  lessons: Lesson[];
+  lessons: LearningContentDto[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons }) => {
-  const categories = [...new Set(lessons.map(lesson => lesson.category))];
+  const categories = [...new Set(lessons.map(lesson => lesson.module_name))];
   
   const getCategoryProgress = (category: string) => {
-    const categoryLessons = lessons.filter(lesson => lesson.category === category);
+    const categoryLessons = lessons.filter(lesson => lesson.module_name === category);
     const completedCount = categoryLessons.filter(lesson => 
-      ProgressManager.isLessonComplete(lesson.id)
+      lesson.completed
     ).length;
     
     return {

@@ -1,6 +1,6 @@
 import {CheckCircle} from "lucide-react";
 import React, {useState} from "react";
-import {Question} from "../App.tsx";
+import {Question} from "../types/question.ts";
 
 type PracticeQuestionBoxProps = {
     question: Question,

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen } from 'lucide-react';
-import type {ChatMessage, Lesson, Question} from '../App.tsx';
-import { ProgressManager } from '../types/progress.ts';
+import type {ChatMessage} from '../App.tsx';
 import CourseDirectory from "../components/CourseDirectory.tsx";
 import LessonCard from "../components/LessonCard.tsx";
 import BackToLessonButton from "../components/BackToLessonButton.tsx";
@@ -13,26 +12,51 @@ import CompletedLessonFooter from "../components/CompletedLessonFooter.tsx";
 import AIChatButton from "../components/AIChatButton.tsx";
 import AIChatMessageBox from "../components/AIChatMessageBox.tsx";
 import PracticeQuestionBox from "../components/PracticeQuestionBox.tsx";
+import {Question} from "../types/question.ts";
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
+import {User} from "../types/user.ts";
+import {ProgressRepository} from "../repository/progressRepository.ts";
 
 interface LearningContentProps {
-  lessons: Lesson[];
+  lessons: LearningContentDto[];
+  user: User | null;
 }
 
-const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
-  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
+  const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showAIChat, setShowAIChat] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  
-  const markLessonComplete = () => {
-    if (selectedLesson) {
-      ProgressManager.markLessonComplete(selectedLesson.id);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      if (selectedLesson && user) {
+        try {
+          const progress = await ProgressRepository.getStudentProgressOnLesson(user as User, selectedLesson);
+          if (isMounted) setIsCompleted(!!progress?.completed);
+        } catch {
+          if (isMounted) setIsCompleted(false);
+        }
+      } else if (isMounted) {
+        setIsCompleted(false);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, [selectedLesson, user]);
+
+  const markLessonComplete = async () => {
+    if (selectedLesson && user != null) {
+        await ProgressRepository.saveProgress(user, selectedLesson, true);
+        setIsCompleted(true);
+      
       // Force re-render by updating state
       setSelectedLesson({...selectedLesson});
     }
   };
 
-  const categories = [...new Set(lessons.map(lesson => lesson.category))];
+  const categories = [...new Set(lessons.map(lesson => lesson.module_name))];
   
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -43,9 +67,9 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
     }
   };
 
-  const getQuestionsForLesson = (lessonId: string): Question[] => {
+  const getQuestionsForLesson = (lessonId: number): Question[] => {
     const questionBank: Record<string, Question[]> = {
-      '1': [
+      1: [
         {
           id: '1-1',
           question: 'What is a database?',
@@ -71,7 +95,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           explanation: 'Databases actually help optimize storage through normalization and efficient data structures, reducing redundancy.'
         }
       ],
-      '2': [
+      2: [
         {
           id: '2-1',
           question: 'What uniquely identifies each row in a table?',
@@ -97,7 +121,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           explanation: 'A tuple is another term for a row in a relational database table, representing a single record.'
         }
       ],
-      '3': [
+      3: [
         {
           id: '3-1',
           question: 'Which SQL clause is used to filter rows?',
@@ -123,7 +147,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           explanation: 'SELECT * means select all columns from the specified table(s).'
         }
       ],
-      '4': [
+      4: [
         {
           id: '4-1',
           question: 'In a one-to-many relationship, how many records in Table B can relate to one record in Table A?',
@@ -137,7 +161,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           explanation: 'In a one-to-many relationship, one record in Table A can relate to multiple records in Table B.'
         }
       ],
-      '5': [
+      5: [
         {
           id: '5-1',
           question: 'Which JOIN returns only matching records from both tables?',
@@ -161,7 +185,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
     if (chatMessages.length === 0 && selectedLesson) {
       setChatMessages([{
         id: '1',
-        content: `Hi! I'm here to help you understand "${selectedLesson.title}". I can explain concepts, answer questions, or provide additional examples. What would you like to know?`,
+        content: `Hi! I'm here to help you understand "${selectedLesson.lesson_name}". I can explain concepts, answer questions, or provide additional examples. What would you like to know?`,
         sender: 'ai',
         timestamp: new Date()
       }]);
@@ -170,7 +194,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
 
 
   if (selectedLesson) {
-    const questions = getQuestionsForLesson(selectedLesson.id);
+    const questions = getQuestionsForLesson(selectedLesson.lesson_id);
     
     return (
       <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
@@ -180,7 +204,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           <div className="flex items-start justify-between mb-4">
               <LessonHeader selectedLesson={selectedLesson} getDifficultyColor={getDifficultyColor}/>
 
-              <CompletedBadge show={ProgressManager.isLessonComplete(selectedLesson.id)}/>
+              <CompletedBadge show={isCompleted}/>
           </div>
 
           {/* Tabs */}
@@ -232,7 +256,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons }) => {
           
           {/* Mark Complete Button */}
           <div className="mt-8 pt-6 border-t border-gray-700">
-              <CompletedLessonFooter isCompleted={ProgressManager.isLessonComplete(selectedLesson.id)}
+              <CompletedLessonFooter isCompleted={isCompleted}
                                      onMarkComplete={markLessonComplete}/>
           </div>
         </div>

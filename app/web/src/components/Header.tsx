@@ -1,9 +1,9 @@
 import React from 'react';
-import { Database, LogIn, LogOut, User } from 'lucide-react';
-import type { User as UserType } from '../App.tsx';
+import { Database, LogOut, User as UserIcon} from 'lucide-react';
+import {User} from "../types/user";
 
 interface HeaderProps {
-  user: UserType | null;
+  user: User | null;
   onLogout: () => void;
 }
 
@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600">
-              <User className="h-4 w-4 text-gray-400" />
+              <UserIcon className="h-4 w-4 text-gray-400" />
               <span className="text-sm font-medium text-white">
                 {user?.name}
               </span>

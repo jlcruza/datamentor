@@ -1,9 +1,9 @@
 import {ArrowLeft} from "lucide-react";
 import React from "react";
-import {Lesson} from "../App.tsx";
+import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
 type BackToLessonButtonProps = {
-    onSelectedLesson: (lesson: Lesson | null) => void;
+    onSelectedLesson: (lesson: LearningContentDto | null) => void;
 };
 
 const BackToLessonButton: React.FC<BackToLessonButtonProps> = (
