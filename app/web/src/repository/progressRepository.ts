@@ -25,6 +25,10 @@ export class ProgressRepository {
             return this.getDefaultProgress(studentId, lessonId);
         }
 
+        if (data === null || data === undefined) {
+            return this.getDefaultProgress(studentId, lessonId);
+        }
+
         return data;
     }
 

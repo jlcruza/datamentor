@@ -11,8 +11,13 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons }) => {
-  const categories = [...new Set(lessons.map(lesson => lesson.module_name))];
-  
+    const categories = [
+        ...new Map(
+            lessons
+                .sort((a, b) => a.module_id - b.module_id) // sort by module_id ascending
+                .map((lesson) => [lesson.module_id, lesson.module_name]) // create [id, name] pairs
+        ).values() // extract only the names
+    ];
   const getCategoryProgress = (category: string) => {
     const categoryLessons = lessons.filter(lesson => lesson.module_name === category);
     const completedCount = categoryLessons.filter(lesson => 

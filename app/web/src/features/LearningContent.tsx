@@ -56,9 +56,16 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
     }
   };
 
-  const categories = [...new Set(lessons.map(lesson => lesson.module_name))];
-  
-  const getDifficultyColor = (difficulty: string) => {
+  const categories = [
+    ...new Map(
+        lessons
+            .sort((a, b) => a.module_id - b.module_id) // sort by module_id ascending
+            .map((lesson) => [lesson.module_id, lesson.module_name]) // create [id, name] pairs
+    ).values() // extract only the names
+  ];
+
+
+    const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-100 text-green-800';
       case 'intermediate': return 'bg-yellow-100 text-yellow-800';
@@ -288,7 +295,9 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
         {/*  Shows all the lessons in different cards*/}
         <div className="lg:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {lessons.map(lesson => (
+            {lessons
+                .sort((a, b) => a.lesson_id - b.lesson_id)
+                .map(lesson => (
                 <LessonCard lesson={lesson} getDifficultyColor={getDifficultyColor} onSelectLesson={setSelectedLesson} />
             ))}
           </div>
