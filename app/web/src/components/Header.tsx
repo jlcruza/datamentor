@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">
-              Database Learning Platform
+              DataMentor
             </h1>
             <p className="text-sm text-gray-400">
               Computer Engineering - Database Course

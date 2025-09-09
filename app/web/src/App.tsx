@@ -90,7 +90,7 @@ function App() {
           lessons={lessons}
         />
         
-        <main className="flex-1 p-4 lg:p-6 ml-64 lg:ml-72 bg-gray-900">
+        <main className="flex-1 p-4 lg:p-6 md:ml-64 lg:ml-72 bg-gray-900">
           <div className="max-w-7xl mx-auto">
             {renderActiveSection()}
           </div>

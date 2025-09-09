@@ -1,10 +1,15 @@
 {
   "name": "datamentor",
   "private": true,
-  "workspaces": ["app/*"],
+  "workspaces": [
+    "app/*"
+  ],
   "scripts": {
     "dev:web": "npm --prefix app/web run dev",
     "build:web": "npm --prefix app/web run build",
     "preview:web": "npm --prefix app/web run preview"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.7"
   }
 }
