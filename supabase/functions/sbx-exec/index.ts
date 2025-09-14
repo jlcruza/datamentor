@@ -1,30 +1,43 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { ordsSql } from "../_shared/oracle.ts";
-import {HTTP_RESPONSE_CODES} from "../constants/httpResponseCodes.ts";
 import {SandboxRepository} from "../repository/sandboxRepository.ts";
+import {
+    DataMentorResponse_BAD_REQUEST, DataMentorResponse_GATEWAY_TIMEOUT, DataMentorResponse_INTERNAL_SERVER_ERROR,
+    DataMentorResponse_NO_CONTENT, DataMentorResponse_OK,
+    DataMentorResponse_UNAUTHORIZED
+} from "../services/dataMentorResponse.ts";
+import {getSupabaseUser} from "../services/supabaseClient.ts";
 
 serve(async (req) => {
     try {
-        const { data: { user } } = await createClient(req).auth.getUser();
-        if (!user) return new Response('Unauthorized', { status: HTTP_RESPONSE_CODES.UNAUTHORIZED });
+        if (req.method === "OPTIONS") {
+            console.log("CORS preflight");
+            return DataMentorResponse_NO_CONTENT(req);
+        }
+
+        const { data: { user }, error } = await getSupabaseUser(req);
+        if (!user || error) {
+            console.log("Unauthorized");
+            return DataMentorResponse_UNAUTHORIZED(req);
+        }
 
         const { sql } = await req.json();
         if (!sql) {
-            return new Response("Missing sandboxId or sql", { status: HTTP_RESPONSE_CODES.BAD_REQUEST });
+            return DataMentorResponse_BAD_REQUEST(req, "Missing sql");
         }
 
         // Guardrails (optional): reject dangerous statements
         const blacklist = [/ALTER\s+SYSTEM/i, /CREATE\s+USER/i, /DROP\s+USER/i];
         if (blacklist.some((re) => re.test(sql))) {
-            return new Response("Statement not allowed", { status: HTTP_RESPONSE_CODES.BAD_REQUEST });
+            return DataMentorResponse_BAD_REQUEST(req, "Statement not allowed")
         }
 
-        let isSandboxActive = await SandboxRepository.doesActiveSandboxExist();
+        let isSandboxActive = await SandboxRepository.doesActiveSandboxExist(req);
         if (!isSandboxActive) {
-            return new Response("Sandbox is not active", { status: HTTP_RESPONSE_CODES.BAD_REQUEST });
+            return DataMentorResponse_BAD_REQUEST(req, "Sandbox is not active");
         }
 
-        const sandbox = await SandboxRepository.getActiveSandbox();
+        const sandbox = await SandboxRepository.getActiveSandbox(req);
 
         // Timeout via AbortController
         const controller = new AbortController();
@@ -44,11 +57,11 @@ serve(async (req) => {
             clearTimeout(t);
         }
 
-        return new Response(resText, { headers: { "Content-Type": "application/json" } });
+        return DataMentorResponse_OK(req, resText)
     } catch (e) {
         const isAbort = e?.name === "AbortError";
-        return new Response(isAbort ? "Query timeout" : `Error: ${e.message}`, {
-            status: isAbort ? HTTP_RESPONSE_CODES.GATEWAY_TIMEOUT : HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR,
-        });
+        let body = isAbort ? "Query timeout" : `Error: ${e.message}`;
+        return isAbort ? DataMentorResponse_GATEWAY_TIMEOUT(req, body)
+            : DataMentorResponse_INTERNAL_SERVER_ERROR(req, body);
     }
 });

@@ -1,17 +1,30 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { runAsAdmin } from "../_shared/oracle.ts";
-import {HTTP_RESPONSE_CODES} from "../constants/httpResponseCodes.ts";
 import {SandboxRepository} from "../repository/sandboxRepository.ts";
+import {
+    DataMentorResponse_BAD_REQUEST, DataMentorResponse_INTERNAL_SERVER_ERROR,
+    DataMentorResponse_NO_CONTENT, DataMentorResponse_OK,
+    DataMentorResponse_UNAUTHORIZED
+} from "../services/dataMentorResponse.ts";
+import {getSupabaseUser} from "../services/supabaseClient.ts";
 
 serve(async (req) => {
     try {
-        const { data: { user } } = await createClient(req).auth.getUser();
-        if (!user) return new Response('Unauthorized', { status: HTTP_RESPONSE_CODES.UNAUTHORIZED });
+        if (req.method === "OPTIONS") {
+            console.log("CORS preflight");
+            return DataMentorResponse_NO_CONTENT(req);
+        }
 
-        const isSandboxActive = await SandboxRepository.doesActiveSandboxExist();
-        if (!isSandboxActive) return new Response("Missing sandboxId", { status: HTTP_RESPONSE_CODES.BAD_REQUEST });
+        const { data: { user }, error } = await getSupabaseUser(req);
+        if (!user || error) {
+            console.log("Unauthorized");
+            return DataMentorResponse_UNAUTHORIZED(req);
+        }
 
-        let sandbox = await SandboxRepository.getActiveSandbox();
+        const isSandboxActive = await SandboxRepository.doesActiveSandboxExist(req);
+        if (!isSandboxActive) return DataMentorResponse_BAD_REQUEST(req, "Missing sandboxId");
+
+        let sandbox = await SandboxRepository.getActiveSandbox(req);
 
         const quoted = `"${sandbox.oracle_username}"`;
         const sql = `
@@ -27,13 +40,11 @@ END;
 `;
         await runAsAdmin(sql);
 
-        await SandboxRepository.disableAllSandboxes();
+        await SandboxRepository.disableAllSandboxes(req);
 
         // Mark in your DB as deleted
-        return new Response(JSON.stringify({ ok: true }), {
-            headers: { "Content-Type": "application/json" },
-        });
+        return DataMentorResponse_OK(req, JSON.stringify({ ok: true }));
     } catch (e) {
-        return new Response(`Error: ${e.message}`, { status: HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR });
+        return DataMentorResponse_INTERNAL_SERVER_ERROR(req, `Error: ${e.message}`);
     }
 });

@@ -6,23 +6,36 @@ import {
 } from "../_shared/oracle.ts";
 import {SBX_OWNER, SANDBOX_TTL_MIN} from "../_shared/environment.ts";
 import {ALL_TABLES} from "../_shared/tables.ts";
-import {HTTP_RESPONSE_CODES} from "../constants/httpResponseCodes.ts";
 import {SandboxDto} from "../repository/dtos/sandboxDto.ts";
 import {SandboxRepository} from "../repository/sandboxRepository.ts";
+import {
+    DataMentorResponse_INTERNAL_SERVER_ERROR, DataMentorResponse_NO_CONTENT, DataMentorResponse_OK,
+    DataMentorResponse_UNAUTHORIZED
+} from "../services/dataMentorResponse.ts";
+import {getSupabaseUser} from "../services/supabaseClient.ts";
 
 const BASE_10 = 10;
 const TTL_MIN = parseInt(SANDBOX_TTL_MIN, BASE_10);
 
 serve(async (req) => {
-    try {
-        const { data: { user } } = await createClient(req).auth.getUser();
-        if (!user) return new Response('Unauthorized', { status: HTTP_RESPONSE_CODES.UNAUTHORIZED });
 
-        sandbox: SandboxDto = {
-            student_id = user.id,
-            oracle_username = randomSandboxUser("SBX"),
-            oracle_password = randomOraclePassword(),
-            expire_at = new Date(Date.now() + TTL_MIN * 60_000).toISOString()
+    try {
+        if (req.method === "OPTIONS") {
+            console.log("CORS preflight");
+            return DataMentorResponse_NO_CONTENT(req);
+        }
+
+        const { data: { user }, error } = await getSupabaseUser(req);
+        if (!user || error) {
+            console.log("Unauthorized");
+            return DataMentorResponse_UNAUTHORIZED(req);
+        }
+
+        const sandbox: SandboxDto = {
+            student_id: user.id,
+            oracle_username: randomSandboxUser("SBX"),
+            oracle_password: randomOraclePassword(),
+            expire_at: new Date(Date.now() + TTL_MIN * 60_000).toISOString()
         };
 
         const quotedUser = `"${sandbox.oracle_username}"`;
@@ -37,7 +50,7 @@ DECLARE
   v_exists NUMBER;
 BEGIN
   -- 1) Create user (tablespace names on ADB are typically DATA & TEMP)
-  EXECUTE IMMEDIATE 'CREATE USER ${quotedUser} IDENTIFIED BY "${oraclePass}" QUOTA 100M ON DATA';
+  EXECUTE IMMEDIATE 'CREATE USER ${quotedUser} IDENTIFIED BY "${sandbox.oracle_password}" QUOTA 100M ON DATA';
   -- 2) Grants (minimum viable for CRUD + basic DDL/PLSQL demos)
   EXECUTE IMMEDIATE 'GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE, CREATE PROCEDURE, CREATE TRIGGER TO ${quotedUser}';
   -- Optional: allow synonyms, types if you need them
@@ -62,18 +75,16 @@ END;
         // Run the provisioning script
         await runAsAdmin(sql);
 
-        await SandboxRepository.insertSandbox(sandbox);
+        await SandboxRepository.insertSandbox(req, sandbox);
 
-        // Return a handle for follow-up calls (client never sees the Oracle password)
-        // Your frontend should only call your functions; your functions will use the stored creds.
-        return new Response(
+        return DataMentorResponse_OK(
+            req,
             JSON.stringify({
                 sandboxId: sandbox.oracle_username,  // e.g. "SBX_7H4F2KQ9"
                 expiresAt: sandbox.expire_at,
             }),
-            { headers: { "Content-Type": "application/json" } },
         );
     } catch (e) {
-        return new Response(`Error: ${e.message}`, { status: HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR });
+        return DataMentorResponse_INTERNAL_SERVER_ERROR(req, `Error: ${e.message}`);
     }
 });

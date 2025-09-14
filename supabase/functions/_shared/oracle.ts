@@ -30,12 +30,15 @@ export async function ordsSql({
     if (!oracleResponse.ok) {
         throw new Error(`ORDS ${oracleResponse.status}: ${text}`);
     }
+
+    console.log(`ORDS ${oracleResponse.status}: ${text}`);
     return text; // ORDS returns JSON text (string). Let caller JSON.parse if needed.
 }
 
 // Provisioning runs as the admin/provisioning user against ADMIN (or any schema path)
 // We’ll still call via /ords/<any>/_/sql; the schema in the SQL determines privileges.
 export async function runAsAdmin(sql: string) {
+    console.log("Running as admin:", sql);
     const schemaPath = SBX_OWNER.toLowerCase();
     return ordsSql({
         schema: schemaPath,

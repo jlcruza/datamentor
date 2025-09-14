@@ -1,28 +1,62 @@
 import React, { useState } from 'react';
 import { Play, RotateCcw, Database, CheckCircle, XCircle, Info } from 'lucide-react';
-import { executeQuery } from '../data/sampleDatabase.ts';
+import {createSandbox, runSandboxQuery, deleteSandbox} from "../services/SandboxService.ts";
 import DatabaseSchemaViewer from "../components/DatabaseSchemaViewer.tsx";
 
 const QueryPractice: React.FC = () => {
   const [query, setQuery] = useState('SELECT * FROM students LIMIT 5;');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSandboxReady, setIsSandboxReady] = useState(false);
+    const [isSandboxLoading, setIsSandboxLoading] = useState(false);
 
   const handleExecuteQuery = async () => {
-    setIsLoading(true);
+      if (!isSandboxReady) {
+        setError('Sandbox is not ready. Please create a sandbox first.');
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+      setResult(null);
+
+      try {
+        const res = await runSandboxQuery(query);
+        setResult(res);
+      } catch (e: any) {
+        setError(e?.message || 'Error executing query');
+      } finally {
+        setIsLoading(false);
+      }
+  };
+
+  const handleCreateSandbox = async () => {
+    setIsSandboxLoading(true);
     setError(null);
-    setResult(null);
 
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      const queryResult = executeQuery(query);
-      setResult(queryResult);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      await createSandbox();
+      setIsSandboxReady(true);
+    } catch (e: any) {
+      setError(e?.message || 'Failed to create sandbox');
     } finally {
-      setIsLoading(false);
+      setIsSandboxLoading(false);
+    }
+  };
+
+  const handleDeleteSandbox = async () => {
+    setIsSandboxLoading(true);
+    setError(null);
+
+    try {
+      await deleteSandbox();
+      setIsSandboxReady(false);
+      setResult(null);
+    } catch (e: any) {
+      setError(e?.message || 'Failed to delete sandbox');
+    } finally {
+      setIsSandboxLoading(false);
     }
   };
 
@@ -31,9 +65,7 @@ const QueryPractice: React.FC = () => {
     setResult(null);
     setError(null);
   };
-
-
-
+  
   return (
     <div>
       <div className="mb-6">
@@ -65,11 +97,34 @@ const QueryPractice: React.FC = () => {
               />
               
               <div className="flex justify-between items-center mt-4">
-                <div className="flex items-center space-x-2 text-sm text-gray-400">
-                  <Info className="h-4 w-4" />
-                  <span>Use standard SQL syntax</span>
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 text-sm text-gray-400">
+                    <Info className="h-4 w-4" />
+                    <span>Use standard SQL syntax</span>
+                  </div>
+
+                  {/* Sandbox controls */}
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={handleCreateSandbox}
+                      disabled={isSandboxReady || isSandboxLoading}
+                      className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-lg hover:from-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <Database className="h-4 w-4" />
+                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? 'Creating...' : 'Create Sandbox'}</span>
+                    </button>
+
+                    <button
+                      onClick={handleDeleteSandbox}
+                      disabled={!isSandboxReady || isSandboxLoading}
+                      className="flex items-center space-x-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <XCircle className="h-4 w-4" />
+                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? 'Deleting...' : 'Delete Sandbox'}</span>
+                    </button>
+                  </div>
                 </div>
-                
+
                 <div className="flex space-x-2">
                   <button
                     onClick={handleReset}
@@ -78,10 +133,10 @@ const QueryPractice: React.FC = () => {
                     <RotateCcw className="h-4 w-4" />
                     <span>Reset</span>
                   </button>
-                  
+
                   <button
                     onClick={handleExecuteQuery}
-                    disabled={isLoading || !query.trim()}
+                    disabled={isLoading || !query.trim() || !isSandboxReady}
                     className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
                   >
                     <Play className="h-4 w-4" />
