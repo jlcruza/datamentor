@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Play, RotateCcw, Database, CheckCircle, XCircle, Info } from 'lucide-react';
 import {createSandbox, runSandboxQuery, deleteSandbox} from "../services/SandboxService.ts";
 import DatabaseSchemaViewer from "../components/DatabaseSchemaViewer.tsx";
+import {getErrorMessage, getResultRows} from "../services/OracleResponseService.ts";
 
 const QueryPractice: React.FC = () => {
   const [query, setQuery] = useState('SELECT * FROM students LIMIT 5;');
@@ -23,7 +24,9 @@ const QueryPractice: React.FC = () => {
 
       try {
         const res = await runSandboxQuery(query);
-        setResult(res);
+
+        setResult(getResultRows(res));
+        setError(getErrorMessage(res));
       } catch (e: any) {
         setError(e?.message || 'Error executing query');
       } finally {

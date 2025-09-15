@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
-import { ordsSql } from "../_shared/oracle.ts";
+import {ordsSql, runAsAdmin} from "../_shared/oracle.ts";
 import {SandboxRepository} from "../repository/sandboxRepository.ts";
 import {
     DataMentorResponse_BAD_REQUEST, DataMentorResponse_GATEWAY_TIMEOUT, DataMentorResponse_INTERNAL_SERVER_ERROR,
@@ -39,22 +39,19 @@ serve(async (req) => {
 
         const sandbox = await SandboxRepository.getActiveSandbox(req);
 
-        // Timeout via AbortController
-        const controller = new AbortController();
-        const t = setTimeout(() => controller.abort(), 10_000); // 10s
-
         let resText;
         try {
-            resText = await ordsSql({
-                schema: sandbox.oracle_username.toLowerCase(),
-                sql,
-                authUser: sandbox.oracle_username,
-                authPass: sandbox.oracle_password,
-                // forward the abort signal so ordsSql (and any internal fetch) can be cancelled
-                signal: controller.signal,
-            });
-        } finally {
-            clearTimeout(t);
+            console.log("Executing SQL:", sql);
+            // resText = await ordsSql({
+            //     schema: sandbox.oracle_username.toLowerCase(),
+            //     sql,
+            //     authUser: sandbox.oracle_username,
+            //     authPass: sandbox.oracle_password
+            // });
+            resText = await runAsAdmin(sql);
+        }
+        finally {
+            // Do nothing
         }
 
         return DataMentorResponse_OK(req, resText)

@@ -1,6 +1,6 @@
 import {HTTP_RESPONSE_CODES} from "../constants/httpResponseCodes.ts";
 
-private function getCorsHeaders(req){
+function getCorsHeaders(req){
     // CORS: build common headers up-front so all responses can reuse them
     const origin = req.headers.get("origin") || "*";
     return {
