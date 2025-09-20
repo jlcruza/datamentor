@@ -1,22 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
-
-type Message = {
-  id: string;
-  content: string;
-  sender: 'user' | 'ai';
-  timestamp: Date;
-};
+import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 
 const AIAssistant: React.FC = () => {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<Msg[]>([
     {
-      id: '1',
       content: t('aiAssistant.welcomeMessage', "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?"),
-      sender: 'ai',
-      timestamp: new Date()
+      role: ASSISTANT_ROLE
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -34,57 +26,23 @@ const AIAssistant: React.FC = () => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
+    const userMessage: Msg = {
       content: inputMessage,
-      sender: 'user',
-      timestamp: new Date()
+      role: USER_ROLE
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = generateAIResponse(inputMessage);
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: aiResponse,
-        sender: 'ai',
-        timestamp: new Date()
-      };
+      const aiResponse = await askTutor({
+          prompt: inputMessage,
+          hint: "",
+          messages: messages
+      });
 
-      setMessages(prev => [...prev, aiMessage]);
+      setMessages(prev => [...prev, aiResponse]);
       setIsLoading(false);
-    }, 1000 + Math.random() * 1000);
-  };
-
-  const generateAIResponse = (userInput: string): string => {
-    const input = userInput.toLowerCase();
-    
-    if (input.includes('join') || input.includes('relationship')) {
-      return t('aiAssistant.joinsResponse');
-    }
-    
-    if (input.includes('primary key') || input.includes('foreign key')) {
-      return t('aiAssistant.keysResponse');
-    }
-    
-    if (input.includes('normalization') || input.includes('normal form')) {
-      return t('aiAssistant.normalizationResponse');
-    }
-    
-    if (input.includes('sql') || input.includes('query') || input.includes('select')) {
-      return t('aiAssistant.sqlResponse');
-    }
-    
-    if (input.includes('index') || input.includes('performance')) {
-      return t('aiAssistant.indexResponse');
-    }
-
-    // Default response
-    return t('aiAssistant.defaultResponse');
   };
 
   const quickQuestions = t('aiAssistant.quickQuestionsList', { returnObjects: true }) as string[];
@@ -148,30 +106,27 @@ const AIAssistant: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message) => (
                 <div
-                  key={message.id}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
                     className={`max-w-xs lg:max-w-md xl:max-w-lg ${
-                      message.sender === 'user'
+                      message.role === USER_ROLE
                         ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white'
                         : 'bg-gray-700 text-gray-100'
                     } rounded-xl px-4 py-3 shadow-lg`}
                   >
                     <div className="flex items-start space-x-2">
-                      {message.sender === 'ai' && (
+                      {message.role === ASSISTANT_ROLE && (
                         <Bot className="h-4 w-4 mt-0.5 text-gray-400" />
                       )}
-                      {message.sender === 'user' && (
+                      {message.role === USER_ROLE && (
                         <User className="h-4 w-4 mt-0.5 text-white/80" />
                       )}
                       <div className="flex-1">
                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                         <p className={`text-xs mt-1 ${
-                          message.sender === 'user' ? 'text-white/60' : 'text-gray-400'
-                        }`}>
-                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
+                          message.role === USER_ROLE ? 'text-white/60' : 'text-gray-400'
+                        }`}></p>
                       </div>
                     </div>
                   </div>
@@ -203,7 +158,7 @@ const AIAssistant: React.FC = () => {
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder={t('aiAssistant.askAboutDatabases')}
                   className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   disabled={isLoading}

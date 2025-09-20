@@ -13,7 +13,7 @@ export type TutorPrompt = {
     messages: Msg[]
 }
 
-export async function askTutor({prompt, hint, messages}: TutorPrompt): Promise<Msg[]> {
+export async function askTutor({prompt, hint, messages}: TutorPrompt): Promise<Msg> {
     try {
         messages.push({ role: USER_ROLE, content: prompt });
 
@@ -25,9 +25,11 @@ export async function askTutor({prompt, hint, messages}: TutorPrompt): Promise<M
         if (error)
             throw error;
 
-        messages.push({ role: ASSISTANT_ROLE, content: data });
+        const newMessage: Msg = { role: ASSISTANT_ROLE, content: data }
 
-        return messages;
+        messages.push(newMessage);
+
+        return newMessage;
     } finally {
         // Do nothing
     }
