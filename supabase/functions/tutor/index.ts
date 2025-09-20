@@ -6,7 +6,7 @@ import {
     getCorsHeaders
 } from "../services/dataMentorResponse.ts";
 import {getSupabaseUser} from "../services/supabaseClient.ts";
-import {OpenAiClient, Msg} from "../services/openaiClient.ts";
+import {getResponse, Msg} from "../services/openaiClient.ts";
 
 Deno.serve(async (req) => {
     if (req.method === "OPTIONS") {
@@ -27,11 +27,11 @@ Deno.serve(async (req) => {
     };
 
     // Compose the request for OpenAI Responses API, with streaming
-    const openAIResponse = await OpenAiClient.getResponse(messages, hint)
+    const openAIResponse = await getResponse(messages, hint)
 
     return new Response(openAIResponse, {
         headers: {
             ...getCorsHeaders(req),
-            "Content-Type": "text/event-stream" },
+            "Content-Type": "text/plain" },
     });
 });

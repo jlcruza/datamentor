@@ -41,6 +41,8 @@ const AIAssistant: React.FC = () => {
           messages: messages
       });
 
+      console.log("AI Response: ", aiResponse);
+
       setMessages(prev => [...prev, aiResponse]);
       setIsLoading(false);
   };
