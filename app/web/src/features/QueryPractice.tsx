@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Play, RotateCcw, Database, CheckCircle, XCircle, Info } from 'lucide-react';
 import {createSandbox, runSandboxQuery, deleteSandbox} from "../services/SandboxService.ts";
 import DatabaseSchemaViewer from "../components/DatabaseSchemaViewer.tsx";
 import {getErrorMessage, getResultRows} from "../services/OracleResponseService.ts";
 
 const QueryPractice: React.FC = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('SELECT * FROM students LIMIT 5;');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +16,7 @@ const QueryPractice: React.FC = () => {
 
   const handleExecuteQuery = async () => {
       if (!isSandboxReady) {
-        setError('Sandbox is not ready. Please create a sandbox first.');
+        setError(t('queryPractice.sandboxNotReady'));
         return;
       }
 
@@ -28,7 +30,7 @@ const QueryPractice: React.FC = () => {
         setResult(getResultRows(res));
         setError(getErrorMessage(res));
       } catch (e: any) {
-        setError(e?.message || 'Error executing query');
+        setError(e?.message || t('errors.queryExecutionError'));
       } finally {
         setIsLoading(false);
       }
@@ -42,7 +44,7 @@ const QueryPractice: React.FC = () => {
       await createSandbox();
       setIsSandboxReady(true);
     } catch (e: any) {
-      setError(e?.message || 'Failed to create sandbox');
+      setError(e?.message || t('errors.failedToCreateSandbox'));
     } finally {
       setIsSandboxLoading(false);
     }
@@ -57,7 +59,7 @@ const QueryPractice: React.FC = () => {
       setIsSandboxReady(false);
       setResult(null);
     } catch (e: any) {
-      setError(e?.message || 'Failed to delete sandbox');
+      setError(e?.message || t('errors.failedToDeleteSandbox'));
     } finally {
       setIsSandboxLoading(false);
     }
@@ -72,9 +74,9 @@ const QueryPractice: React.FC = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">SQL Query Practice</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('queryPractice.title')}</h1>
         <p className="text-gray-400">
-          Practice your SQL skills with our sample database. Execute queries and see results in real-time.
+          {t('queryPractice.subtitle')}
         </p>
       </div>
 
@@ -89,21 +91,21 @@ const QueryPractice: React.FC = () => {
           {/* Query Editor */}
           <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
             <div className="p-4 border-b border-gray-700">
-              <h2 className="font-semibold text-white">SQL Query Editor</h2>
+              <h2 className="font-semibold text-white">{t('queryPractice.sqlQueryEditor')}</h2>
             </div>
             <div className="p-4">
               <textarea
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="w-full h-32 p-3 bg-gray-900 border border-gray-600 rounded-lg font-mono text-sm text-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                placeholder="Enter your SQL query here..."
+                placeholder={t('queryPractice.enterSQLQuery')}
               />
               
               <div className="flex justify-between items-center mt-4">
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2 text-sm text-gray-400">
                     <Info className="h-4 w-4" />
-                    <span>Use standard SQL syntax</span>
+                    <span>{t('queryPractice.useStandardSQL')}</span>
                   </div>
 
                   {/* Sandbox controls */}
@@ -114,7 +116,7 @@ const QueryPractice: React.FC = () => {
                       className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-lg hover:from-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <Database className="h-4 w-4" />
-                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? 'Creating...' : 'Create Sandbox'}</span>
+                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? t('queryPractice.creating') : t('queryPractice.createSandbox')}</span>
                     </button>
 
                     <button
@@ -123,7 +125,7 @@ const QueryPractice: React.FC = () => {
                       className="flex items-center space-x-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <XCircle className="h-4 w-4" />
-                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? 'Deleting...' : 'Delete Sandbox'}</span>
+                      <span className="text-sm">{isSandboxLoading && !isSandboxReady ? t('queryPractice.deleting') : t('queryPractice.deleteSandbox')}</span>
                     </button>
                   </div>
                 </div>
@@ -134,7 +136,7 @@ const QueryPractice: React.FC = () => {
                     className="flex items-center space-x-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
                   >
                     <RotateCcw className="h-4 w-4" />
-                    <span>Reset</span>
+                    <span>{t('queryPractice.reset')}</span>
                   </button>
 
                   <button
@@ -143,7 +145,7 @@ const QueryPractice: React.FC = () => {
                     className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
                   >
                     <Play className="h-4 w-4" />
-                    <span>{isLoading ? 'Executing...' : 'Execute'}</span>
+                    <span>{isLoading ? t('queryPractice.executing') : t('queryPractice.execute')}</span>
                   </button>
                 </div>
               </div>
@@ -154,7 +156,7 @@ const QueryPractice: React.FC = () => {
           <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
             <div className="p-4 border-b border-gray-700">
               <h2 className="font-semibold text-white flex items-center">
-                Results
+                {t('queryPractice.results')}
                 {result && (
                   <CheckCircle className="h-5 w-5 ml-2 text-green-600" />
                 )}
@@ -168,7 +170,7 @@ const QueryPractice: React.FC = () => {
               {isLoading && (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
-                  <p className="text-gray-400 mt-2">Executing query...</p>
+                  <p className="text-gray-400 mt-2">{t('queryPractice.executingQuery')}</p>
                 </div>
               )}
 
@@ -176,7 +178,7 @@ const QueryPractice: React.FC = () => {
                 <div className="bg-red-900/30 border border-red-500/30 rounded-lg p-4">
                   <div className="flex items-center space-x-2 text-red-400">
                     <XCircle className="h-5 w-5" />
-                    <span className="font-medium">Query Error</span>
+                    <span className="font-medium">{t('queryPractice.queryError')}</span>
                   </div>
                   <p className="text-red-300 mt-1 font-mono text-sm">{error}</p>
                 </div>
@@ -185,7 +187,7 @@ const QueryPractice: React.FC = () => {
               {result && !error && (
                 <div>
                   <div className="mb-3 text-sm text-gray-400">
-                    {result.length} row{result.length !== 1 ? 's' : ''} returned
+                    {t('queryPractice.rowsReturned', { count: result.length })}
                   </div>
                   
                   {result.length > 0 ? (
@@ -214,7 +216,7 @@ const QueryPractice: React.FC = () => {
                       </table>
                     </div>
                   ) : (
-                    <p className="text-gray-400 italic">No results returned</p>
+                    <p className="text-gray-400 italic">{t('queryPractice.noResults')}</p>
                   )}
                 </div>
               )}
@@ -222,7 +224,7 @@ const QueryPractice: React.FC = () => {
               {!result && !error && !isLoading && (
                 <div className="text-center py-8 text-gray-400">
                   <Database className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>Execute a query to see results here</p>
+                  <p>{t('queryPractice.executeQueryToSeeResults')}</p>
                 </div>
               )}
             </div>

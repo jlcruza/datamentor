@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.ts';
 
 // Handles redirects from Supabase for password recovery.
 // When the user arrives here via the reset link, Supabase provides a temporary session.
 // We then allow the user to set a new password using supabase.auth.updateUser.
 const ResetComplete: React.FC = () => {
+  const { t } = useTranslation();
   const [isValidSession, setIsValidSession] = useState<boolean | null>(null);
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -21,11 +23,11 @@ const ResetComplete: React.FC = () => {
 
       if (data.session?.user) {
         setIsValidSession(true);
-        setMessage('Please set a new password for your account.');
+        setMessage(t('auth.pleaseSetNewPassword', 'Please set a new password for your account.'));
         setVariant('info');
       } else {
         setIsValidSession(false);
-        setMessage('This reset link is invalid or has expired. Please request a new one.');
+        setMessage(t('auth.resetLinkInvalid'));
         setVariant('error');
       }
     };
@@ -42,12 +44,12 @@ const ResetComplete: React.FC = () => {
 
     if (password.length < 6) {
       setVariant('error');
-      setMessage('Password must be at least 6 characters.');
+      setMessage(t('auth.passwordMinLength'));
       return;
     }
     if (password !== confirm) {
       setVariant('error');
-      setMessage('Passwords do not match.');
+      setMessage(t('auth.passwordsDoNotMatch'));
       return;
     }
 
@@ -57,11 +59,11 @@ const ResetComplete: React.FC = () => {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
         setVariant('error');
-        setMessage(error.message || 'Unable to update password.');
+        setMessage(error.message || t('errors.generic'));
         return;
       }
       setVariant('success');
-      setMessage('Password updated successfully! Redirecting to the app...');
+      setMessage(t('auth.passwordUpdatedSuccess'));
       // After success, user typically remains signed in; redirect to app.
       setTimeout(() => {
         window.location.replace('/');
@@ -84,7 +86,7 @@ const ResetComplete: React.FC = () => {
   return (
     <div className={baseClasses}>
       <div className={panelClasses}>
-        <h1 className="text-xl font-semibold text-white mb-4">Set New Password</h1>
+        <h1 className="text-xl font-semibold text-white mb-4">{t('auth.setNewPassword')}</h1>
 
         {message && (
           <div className={`p-3 rounded-lg border mb-4 ${msgClass}`}>
@@ -93,14 +95,14 @@ const ResetComplete: React.FC = () => {
         )}
 
         {isValidSession === null && (
-          <p className="text-gray-300 text-sm">Verifying reset link...</p>
+          <p className="text-gray-300 text-sm">{t('auth.verifyingResetLink')}</p>
         )}
 
         {isValidSession === true && (
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                New Password
+                {t('auth.newPassword')}
               </label>
               <input
                 type="password"
@@ -108,14 +110,14 @@ const ResetComplete: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
-                placeholder="Enter new password"
+                placeholder={t('auth.enterNewPassword')}
                 minLength={6}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Confirm New Password
+                {t('auth.confirmNewPassword')}
               </label>
               <input
                 type="password"
@@ -123,7 +125,7 @@ const ResetComplete: React.FC = () => {
                 onChange={(e) => setConfirm(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
-                placeholder="Re-enter new password"
+                placeholder={t('auth.reenterNewPassword')}
                 minLength={6}
               />
             </div>
@@ -133,7 +135,7 @@ const ResetComplete: React.FC = () => {
               disabled={isLoading}
               className="w-full px-4 py-2 text-white rounded-lg transition-all duration-300 shadow-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:opacity-50"
             >
-              {isLoading ? 'Updating...' : 'Update Password'}
+              {isLoading ? t('auth.updating') : t('auth.updatePassword')}
             </button>
           </form>
         )}
@@ -144,7 +146,7 @@ const ResetComplete: React.FC = () => {
               href="/"
               className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition"
             >
-              Return to App
+              {t('auth.returnToApp')}
             </a>
           </div>
         )}

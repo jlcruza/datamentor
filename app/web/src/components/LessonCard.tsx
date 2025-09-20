@@ -1,4 +1,5 @@
 import {BarChart3, CheckCircle, Clock} from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import React from "react";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
@@ -13,6 +14,7 @@ const LessonCard: React.FC<LessonCardProps> = ({
                                                    getDifficultyColor,
                                                    onSelectLesson
                                                }) => {
+    const { t } = useTranslation();
 
     return (
         <div
@@ -45,7 +47,7 @@ const LessonCard: React.FC<LessonCardProps> = ({
                 </div>
                 <div className="flex items-center space-x-2">
                     <Clock className="h-4 w-4" />
-                    <span>5 min read</span>
+                    <span>5 {t('learningContent.minRead')}</span>
                 </div>
             </div>
         </div>

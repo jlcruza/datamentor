@@ -1,4 +1,5 @@
 import {BookOpen, CheckCircle, ChevronDown, ChevronRight} from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import React, {useState} from "react";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 
@@ -14,6 +15,7 @@ const CourseDirectory: React.FC<CourseDirectoryProps> = (
         lessons,
         onSelectLesson,
     }) => {
+    const { t } = useTranslation();
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
     const toggleCategory = (category: string) => {
@@ -27,7 +29,7 @@ const CourseDirectory: React.FC<CourseDirectoryProps> = (
         <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-4 sticky top-4">
             <h2 className="font-semibold text-white mb-4 flex items-center">
                 <BookOpen className="h-5 w-5 mr-2 text-purple-400" />
-                Course Topics
+                {t('learningContent.courseTopics')}
             </h2>
 
             {categories.map(category => (

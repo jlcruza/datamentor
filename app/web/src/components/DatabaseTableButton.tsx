@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 
 type DatabaseTableButtonProps = {
     tableName: string;
@@ -14,7 +15,7 @@ const DatabaseTableButton: React.FC<DatabaseTableButtonProps> = ({
     selected,
     onSelect
 }) => {
-
+    const { t } = useTranslation();
 
     return (
         <button
@@ -27,7 +28,7 @@ const DatabaseTableButton: React.FC<DatabaseTableButtonProps> = ({
         >
             <div className="font-medium">{tableName}</div>
             <div className="text-sm text-gray-400 mt-1">
-                {tableData.length} records
+                {t('queryPractice.records', { count: tableData.length })}
             </div>
         </button>
     )

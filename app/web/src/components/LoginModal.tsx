@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, LogIn, UserPlus, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient.ts';
 import {VITE_APP_BASE_URL} from "../constants/environmentConfigs.ts";
@@ -12,6 +13,7 @@ interface LoginModalProps {
 type AuthMode = 'login' | 'register' | 'reset';
 
 const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = false }) => {
+  const { t } = useTranslation();
   const [authMode, setAuthMode] = useState<AuthMode>('login');
 
   // Clear default demo values; use empty fields for real auth.
@@ -39,21 +41,21 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
         });
 
         if (error) {
-          setMessage(error.message || 'Unable to sign in.');
+          setMessage(error.message || t('errors.generic'));
           return;
         }
 
         // Notify parent that login succeeded; parent can fetch user/session as needed.
-        setMessage('Logged in successfully.');
+        setMessage(t('auth.loginSuccess', 'Logged in successfully.'));
         onLogin(email, password);
       } else if (authMode === 'register') {
         // Basic client-side validation
         if (password !== confirmPassword) {
-          setMessage('Passwords do not match');
+          setMessage(t('auth.passwordsDoNotMatch'));
           return;
         }
         if (password.length < 6) {
-          setMessage('Password must be at least 6 characters');
+          setMessage(t('auth.passwordMinLength'));
           return;
         }
 
@@ -70,12 +72,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
         });
 
         if (error) {
-          setMessage(error.message || 'Unable to create account.');
+          setMessage(error.message || t('errors.generic'));
           return;
         }
 
         // If email confirmations are enabled, session will be null until confirmed
-        setMessage('Account created successfully! Check your email to confirm your address.');
+        setMessage(t('auth.accountCreatedSuccess'));
         setAuthMode('login');
         setPassword('');
         setConfirmPassword('');
@@ -86,11 +88,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
         });
 
         if (error) {
-          setMessage(error.message || 'Unable to send password reset email.');
+          setMessage(error.message || t('errors.generic'));
           return;
         }
 
-        setMessage('Password reset email sent. Check your inbox.');
+        setMessage(t('auth.resetEmailSent'));
         setTimeout(() => {
           setAuthMode('login');
           setMessage('');
@@ -116,17 +118,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
 
   const getTitle = () => {
     switch (authMode) {
-      case 'login': return 'Login to Your Account';
-      case 'register': return 'Create New Account';
-      case 'reset': return 'Reset Password';
+      case 'login': return t('auth.loginTitle');
+      case 'register': return t('auth.registerTitle');
+      case 'reset': return t('auth.resetTitle');
     }
   };
 
   const getButtonText = () => {
     switch (authMode) {
-      case 'login': return 'Login';
-      case 'register': return 'Create Account';
-      case 'reset': return 'Send Reset Email';
+      case 'login': return t('auth.login');
+      case 'register': return t('auth.register');
+      case 'reset': return t('auth.sendResetEmail');
     }
   };
 
@@ -151,7 +153,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
           {authMode === 'register' && (
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Full Name
+                {t('auth.fullName')}
               </label>
               <input
                 type="text"
@@ -159,14 +161,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
-                placeholder="Enter your full name"
+                placeholder={t('auth.enterFullName')}
               />
             </div>
           )}
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
-              Email
+              {t('auth.email')}
             </label>
             <input
               type="email"
@@ -174,14 +176,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
-              placeholder="Enter your email"
+              placeholder={t('auth.enterEmail')}
             />
           </div>
 
           {authMode !== 'reset' && (
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Password
+                {t('auth.password')}
               </label>
               <input
                 type="password"
@@ -189,7 +191,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
-                placeholder="Enter your password"
+                placeholder={t('auth.enterPassword')}
                 minLength={authMode === 'register' ? 6 : undefined}
               />
             </div>
@@ -198,7 +200,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
           {authMode === 'register' && (
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Confirm Password
+                {t('auth.confirmPassword')}
               </label>
               <input
                 type="password"
@@ -206,7 +208,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
-                placeholder="Confirm your password"
+                placeholder={t('auth.confirmYourPassword')}
                 minLength={6}
               />
             </div>
@@ -233,7 +235,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
               {authMode === 'login' && <LogIn className="h-4 w-4" />}
               {authMode === 'register' && <UserPlus className="h-4 w-4" />}
               {authMode === 'reset' && <Mail className="h-4 w-4" />}
-              <span>{isLoading ? 'Processing...' : getButtonText()}</span>
+              <span>{isLoading ? t('auth.processing') : getButtonText()}</span>
             </button>
 
             {/* Auth Mode Switcher */}
@@ -245,7 +247,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                     onClick={() => switchMode('register')}
                     className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    Don't have an account? Create one
+                    {t('auth.noAccount')}
                   </button>
                   <div className="text-gray-500">•</div>
                   <button
@@ -253,7 +255,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                     onClick={() => switchMode('reset')}
                     className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    Forgot your password?
+                    {t('auth.forgotPassword')}
                   </button>
                 </>
               )}
@@ -264,7 +266,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                   onClick={() => switchMode('login')}
                   className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                 >
-                  Already have an account? Login
+                  {t('auth.hasAccount')}
                 </button>
               )}
               
@@ -274,7 +276,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
                   onClick={() => switchMode('login')}
                   className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                 >
-                  Back to login
+                  {t('auth.backToLogin')}
                 </button>
               )}
             </div>
