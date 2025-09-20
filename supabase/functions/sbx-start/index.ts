@@ -31,6 +31,19 @@ serve(async (req) => {
             return DataMentorResponse_UNAUTHORIZED(req);
         }
 
+        const isSandboxActive = await SandboxRepository.doesActiveSandboxExist(req);
+        if (isSandboxActive) {
+            const existingSandbox = await SandboxRepository.getActiveSandbox(req);
+
+            return DataMentorResponse_OK(
+                req,
+                JSON.stringify({
+                    sandboxId: existingSandbox.oracle_username,
+                    expiresAt: existingSandbox.expire_at,
+                }),
+            );
+        }
+
         const sandbox: SandboxDto = {
             student_id: user.id,
             oracle_username: randomSandboxUser("SBX"),

@@ -15,7 +15,7 @@ const BackToLessonButton: React.FC<BackToLessonButtonProps> = (
         onClick={() => onSelectedLesson(null)}
         className="text-purple-400 hover:text-purple-300 mb-4 flex items-center space-x-2 transition-colors">
         <ArrowLeft className="h-4 w-4" />
-        <span>Back to lessons</span>
+        <span>Atrás</span>
     </button>
 }
 

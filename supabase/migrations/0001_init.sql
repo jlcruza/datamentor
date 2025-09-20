@@ -36,14 +36,18 @@ CREATE TABLE IF NOT EXISTS exercises(
     exercise_id         SERIAL          PRIMARY KEY,
     lesson_id           INT             REFERENCES lessons(lesson_id),
     question            VARCHAR(255)    NOT NULL,
-    option_a            VARCHAR(255)    NOT NULL,
-    option_b            VARCHAR(255)    NOT NULL,
-    option_c            VARCHAR(255)    NOT NULL,
-    option_d            VARCHAR(255)    NOT NULL,
-    answer              VARCHAR(255)    NOT NULL,
     reason              VARCHAR(255)    NOT NULL,
     created_date        TIMESTAMP       NOT NULL    DEFAULT NOW(),
     modified_date       TIMESTAMP       NOT NULL    DEFAULT NOW()
+    );
+
+CREATE TABLE IF NOT EXISTS exercise_options(
+    exercise_option_id  SERIAL          PRIMARY KEY,
+    exercise_id         INT             REFERENCES exercises(exercise_id),
+    text                VARCHAR(255)    NOT NULL,
+    is_correct          BOOLEAN         NOT NULL        DEFAULT FALSE,
+    created_date        TIMESTAMP       NOT NULL        DEFAULT NOW(),
+    modified_date       TIMESTAMP       NOT NULL        DEFAULT NOW()
     );
 
 CREATE TABLE IF NOT EXISTS sandboxes(
