@@ -1,4 +1,5 @@
 import {CheckCircle} from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import React, {useState} from "react";
 import {Question} from "../types/question.ts";
 
@@ -12,6 +13,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
         question,
         index,
     }) => {
+    const { t } = useTranslation();
     const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, number>>({});
 
     const userAnswer = answeredQuestions[question.id];
@@ -29,7 +31,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
         <div key={question.id} className="bg-gray-700 rounded-lg p-6 border border-gray-600">
             <div className="mb-4">
                 <h3 className="text-lg font-medium text-white mb-3">
-                    Question {index + 1}: {question.question}
+                    {t('practiceQuestions.question', { number: index + 1 })} {question.question}
                 </h3>
             </div>
 
@@ -79,7 +81,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
                     <div className="flex items-center space-x-2 mb-2">
                         <CheckCircle className={`h-5 w-5 ${isCorrect ? 'text-green-400' : 'text-red-400'}`} />
                         <span className="font-medium">
-                                {isCorrect ? 'Correct!' : 'Incorrect'}
+                                {isCorrect ? t('practiceQuestions.correct') : t('practiceQuestions.incorrect')}
                               </span>
                     </div>
                     <p className="text-sm">{question.explanation}</p>

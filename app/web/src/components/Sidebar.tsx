@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 import { BookOpen, Database, MessageCircle, ChevronRight, TrendingUp } from 'lucide-react';
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
@@ -12,6 +13,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons }) => {
+    const { t } = useTranslation();
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const categories = [
@@ -35,9 +37,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
   };
 
   const menuItems = [
-    { id: 'learn' as ActiveSection, label: 'Learning Materials', icon: BookOpen, available: true },
-    { id: 'practice' as ActiveSection, label: 'Query Practice', icon: Database, available: true },
-    { id: 'chat' as ActiveSection, label: 'AI Assistant', icon: MessageCircle, available: true },
+    { id: 'learn' as ActiveSection, label: t('sidebar.learningMaterials'), icon: BookOpen, available: true },
+    { id: 'practice' as ActiveSection, label: t('sidebar.queryPractice'), icon: Database, available: true },
+    { id: 'chat' as ActiveSection, label: t('sidebar.aiAssistant'), icon: MessageCircle, available: true },
   ];
 
   return (
@@ -81,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
             >
               <Dialog.Panel className="relative max-w-xs w-64 bg-gray-800 border-r border-gray-700 shadow-xl overflow-y-auto">
                 <div className="p-4 flex items-center justify-between">
-                  <div className="font-semibold text-white">Menu</div>
+                  <div className="font-semibold text-white">{t('common.menu', 'Menu')}</div>
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="p-1 rounded text-gray-300 hover:text-white"
@@ -131,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
                   <div className="mb-4">
                     <h3 className="font-semibold text-white mb-3 flex items-center">
                       <TrendingUp className="h-4 w-4 mr-2 text-purple-400" />
-                      Learning Progress
+                      {t('sidebar.learningProgress')}
                     </h3>
 
                     <div className="space-y-3">
@@ -152,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
                               />
                             </div>
                             <div className="text-xs text-gray-500 text-right">
-                              {progress.percentage}% complete
+                              {progress.percentage}% {t('sidebar.complete')}
                             </div>
                           </div>
                         );
@@ -163,10 +165,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
 
                 <div className="mt-8 p-4">
                   <div className="bg-gradient-to-br from-purple-900/50 to-cyan-900/50 p-4 rounded-xl border border-purple-500/30">
-                    <h3 className="font-semibold text-white mb-2">Quick Tip</h3>
+                    <h3 className="font-semibold text-white mb-2">{t('sidebar.quickTip')}</h3>
                     <p className="text-sm text-gray-300">
-                      Use the Query Practice section to test your SQL skills with our sample database. 
-                      The AI Assistant is here to help if you get stuck!
+                      {t('sidebar.quickTipText')}
                     </p>
                   </div>
                 </div>
@@ -216,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
           <div className="mb-4">
             <h3 className="font-semibold text-white mb-3 flex items-center">
               <TrendingUp className="h-4 w-4 mr-2 text-purple-400" />
-              Learning Progress
+              {t('sidebar.learningProgress')}
             </h3>
 
             <div className="space-y-3">
@@ -237,7 +238,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
                       />
                     </div>
                     <div className="text-xs text-gray-500 text-right">
-                      {progress.percentage}% complete
+                      {progress.percentage}% {t('sidebar.complete')}
                     </div>
                   </div>
                 );
@@ -248,10 +249,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
 
         <div className="mt-8 p-4">
           <div className="bg-gradient-to-br from-purple-900/50 to-cyan-900/50 p-4 rounded-xl border border-purple-500/30">
-            <h3 className="font-semibold text-white mb-2">Quick Tip</h3>
+            <h3 className="font-semibold text-white mb-2">{t('sidebar.quickTip')}</h3>
             <p className="text-sm text-gray-300">
-              Use the Query Practice section to test your SQL skills with our sample database. 
-              The AI Assistant is here to help if you get stuck!
+              {t('sidebar.quickTipText')}
             </p>
           </div>
         </div>

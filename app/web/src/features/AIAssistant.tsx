@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 
 type Message = {
@@ -9,10 +10,11 @@ type Message = {
 };
 
 const AIAssistant: React.FC = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?",
+      content: t('aiAssistant.welcomeMessage', "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?"),
       sender: 'ai',
       timestamp: new Date()
     }
@@ -62,43 +64,37 @@ const AIAssistant: React.FC = () => {
     const input = userInput.toLowerCase();
     
     if (input.includes('join') || input.includes('relationship')) {
-      return "Great question about JOINs! In relational databases, JOINs are used to combine data from multiple tables based on related columns. Here are the main types:\n\n• **INNER JOIN**: Returns only matching records from both tables\n• **LEFT JOIN**: Returns all records from the left table, plus matched records from the right\n• **RIGHT JOIN**: Returns all records from the right table, plus matched records from the left\n• **FULL OUTER JOIN**: Returns all records when there's a match in either table\n\nWould you like me to show you some examples with our sample database?";
+      return t('aiAssistant.joinsResponse');
     }
     
     if (input.includes('primary key') || input.includes('foreign key')) {
-      return "Keys are fundamental to relational databases!\n\n**Primary Key:**\n• Uniquely identifies each record in a table\n• Cannot contain NULL values\n• Each table can have only one primary key\n• Can be composed of multiple columns (composite key)\n\n**Foreign Key:**\n• Creates a link between two tables\n• References the primary key of another table\n• Helps maintain referential integrity\n• Can contain NULL values (unless specified otherwise)\n\nIn our sample database, 'id' fields are primary keys, and fields like 'student_id' in the enrollments table are foreign keys!";
+      return t('aiAssistant.keysResponse');
     }
     
     if (input.includes('normalization') || input.includes('normal form')) {
-      return "Database normalization helps eliminate data redundancy and improve data integrity!\n\n**1st Normal Form (1NF):**\n• Each column contains atomic values\n• No repeating groups\n\n**2nd Normal Form (2NF):**\n• Must be in 1NF\n• No partial dependencies on composite primary keys\n\n**3rd Normal Form (3NF):**\n• Must be in 2NF\n• No transitive dependencies\n\nNormalization helps reduce storage space and prevents update anomalies. Would you like me to explain any specific normal form in more detail?";
+      return t('aiAssistant.normalizationResponse');
     }
     
     if (input.includes('sql') || input.includes('query') || input.includes('select')) {
-      return "SQL (Structured Query Language) is the standard language for interacting with relational databases. Here are some key concepts:\n\n**Basic SQL Commands:**\n• SELECT: Retrieve data\n• INSERT: Add new records\n• UPDATE: Modify existing records\n• DELETE: Remove records\n\n**Query Structure:**\n```sql\nSELECT columns\nFROM table\nWHERE conditions\nGROUP BY columns\nHAVING group_conditions\nORDER BY columns;\n```\n\nTry practicing with our Query Practice section! What specific SQL topic would you like to explore?";
+      return t('aiAssistant.sqlResponse');
     }
     
     if (input.includes('index') || input.includes('performance')) {
-      return "Database indexes are crucial for query performance!\n\n**What are indexes?**\n• Data structures that improve query speed\n• Like an index in a book - helps find information quickly\n• Trade-off: faster reads, slower writes\n\n**Types of indexes:**\n• Clustered: Determines physical storage order\n• Non-clustered: Separate structure pointing to data\n• Unique: Ensures uniqueness\n• Composite: Covers multiple columns\n\n**When to use indexes:**\n✅ Frequently queried columns\n✅ Columns used in WHERE, JOIN, ORDER BY\n❌ Small tables\n❌ Frequently updated columns\n\nWould you like to learn about query optimization strategies?";
+      return t('aiAssistant.indexResponse');
     }
 
     // Default response
-    return "I'm here to help with database concepts! I can assist with:\n\n• SQL queries and syntax\n• Database design principles\n• Normalization and relationships\n• Joins and advanced queries\n• Performance optimization\n• Data modeling\n\nFeel free to ask me anything specific about databases, or try asking about topics like 'What are JOINs?', 'Explain normalization', or 'How do indexes work?'";
+    return t('aiAssistant.defaultResponse');
   };
 
-  const quickQuestions = [
-    "What are database relationships?",
-    "Explain SQL JOINs",
-    "What is normalization?",
-    "How do indexes work?",
-    "Primary vs Foreign keys"
-  ];
+  const quickQuestions = t('aiAssistant.quickQuestionsList', { returnObjects: true }) as string[];
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">AI Database Assistant</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('aiAssistant.title')}</h1>
         <p className="text-gray-400">
-          Get instant help with database concepts, SQL queries, and more from our AI assistant.
+          {t('aiAssistant.subtitle')}
         </p>
       </div>
 
@@ -108,7 +104,7 @@ const AIAssistant: React.FC = () => {
           <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-4 sticky top-4">
             <h2 className="font-semibold text-white mb-4 flex items-center">
               <Lightbulb className="h-5 w-5 mr-2 text-yellow-400" />
-              Quick Questions
+              {t('aiAssistant.quickQuestions')}
             </h2>
             
             <div className="space-y-2">
@@ -126,10 +122,10 @@ const AIAssistant: React.FC = () => {
             <div className="mt-6 p-3 bg-gradient-to-br from-purple-900/50 to-cyan-900/50 rounded-lg border border-purple-500/30">
               <div className="flex items-center space-x-2 mb-2">
                 <BookOpen className="h-4 w-4 text-purple-400" />
-                <span className="text-sm font-medium text-white">Study Tip</span>
+                <span className="text-sm font-medium text-white">{t('aiAssistant.studyTip')}</span>
               </div>
               <p className="text-xs text-gray-300">
-                Practice queries in the Query Practice section after learning concepts here!
+                {t('aiAssistant.studyTipText')}
               </p>
             </div>
           </div>
@@ -143,8 +139,8 @@ const AIAssistant: React.FC = () => {
                 <Bot className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h2 className="font-semibold text-white">Database AI Assistant</h2>
-                <p className="text-sm text-gray-400">Always ready to help with database questions</p>
+                <h2 className="font-semibold text-white">{t('aiAssistant.title')}</h2>
+                <p className="text-sm text-gray-400">{t('aiAssistant.alwaysReady')}</p>
               </div>
             </div>
 
@@ -208,7 +204,7 @@ const AIAssistant: React.FC = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Ask me about databases, SQL, or any related topic..."
+                  placeholder={t('aiAssistant.askAboutDatabases')}
                   className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   disabled={isLoading}
                 />

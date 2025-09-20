@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.ts';
 
 // Handles redirects from Supabase after email confirmation.
@@ -7,8 +8,9 @@ import { supabase } from '../lib/supabaseClient.ts';
 // - If not, we simply inform the user that their email is confirmed and they can log in.
 // - This page intentionally does not expose any secrets and just uses the client anon key.
 const AuthCallback: React.FC = () => {
+  const { t } = useTranslation();
   const [status, setStatus] = useState<'loading' | 'success' | 'info' | 'error'>('loading');
-  const [message, setMessage] = useState('Completing email confirmation...');
+  const [message, setMessage] = useState(t('auth.completingEmailConfirmation', 'Completing email confirmation...'));
 
   useEffect(() => {
     let mounted = true;
@@ -33,7 +35,7 @@ const AuthCallback: React.FC = () => {
 
         if (session?.user) {
           setStatus('success');
-          setMessage('Your email has been confirmed. Redirecting to app...');
+          setMessage(t('auth.emailConfirmedRedirecting'));
           // Allow a short pause for UX, then go to app
           setTimeout(() => {
             window.location.replace('/');
@@ -41,11 +43,11 @@ const AuthCallback: React.FC = () => {
         } else {
           // No session was created by the confirmation link (common when email confirmation is enabled)
           setStatus('info');
-          setMessage('Email confirmed. You can now log in to your account.');
+          setMessage(t('auth.emailConfirmed'));
         }
       } catch (err) {
         setStatus('error');
-        setMessage('Could not complete email confirmation. Please try logging in.');
+        setMessage(t('auth.emailConfirmationError'));
       }
     };
 
@@ -68,7 +70,7 @@ const AuthCallback: React.FC = () => {
   return (
     <div className={baseClasses}>
       <div className={panelClasses}>
-        <h1 className="text-xl font-semibold text-white mb-2">Email Confirmation</h1>
+        <h1 className="text-xl font-semibold text-white mb-2">{t('auth.emailConfirmation')}</h1>
         <p className={`text-sm ${statusClass}`}>{message}</p>
         {status !== 'loading' && (
           <div className="mt-6">
@@ -76,7 +78,7 @@ const AuthCallback: React.FC = () => {
               href="/"
               className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition"
             >
-              Go to App
+              {t('auth.goToApp')}
             </a>
           </div>
         )}

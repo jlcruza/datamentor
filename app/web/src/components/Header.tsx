@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Database, LogOut, User as UserIcon} from 'lucide-react';
 import {User} from "../types/user";
+import LanguageSelector from './LanguageSelector';
 
 interface HeaderProps {
   user: User | null;
@@ -8,6 +10,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
+  const { t } = useTranslation();
+
   return (
     <header className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4 shadow-lg">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -17,15 +21,16 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">
-              DataMentor
+              {t('header.title')}
             </h1>
             <p className="text-sm text-gray-400">
-              Computer Engineering - Database Course
+              {t('header.subtitle')}
             </p>
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
+          <LanguageSelector />
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600">
               <UserIcon className="h-4 w-4 text-gray-400" />
@@ -33,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                 {user?.name}
               </span>
               <span className="text-xs px-2 py-0.5 rounded-full bg-blue-600 text-white">
-                Student
+                {t('header.student')}
               </span>
             </div>
             <button
@@ -41,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
               className="flex items-center space-x-1 px-3 py-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
             >
               <LogOut className="h-4 w-4" />
-              <span className="hidden sm:inline text-sm">Logout</span>
+              <span className="hidden sm:inline text-sm">{t('header.logout')}</span>
             </button>
           </div>
         </div>

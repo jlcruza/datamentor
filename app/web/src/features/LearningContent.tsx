@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BookOpen } from 'lucide-react';
 import type {ChatMessage} from '../App.tsx';
 import CourseDirectory from "../components/CourseDirectory.tsx";
@@ -23,6 +24,7 @@ interface LearningContentProps {
 }
 
 const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
+  const { t } = useTranslation();
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showAIChat, setShowAIChat] = useState(false);
@@ -219,11 +221,11 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
               <LessonTabButton activeTab={activeTab}
                                onActiveTabSet={setActiveTab}
                                stateText={'theory'}
-                               buttonText={'Theory'}/>
+                               buttonText={t('learningContent.theory')}/>
               <LessonTabButton activeTab={activeTab}
                                onActiveTabSet={setActiveTab}
                                stateText={'practice'}
-                               buttonText={'Practice ({questions.length} questions)'}/>
+                               buttonText={t('learningContent.practice', { count: questions.length })}/>
           </div>
         </div>
         
@@ -239,8 +241,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
           {activeTab === 'practice' && (
             <div className="space-y-6">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-white mb-2">Practice Questions</h2>
-                <p className="text-gray-400">Test your understanding of the concepts from this lesson.</p>
+                <h2 className="text-xl font-semibold text-white mb-2">{t('learningContent.practiceQuestions')}</h2>
+                <p className="text-gray-400">{t('learningContent.practiceSubtitle')}</p>
               </div>
 
               {questions.length > 0 ? (
@@ -254,8 +256,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
               ) : (
                 <div className="text-center py-12 text-gray-400">
                   <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>No practice questions available for this lesson yet.</p>
-                  <p className="text-sm mt-1">Check back later for interactive exercises!</p>
+                  <p>{t('learningContent.noPracticeQuestions')}</p>
+                  <p className="text-sm mt-1">{t('learningContent.checkBackLater')}</p>
                 </div>
               )}
             </div>
@@ -282,9 +284,9 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">Learning Materials</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('learningContent.title')}</h1>
         <p className="text-gray-400">
-          Comprehensive database concepts and tutorials for computer engineering students
+          {t('learningContent.subtitle')}
         </p>
       </div>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from './components/Header.tsx';
 import Sidebar from './components/Sidebar.tsx';
 import LearningContent from './features/LearningContent.tsx';
@@ -19,6 +20,7 @@ export interface ChatMessage {
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
 function App() {
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState<ActiveSection>('learn');
   const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
   const [lessons, setLessons] = useState<LearningContentDto[]>([]);
@@ -45,7 +47,7 @@ function App() {
   if (initializing) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-        <div className="text-gray-300">Loading...</div>
+        <div className="text-gray-300">{t('common.loading')}</div>
       </div>
     );
   }
