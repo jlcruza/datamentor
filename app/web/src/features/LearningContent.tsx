@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BookOpen } from 'lucide-react';
-import type {ChatMessage} from '../App.tsx';
 import CourseDirectory from "../components/CourseDirectory.tsx";
 import LessonCard from "../components/LessonCard.tsx";
 import BackToLessonButton from "../components/BackToLessonButton.tsx";
@@ -17,6 +16,7 @@ import {Question} from "../types/question.ts";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 import {User} from "../types/user.ts";
 import {ProgressRepository} from "../repository/progressRepository.ts";
+import {ASSISTANT_ROLE, Msg} from "../services/OpenAiService.ts";
 
 interface LearningContentProps {
   lessons: LearningContentDto[];
@@ -28,7 +28,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showAIChat, setShowAIChat] = useState(false);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [chatMessages, setChatMessages] = useState<Msg[]>([]);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -193,10 +193,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
     setShowAIChat(true);
     if (chatMessages.length === 0 && selectedLesson) {
       setChatMessages([{
-        id: '1',
         content: `Hi! I'm here to help you understand "${selectedLesson.lesson_name}". I can explain concepts, answer questions, or provide additional examples. What would you like to know?`,
-        sender: 'ai',
-        timestamp: new Date()
+        role: ASSISTANT_ROLE
       }]);
     }
   };
