@@ -1,6 +1,10 @@
 // deno task serve
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import {DataMentorResponse_NO_CONTENT, DataMentorResponse_UNAUTHORIZED} from "../services/dataMentorResponse.ts";
+import {
+    DataMentorResponse_NO_CONTENT,
+    DataMentorResponse_UNAUTHORIZED,
+    getCorsHeaders
+} from "../services/dataMentorResponse.ts";
 import {getSupabaseUser} from "../services/supabaseClient.ts";
 import {OpenAiClient, Msg} from "../services/openaiClient.ts";
 
@@ -26,6 +30,8 @@ Deno.serve(async (req) => {
     const openAIResponse = await OpenAiClient.getResponse(messages, hint)
 
     return new Response(openAIResponse, {
-        headers: { "Content-Type": "text/event-stream" },
+        headers: {
+            ...getCorsHeaders(req),
+            "Content-Type": "text/event-stream" },
     });
 });
