@@ -2,6 +2,7 @@ import {Bot, Send, X} from "lucide-react";
 import React, {useState} from "react";
 import {askTutor, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
+import {useTranslation} from "react-i18next";
 
 type AIChatMessageBoxProps = {
     selectedLesson: LearningContentDto;
@@ -20,6 +21,7 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
 ) => {
     const [chatInput, setChatInput] = useState('');
     const [isChatLoading, setIsChatLoading] = useState(false);
+    const { t } = useTranslation();
 
     const sendChatMessage = async () => {
         if (!chatInput.trim() || isChatLoading) return;
@@ -57,7 +59,7 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
                         </div>
                         <div>
                             <h3 className="font-semibold text-white">AI Assistant</h3>
-                            <p className="text-xs text-gray-400">Help with: {selectedLesson.lesson_name}</p>
+                            <p className="text-xs text-gray-400">{t("aiAssistant.helpWith")}{selectedLesson.lesson_name}</p>
                         </div>
                     </div>
                     <button

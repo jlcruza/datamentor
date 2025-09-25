@@ -129,6 +129,7 @@
     "studyTipText": "¡Practica consultas en la sección de Práctica de Consultas después de aprender conceptos aquí!",
     "alwaysReady": "Siempre listo para ayudar con preguntas de bases de datos",
     "askAboutDatabases": "Pregúntame sobre bases de datos, SQL o cualquier tema relacionado...",
+    "welcomeMessage": "¡Hola! Soy tu asistente de bases de datos con IA. Puedo ayudarte con consultas SQL, conceptos de bases de datos, normalización, relaciones y mucho más. ¿Sobre qué te gustaría aprender?",
     "helpWith": "Estoy aquí para ayudar con:",
     "helpTopics": [
       "Consultas y sintaxis SQL",

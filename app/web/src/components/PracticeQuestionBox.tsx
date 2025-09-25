@@ -1,10 +1,10 @@
 import {CheckCircle} from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import React, {useState} from "react";
-import {Question} from "../types/question.ts";
+import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
 
 type PracticeQuestionBoxProps = {
-    question: Question,
+    question: PracticeExerciseQuestionBoxDto,
     index: number,
 }
 
@@ -16,11 +16,11 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
     const { t } = useTranslation();
     const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, number>>({});
 
-    const userAnswer = answeredQuestions[question.id];
+    const userAnswer = answeredQuestions[question.question_id];
     const isAnswered = userAnswer !== undefined;
-    const isCorrect = userAnswer === question.correctAnswer;
+    const isCorrect = userAnswer === question.correct_answer_index;
 
-    const handleAnswerQuestion = (questionId: string, selectedAnswer: number) => {
+    const handleAnswerQuestion = (questionId: number, selectedAnswer: number) => {
         setAnsweredQuestions(prev => ({
             ...prev,
             [questionId]: selectedAnswer
@@ -28,7 +28,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
     };
 
     return (
-        <div key={question.id} className="bg-gray-700 rounded-lg p-6 border border-gray-600">
+        <div key={question.question_id} className="bg-gray-700 rounded-lg p-6 border border-gray-600">
             <div className="mb-4">
                 <h3 className="text-lg font-medium text-white mb-3">
                     {t('practiceQuestions.question', { number: index + 1 })} {question.question}
@@ -40,7 +40,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
                     let buttonClass = "w-full text-left p-3 rounded-lg border transition-all duration-200 ";
 
                     if (isAnswered) {
-                        if (optionIndex === question.correctAnswer) {
+                        if (optionIndex === question.correct_answer_index) {
                             buttonClass += "border-green-500 bg-green-900/30 text-green-300";
                         } else if (optionIndex === userAnswer && !isCorrect) {
                             buttonClass += "border-red-500 bg-red-900/30 text-red-300";
@@ -54,7 +54,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
                     return (
                         <button
                             key={optionIndex}
-                            onClick={() => !isAnswered && handleAnswerQuestion(question.id, optionIndex)}
+                            onClick={() => !isAnswered && handleAnswerQuestion(question.question_id, optionIndex)}
                             disabled={isAnswered}
                             className={buttonClass}
                         >
@@ -63,7 +63,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
                                     {String.fromCharCode(65 + optionIndex)}
                                   </span>
                                 <span>{option}</span>
-                                {isAnswered && optionIndex === question.correctAnswer && (
+                                {isAnswered && optionIndex === question.correct_answer_index && (
                                     <CheckCircle className="h-5 w-5 text-green-400 ml-auto" />
                                 )}
                             </div>
@@ -84,7 +84,7 @@ const PracticeQuestionBox: React.FC<PracticeQuestionBoxProps> = (
                                 {isCorrect ? t('practiceQuestions.correct') : t('practiceQuestions.incorrect')}
                               </span>
                     </div>
-                    <p className="text-sm">{question.explanation}</p>
+                    <p className="text-sm">{question.reason}</p>
                 </div>
             )}
         </div>

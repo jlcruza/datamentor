@@ -1,25 +1,54 @@
-# Lesson 4: Retrieving Data with SELECT (CRUD: Read)
+## 4. Obteniendo Datos con `SELECT` (CRUD: Leer)
 
-## Learning Objectives
-- Retrieve data from one or more columns.
-- Use `SELECT *` vs. specific columns.
-- Write simple `SELECT` queries.
+### ¿Por Qué Leer Datos?
 
-## Explanation
-The `SELECT` command retrieves rows from a table. You can either select all columns or specify which ones you need.
+Has creado tus tablas y las has llenado de datos valiosos. ¿Ahora qué? El propósito principal de una base de datos es permitirte consultar esa información para responder preguntas, generar informes y alimentar aplicaciones. `SELECT` es tu herramienta principal para explorar y extraer los datos. Es como hacerle una pregunta a tu base de datos.
 
+### La Anatomía de `SELECT`
 
-## Example
-```sql
-SELECT * FROM Students;
-
-SELECT name, gpa
-FROM Students;
+`SELECT` es el comando más versátil de SQL. En su forma más simple, se ve así:
+```oracle
+SELECT columna1, columna2, ...
+FROM nombre_de_la_tabla;
 ```
 
-## Practice Questions
-1. Select only the `name` column from the `Students` table.
-2. Write a query to select all columns from the `Courses` table.
+- Para obtener todas las columnas, puedes usar el comodín `*`:
+```oracle
+SELECT *
+FROM Estudiantes;
+```
 
-## Key Takeaways
-`SELECT` is the most commonly used SQL command, allowing precise control over which data you retrieve.
+- Para obtener solo columnas específicas:
+```oracle
+SELECT Nombre, Apellido, Email
+FROM Estudiantes;
+```
+
+### Ejemplos Ilustrativos
+
+- **Pregunta:** "¿Cuáles son los nombres y apellidos de todos mis estudiantes?"
+```oracle
+SELECT Nombre, Apellido
+FROM Estudiantes;
+```
+
+- **Pregunta:** "Necesito toda la información disponible sobre los estudiantes."
+```oracle
+SELECT *
+FROM Estudiantes;
+```
+
+### Consejos de los Expertos
+
+- **Evita `SELECT *` en Código de Producción:** Aunque `SELECT *` es útil para exploraciones rápidas, es una mala práctica en el código de una aplicación. ¿Por qué?
+    1. **Rendimiento:** Pides más datos de los que necesitas, lo que aumenta el tráfico de red y la carga en la base de datos.
+    2. **Fragilidad:** Si alguien añade o elimina una columna de la tabla, el código de tu aplicación que espera un número específico de columnas podría romperse.
+- **Usa Alias:** Puedes renombrar las columnas en los resultados de tu consulta usando la palabra clave `AS` para que sean más legibles.
+```oracle
+SELECT Nombre AS Nombre_Estudiante, Email AS Correo_Electronico
+FROM Estudiantes;
+```
+
+### Resumen
+
+`SELECT` es tu puerta de entrada para leer y analizar los datos. Te permite elegir exactamente qué piezas de información quieres ver de tus tablas. Ser específico con las columnas que seleccionas es una práctica clave para escribir consultas eficientes y mantenibles.

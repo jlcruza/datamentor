@@ -1,26 +1,65 @@
-# Lesson 3: Using Subqueries (Nested and Correlated)
+## Lección 3: Usando Subconsultas (Anidadas y Correlacionadas)
 
-## Learning Objectives
-- Learn what subqueries are and when to use them.
-- Differentiate between nested and correlated subqueries.
-- Practice writing subqueries for filtering and calculations.
+### ¿Por qué poner una consulta dentro de otra?
 
-## Explanation
-A subquery is a query inside another query.
-Nested subquery: executed once, result used by outer query.
-Correlated subquery: executed for each row in the outer query.
+Imagina que necesitas encontrar a los empleados que ganan más que el salario promedio de *toda* la empresa. No puedes hacer esto en un solo paso. Primero, necesitas responder una pregunta: "¿Cuál es el salario promedio?". Luego, usas esa respuesta para una segunda pregunta: "¿Qué empleados ganan más que esa cantidad?".
 
-## Example
-Find students with above-average GPA:
-```sql
-SELECT name, gpa
-FROM Students
-WHERE gpa > (SELECT AVG(gpa) FROM Students);
+Una **subconsulta** (o *subquery*) es una consulta `SELECT` anidada dentro de otra consulta. Te permite realizar operaciones en varios pasos, donde el resultado de la consulta interna se usa para alimentar a la consulta externa. Es una herramienta poderosa para resolver problemas complejos.
+
+### Tipos de Subconsultas
+
+#### 1. Subconsulta Anidada (o No Correlacionada)
+Esta subconsulta se ejecuta **una sola vez**, antes que la consulta principal. Su resultado es un valor o una lista de valores que no cambia.
+
+**Ejemplo Ilustrativo:** Encontrar los empleados que trabajan en el departamento de "Ventas".
+
+Primero, necesitamos el `ID_DEPARTAMENTO` de "Ventas". Luego, buscamos los empleados con ese ID.
+```oracle
+SELECT
+    NOMBRE
+FROM
+    EMPLEADOS
+WHERE
+    ID_DEPARTAMENTO = (SELECT ID_DEPARTAMENTO FROM DEPARTAMENTOS WHERE NOMBRE_DEPTO = 'Ventas');
 ```
 
-## Practice Questions
-1. Write a query to find students enrolled in the course "Databases" using a subquery.
-2. What is the main difference between a nested and a correlated subquery?
+La subconsulta `(SELECT ID_DEPARTAMENTO ...)` se ejecuta primero y devuelve `101`. Luego, la consulta principal se convierte en: `SELECT NOMBRE FROM EMPLEADOS WHERE ID_DEPARTAMENTO = 101;`.
 
-## Key Takeaways
-Subqueries allow complex filtering and calculations within queries, making them powerful but sometimes less efficient.
+Las subconsultas también pueden devolver múltiples filas usando operadores como `IN`:
+```oracle
+-- Empleados que están en CUALQUIER departamento ubicado en el edificio 'A'
+SELECT
+    NOMBRE
+FROM
+    EMPLEADOS
+WHERE
+    ID_DEPARTAMENTO IN (SELECT ID_DEPARTAMENTO FROM DEPARTAMENTOS WHERE UBICACION = 'Edificio A');
+```
+
+#### 2. Subconsulta Correlacionada
+Esta subconsulta está vinculada a la consulta externa y se ejecuta **una vez por cada fila** que procesa la consulta externa. Depende de los datos de la fila actual.
+
+**Analogía:** Es como si, para cada empleado en una lista, tuvieras que hacer una pregunta específica sobre él. Por ejemplo, para cada empleado, preguntar: "¿Cuál es el salario promedio *de su propio departamento*?".
+
+**Ejemplo Ilustrativo:** Encontrar empleados cuyo salario es mayor que el promedio *de su respectivo departamento*.
+```oracle
+SELECT
+    e1.NOMBRE,
+    e1.SALARIO
+FROM
+    EMPLEADOS e1
+WHERE
+    e1.SALARIO > (SELECT AVG(e2.SALARIO)
+                  FROM EMPLEADOS e2
+                  WHERE e2.ID_DEPARTAMENTO = e1.ID_DEPARTAMENTO);
+```
+
+Aquí, la subconsulta se ejecuta para cada empleado (`e1`). Para Ana (depto 101), calcula el promedio del depto 101. Para Luis (depto 102), calcula el promedio del depto 102, y así sucesivamente.
+
+### Consejos de los Expertos
+- **Cuidado con el rendimiento:** Las subconsultas correlacionadas pueden ser muy lentas en tablas grandes, ya que se ejecutan repetidamente. A menudo, un `JOIN` o una Expresión de Tabla Común (CTE) es una alternativa mucho más eficiente.
+- **`EXISTS` vs. `IN`:** Para subconsultas correlacionadas donde solo necesitas verificar si existe *alguna* fila que cumpla una condición, `EXISTS` suele ser más eficiente que `IN`. `EXISTS` se detiene tan pronto como encuentra una coincidencia.
+- **Legibilidad:** Aunque son potentes, las subconsultas anidadas profundamente pueden hacer que el código sea difícil de leer. Si una consulta se vuelve demasiado compleja, considera refactorizarla con `JOIN` o CTEs.
+
+### Resumen
+Las subconsultas te permiten construir consultas más sofisticadas al anidar una dentro de otra. Las anidadas se ejecutan una vez y son excelentes para filtros simples, mientras que las correlacionadas se ejecutan para cada fila de la consulta principal y resuelven problemas más complejos, aunque con un posible costo de rendimiento. Son una herramienta esencial, pero siempre considera si un `JOIN` podría hacer el trabajo de manera más eficiente y legible.

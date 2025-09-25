@@ -12,11 +12,12 @@ import CompletedLessonFooter from "../components/CompletedLessonFooter.tsx";
 import AIChatButton from "../components/AIChatButton.tsx";
 import AIChatMessageBox from "../components/AIChatMessageBox.tsx";
 import PracticeQuestionBox from "../components/PracticeQuestionBox.tsx";
-import {Question} from "../types/question.ts";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 import {User} from "../types/user.ts";
 import {ProgressRepository} from "../repository/progressRepository.ts";
 import {ASSISTANT_ROLE, Msg} from "../services/OpenAiService.ts";
+import {PracticeExerciseService} from "../services/PracticeExerciseService.ts";
+import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
 
 interface LearningContentProps {
   lessons: LearningContentDto[];
@@ -26,6 +27,7 @@ interface LearningContentProps {
 const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
   const { t } = useTranslation();
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
+  const [questions, setQuestions] = useState<PracticeExerciseQuestionBoxDto[]>([]);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showAIChat, setShowAIChat] = useState(false);
   const [chatMessages, setChatMessages] = useState<Msg[]>([]);
@@ -37,6 +39,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
       if (selectedLesson && user) {
         try {
           const progress = await ProgressRepository.getStudentProgressOnLesson(user as User, selectedLesson);
+          const exercises = await PracticeExerciseService.getPracticeExerciseByLessonId(selectedLesson.lesson_id);
+          setQuestions(exercises);
           if (isMounted) setIsCompleted(!!progress?.completed);
         } catch {
           if (isMounted) setIsCompleted(false);
@@ -76,124 +80,11 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
     }
   };
 
-  const getQuestionsForLesson = (lessonId: number): Question[] => {
-    const questionBank: Record<string, Question[]> = {
-      1: [
-        {
-          id: '1-1',
-          question: 'What is a database?',
-          options: [
-            'A collection of unorganized data',
-            'An organized collection of structured information',
-            'A single file containing data',
-            'A programming language'
-          ],
-          correctAnswer: 1,
-          explanation: 'A database is an organized collection of structured information, typically stored electronically and managed by a DBMS.'
-        },
-        {
-          id: '1-2',
-          question: 'Which of the following is NOT a benefit of using databases?',
-          options: [
-            'Data organization',
-            'Data integrity',
-            'Increased storage requirements',
-            'Concurrent access'
-          ],
-          correctAnswer: 2,
-          explanation: 'Databases actually help optimize storage through normalization and efficient data structures, reducing redundancy.'
-        }
-      ],
-      2: [
-        {
-          id: '2-1',
-          question: 'What uniquely identifies each row in a table?',
-          options: [
-            'Foreign key',
-            'Primary key',
-            'Index',
-            'Column name'
-          ],
-          correctAnswer: 1,
-          explanation: 'A primary key is a unique identifier for each row in a table and cannot contain NULL values.'
-        },
-        {
-          id: '2-2',
-          question: 'In the relational model, what is a tuple?',
-          options: [
-            'A column in a table',
-            'A row in a table',
-            'A table relationship',
-            'A database constraint'
-          ],
-          correctAnswer: 1,
-          explanation: 'A tuple is another term for a row in a relational database table, representing a single record.'
-        }
-      ],
-      3: [
-        {
-          id: '3-1',
-          question: 'Which SQL clause is used to filter rows?',
-          options: [
-            'ORDER BY',
-            'GROUP BY',
-            'WHERE',
-            'HAVING'
-          ],
-          correctAnswer: 2,
-          explanation: 'The WHERE clause is used to filter rows based on specified conditions.'
-        },
-        {
-          id: '3-2',
-          question: 'What does SELECT * mean in SQL?',
-          options: [
-            'Select all tables',
-            'Select all columns',
-            'Select all databases',
-            'Select all rows'
-          ],
-          correctAnswer: 1,
-          explanation: 'SELECT * means select all columns from the specified table(s).'
-        }
-      ],
-      4: [
-        {
-          id: '4-1',
-          question: 'In a one-to-many relationship, how many records in Table B can relate to one record in Table A?',
-          options: [
-            'Exactly one',
-            'Zero or one',
-            'Multiple',
-            'None'
-          ],
-          correctAnswer: 2,
-          explanation: 'In a one-to-many relationship, one record in Table A can relate to multiple records in Table B.'
-        }
-      ],
-      5: [
-        {
-          id: '5-1',
-          question: 'Which JOIN returns only matching records from both tables?',
-          options: [
-            'LEFT JOIN',
-            'RIGHT JOIN',
-            'INNER JOIN',
-            'FULL OUTER JOIN'
-          ],
-          correctAnswer: 2,
-          explanation: 'INNER JOIN returns only the records that have matching values in both tables.'
-        }
-      ]
-    };
-
-    return questionBank[lessonId] || [];
-  };
-
   const openAIChat = () => {
     setShowAIChat(true);
     if (chatMessages.length === 0 && selectedLesson) {
       setChatMessages([{
-        content: `Hi! I'm here to help you understand "${selectedLesson.lesson_name}". I can explain concepts, answer questions, or provide additional examples. What would you like to know?`,
+        content: t('aiAssistant.contextualHelp', { lessonTitle: selectedLesson.lesson_name }),
         role: ASSISTANT_ROLE
       }]);
     }
@@ -201,8 +92,6 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
 
 
   if (selectedLesson) {
-    const questions = getQuestionsForLesson(selectedLesson.lesson_id);
-    
     return (
       <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
         <div className="p-6 border-b border-gray-700">

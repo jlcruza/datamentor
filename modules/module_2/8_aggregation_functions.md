@@ -1,22 +1,50 @@
-# Lesson 8: Aggregation Functions
+## 8. Funciones de Agregación
 
-## Learning Objectives
-- Use aggregate functions (`COUNT`, `SUM`, `AVG`, `MIN`, `MAX`).
-- Summarize data instead of returning individual rows.
-- Apply aggregate functions with `WHERE`.
+### ¿Por Qué Resumir Datos?
 
-## Explanation
-Aggregate functions perform calculations across multiple rows.
+A veces no necesitas la lista completa de datos, sino un resumen de ellos. Quieres ver el panorama general, no los detalles individuales. Las funciones de agregación te permiten calcular un valor único a partir de un conjunto de filas. Son como la calculadora de tu base de datos.
 
-## Example
-```sql
-SELECT COUNT(*) AS total_students FROM Students;
-SELECT AVG(gpa) AS average_gpa FROM Students;
+### ¿Qué son las Funciones de Agregación?
+
+Estas funciones toman múltiples valores de una columna y los "agregan" en un único resultado.
+
+**Funciones más Comunes:**
+- `COUNT()`: Cuenta el número de filas.
+- `SUM()`: Suma los valores de una columna numérica.
+- `AVG()`: Calcula el promedio de los valores de una columna numérica.
+- `MAX()`: Devuelve el valor máximo de una columna.
+- `MIN()`: Devuelve el valor mínimo de una columna.
+
+### Ejemplos Ilustrativos
+
+- **Pregunta:** "¿Cuántos estudiantes tengo en total?"
+```oracle
+SELECT COUNT(*)
+FROM Estudiantes;
 ```
 
-## Practice Questions
-1. Find the highest GPA in the class.
-2. Count how many students are enrolled.
+- **Pregunta:** "¿Cuál es la fecha de nacimiento del estudiante más viejo y del más joven?"
 
-## Key Takeaways
-Aggregate functions summarize large amounts of data into single values.
+```oracle
+SELECT MIN(Fecha_Nacimiento) AS Mas_Viejo, MAX(Fecha_Nacimiento) AS Mas_Joven
+FROM Estudiantes;
+```
+
+  (Nota: Para fechas, un valor "menor" es una fecha más antigua).
+
+- **Pregunta:** Supongamos que tenemos una tabla `Calificaciones` con una columna `Nota`. "¿Cuál es la nota promedio?"
+
+```oracle
+SELECT AVG(Nota)
+FROM Calificaciones;
+```
+
+### Consejos de los Expertos
+
+- **`COUNT(*)` vs `COUNT(columna)`:** `COUNT(*)` cuenta todas las filas del grupo, sin excepción. `COUNT(nombre_columna)` cuenta solo las filas donde `nombre_columna` tiene un valor no nulo (`NULL`). Esta diferencia es sutil pero importante.
+- **Usa Alias con `AS`:** Las columnas calculadas por funciones de agregación no tienen un nombre por defecto. Usa `AS` para darles un nombre descriptivo y que sea fácil de referenciar en tu aplicación.
+- **Tipos de Datos:** Asegúrate de usar `SUM` y `AVG` solo en columnas numéricas. `MIN` y `MAX` funcionan en números, fechas y texto (orden alfabético).
+
+### Resumen
+
+Las funciones de agregación son herramientas increíblemente poderosas para la inteligencia de negocios y la analítica. Te permiten condensar grandes cantidades de datos en resúmenes significativos como conteos, totales y promedios.

@@ -1,61 +1,65 @@
-# Filtering Results with WHERE
+## 6. Filtrando Resultados con `WHERE`
 
-## Learning Objectives
-- Understand how the `WHERE` clause restricts rows in SQL queries.
-- Learn to apply conditions using comparison and logical operators.
-- Write queries that return only the data you need.
+### ¿Por Qué Filtrar?
 
----
+Rara vez querrás ver *toda* la información de una tabla. Lo más común es que busques respuestas a preguntas específicas: "¿Qué estudiantes nacieron después del año 2000?", "¿Qué productos cuestan menos de $50?", "¿Quién es el usuario 'admin'?". La cláusula `WHERE` es la herramienta que te permite hacer estas preguntas y filtrar los datos para obtener solo las filas que te interesan. Es el detective de SQL.
 
-## Explanation
-The `WHERE` clause in SQL allows you to filter rows from a table based on a condition. Without `WHERE`, a query will return **all rows**, which is often not useful. By applying conditions, you can focus on a subset of the data.
+### ¿Cómo Funciona `WHERE`?
 
-Conditions can use:
-- **Comparison operators**: `=`, `!=`, `<`, `>`, `<=`, `>=`
-- **Logical operators**: `AND`, `OR`, `NOT`
-- **Special operators**: `BETWEEN`, `IN`, `LIKE`, `IS NULL`
-
----
-
-## Example
-Suppose we have a table named `Students`:
-
-| id | name     | gpa | enrollment_date |
-|----|----------|-----|-----------------|
-| 1  | Alice    | 3.8 | 2023-01-15      |
-| 2  | Bob      | 2.9 | 2022-09-01      |
-| 3  | Charlie  | 3.4 | 2023-08-21      |
-| 4  | Daniela  | 3.1 | 2021-05-11      |
-
-### Example 1: Filtering by GPA
-```sql
-SELECT name, gpa
-FROM Students
-WHERE gpa > 3.0;
+La cláusula `WHERE` se coloca después de la cláusula `FROM` y antes de otras como `ORDER BY`. Contiene una o más condiciones que deben ser verdaderas para que una fila se incluya en el resultado.
+```oracle
+SELECT columnas
+FROM tabla
+WHERE condicion;
 ```
 
-Result:
+**Operadores de Comparación:**
+- `=`: Igual a
+- `!=` o `<>`: Distinto de
+- `>`: Mayor que
+- `<`: Menor que
+- `>=`: Mayor o igual que
+- `<=`: Menor o igual que
 
-| name    | gpa |
-| ------- | --- |
-| Alice   | 3.8 |
-| Charlie | 3.4 |
-| Daniela | 3.1 |
+**Operadores Lógicos:**
+- `AND`: Todas las condiciones deben ser verdaderas.
+- `OR`: Al menos una de las condiciones debe ser verdadera.
+- `NOT`: Niega una condición.
 
-### Example 2: Using AND
-```sql
-SELECT name, gpa
-FROM Students
-WHERE gpa > 3.0 AND enrollment_date >= '2023-01-01';
+**Otros Operadores Útiles:**
+- `BETWEEN x AND y`: El valor está en el rango de `x` a `y` (inclusivo).
+- `IN (valor1, valor2, ...)`: El valor coincide con cualquiera de la lista.
+- `LIKE`: Búsqueda de patrones en texto (con comodines `%` y `_`).
+
+### Ejemplos Ilustrativos
+
+- **Pregunta:** "Mostrar los estudiantes cuyo apellido es 'Perez'."
+```oracle
+SELECT Nombre, Apellido
+FROM Estudiantes
+WHERE Apellido = 'Perez';
 ```
 
-Result:
+- **Pregunta:** "Mostrar los estudiantes que nacieron en 1999."
+```oracle
+SELECT Nombre, Fecha_Nacimiento
+FROM Estudiantes
+WHERE Fecha_Nacimiento BETWEEN TO_DATE('1999-01-01', 'YYYY-MM-DD') AND TO_DATE('1999-12-31', 'YYYY-MM-DD');
+```
 
-| name  | gpa |
-| ----- | --- |
-| Alice | 3.8 |
+- **Pregunta:** "Encontrar estudiantes cuyo email termine en `@example.com`."
+```oracle
+SELECT Nombre, Email
+FROM Estudiantes
+WHERE Email LIKE '%@example.com';
+```
 
-Practice Questions
-1. Write a query to find all students with a GPA less than 3.0.
-2. Retrieve the names of students enrolled before 2022-01-01.
-3. Find all students whose names start with the letter 'C'.
+### Consejos de los Expertos
+
+- **Manejo de `NULL`:** Un valor `NULL` significa "desconocido" o "no aplicable". No puedes compararlo con `=` o `!=`. En su lugar, debes usar `IS NULL` o `IS NOT NULL`.
+  `WHERE Apellido IS NULL` (encuentra estudiantes sin apellido registrado).
+- **Orden de los Operadores:** Usa paréntesis `()` para agrupar condiciones `AND` y `OR` y asegurar que se evalúen en el orden que deseas, evitando ambigüedades.
+
+### Resumen
+
+La cláusula `WHERE` es fundamental para realizar consultas significativas. Te permite pasar de ver un mar de datos a obtener respuestas concretas, filtrando las filas según las condiciones que especifiques.

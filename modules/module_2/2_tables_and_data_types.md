@@ -1,31 +1,54 @@
-# Lesson 2: Creating Tables and Defining Data Types
+## 2. Creando Tablas y Definiendo Tipos de Datos
 
-## Learning Objectives
-- Learn how to create a new table in SQL.
-- Understand common SQL data types.
-- Define columns with appropriate types and constraints.
+### ¿Por Qué Definir una Estructura?
 
-## Explanation
-The `CREATE TABLE` command is used to make a new table. Each column must be given a data type such as:
-- `INT` → whole numbers
-- `VARCHAR(n)` → variable-length text
-- `DATE` → dates
-- `DECIMAL(p,s)` → precise decimal numbers
-Constraints like `PRIMARY KEY` and `NOT NULL` help enforce rules.
+Antes de poder guardar tus cosas en cajas, necesitas las cajas. Y no usarías una caja de zapatos para guardar agua, ¿verdad? Crear una tabla es como diseñar un formulario o una hoja de cálculo: defines qué columnas tendrá y qué tipo de información irá en cada una. Esto garantiza que los datos sean consistentes, organizados y fiables.
 
-## Example
-```sql
-CREATE TABLE Students (
-id INT PRIMARY KEY,
-name VARCHAR(50) NOT NULL,
-gpa DECIMAL(3,2),
-enrollment_date DATE
+### Creando una Tabla con `CREATE TABLE`
+
+El comando `CREATE TABLE` te permite construir la estructura de una tabla. Para cada columna, debes especificar un nombre y un tipo de dato.
+```oracle
+CREATE TABLE nombre_de_la_tabla (
+    nombre_columna1 TIPO_DE_DATO RESTRICCIONES,
+    nombre_columna2 TIPO_DE_DATO,
+    ...
+    PRIMARY KEY (nombre_columna_clave)
 );
 ```
 
-## Practice Questions
-1. Create a table `Courses` with columns `course_id`, `title`, and `credits`.
-2. Which data type would you use for: (a) a student’s name, (b) enrollment date, (c) GPA?
+**Tipos de Datos Comunes en Oracle:**
+- `VARCHAR2(size)`: Para texto de longitud variable, como nombres o direcciones. ¡Es el tipo de texto más común y recomendado en Oracle!
+- `NUMBER(precision, scale)`: Para números. `precision` es el número total de dígitos y `scale` es el número de dígitos después del punto decimal. Por ejemplo, `NUMBER(5, 2)` puede almacenar `123.45`. `NUMBER(10)` almacena un entero de hasta 10 dígitos.
+- `DATE`: Para almacenar fechas y horas (siglo, año, mes, día, hora, minuto y segundo).
+- `CLOB (Character Large Object)`: Para textos muy largos, como descripciones de productos o artículos de blog.
 
-## Key Takeaways
-Choosing the right data type ensures accurate, efficient, and reliable data storage.
+### Ejemplo Ilustrativo
+
+Vamos a crear una tabla para almacenar información de nuestros estudiantes.
+
+```oracle
+CREATE TABLE Estudiantes (
+    ID_Estudiante NUMBER(10) PRIMARY KEY,
+    Nombre VARCHAR2(50) NOT NULL,
+    Apellido VARCHAR2(50),
+    Fecha_Nacimiento DATE,
+    Email VARCHAR2(100) UNIQUE
+);
+```
+
+En este ejemplo:
+- `ID_Estudiante` es un número que servirá como identificador único (`PRIMARY KEY`).
+- `Nombre` es un texto obligatorio (`NOT NULL`).
+- `Apellido` es un texto opcional.
+- `Fecha_Nacimiento` almacenará la fecha.
+- `Email` debe ser único para cada estudiante (`UNIQUE`).
+
+### Consejos de los Expertos
+
+- **Elige el Tipo Correcto:** Usar el tipo de dato correcto ahorra espacio y previene errores. No uses `VARCHAR2` para almacenar fechas o números que necesites calcular.
+- **`VARCHAR2` sobre `CHAR`:** Prefiere siempre `VARCHAR2` a `CHAR`. `CHAR(50)` siempre usará 50 bytes de espacio, incluso si guardas "Ana". `VARCHAR2(50)` solo usará el espacio que necesite el texto.
+- **Define Restricciones:** Usa `PRIMARY KEY`, `NOT NULL`, `UNIQUE` y otras restricciones para proteger la integridad de tus datos desde el principio.
+
+### Resumen
+
+Con `CREATE TABLE`, diseñas el esqueleto de tus datos. Elegir los tipos de datos y restricciones correctos es un paso fundamental para construir una base de datos robusta y fiable.
