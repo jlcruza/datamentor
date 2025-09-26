@@ -4,6 +4,11 @@ import React, {useEffect, useState} from "react";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 import {supabase} from "../lib/supabaseClient.ts";
 import {VITE_SUPABASE_BUCKET_NAME} from "../constants/environmentConfigs.ts"
+import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql';
+
+SyntaxHighlighter.registerLanguage('sql', sql);
 
 type CustomReactViewerProps = {
     selectedLesson: LearningContentDto;
@@ -43,16 +48,21 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                     ul: ({children}) => <ul className="list-disc list-inside text-gray-300 mb-3 space-y-1">{children}</ul>,
                     ol: ({children}) => <ol className="list-decimal list-inside text-gray-300 mb-3 space-y-1">{children}</ol>,
                     li: ({children}) => <li className="text-gray-300">{children}</li>,
-                    code: ({children, className}) => {
-                        const isInline = !className;
-                        return isInline ? (
+                    code: ({className, children, ...props}) => {
+                        const isBlock = /language-(\w+)/.exec(className || '');
+                        return !isBlock ? (
                             <code className="bg-gray-700 text-cyan-300 px-1.5 py-0.5 rounded text-sm font-mono">
                                 {children}
                             </code>
                         ) : (
-                            <pre className="bg-gray-900 text-cyan-300 p-4 rounded-lg overflow-x-auto mb-4 border border-gray-600">
-                          <code className="font-mono text-sm">{children}</code>
-                        </pre>
+                            <SyntaxHighlighter
+                                style={atomDark}
+                                language="sql"
+                                PreTag="div"
+                                {...props}
+                            >
+                                {String(children).replace(/\n$/, '')}
+                            </SyntaxHighlighter>
                         );
                     },
                     blockquote: ({children}) => (
