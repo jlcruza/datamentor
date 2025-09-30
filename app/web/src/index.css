@@ -62,4 +62,35 @@
   .sidebar-item.active {
     @apply bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25;
   }
+  
+  /* Ensure prose content doesn't overflow */
+  .prose {
+    @apply w-full max-w-none;
+  }
+  
+  .prose * {
+    @apply max-w-full;
+  }
+  
+  /* Handle long words and URLs */
+  .prose p,
+  .prose li,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply break-words hyphens-auto;
+  }
+  
+  /* Ensure code blocks are scrollable horizontally when needed */
+  .prose pre {
+    @apply overflow-x-auto max-w-full;
+  }
+  
+  /* Ensure inline code breaks properly */
+  .prose code {
+    @apply break-all;
+  }
 }
