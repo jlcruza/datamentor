@@ -22,14 +22,6 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
             alt="DataMentor Logo" 
             className="h-10 w-auto"
           />
-          <div>
-            <h1 className="text-xl font-bold text-white">
-              {t('header.title')}
-            </h1>
-            <p className="text-sm text-gray-400">
-              {t('header.subtitle')}
-            </p>
-          </div>
         </div>
 
         <div className="flex items-center space-x-4">
