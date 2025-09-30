@@ -223,8 +223,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
               <p className="text-sm">{message}</p>
             </div>
           )}
-
-          {/* Removed demo credentials block to avoid hardcoded values */}
           
           <div className="flex flex-col space-y-3 pt-4">
             <button
