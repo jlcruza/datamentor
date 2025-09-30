@@ -37,25 +37,25 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
 
 
     return (
-        <div className="prose prose-invert max-w-none w-full overflow-hidden">
+        <div className="prose prose-invert max-w-none w-full overflow-hidden px-2 sm:px-4">
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                    h1: ({children}) => <h1 className="text-2xl font-bold text-purple-300 mb-4 break-words">{children}</h1>,
-                    h2: ({children}) => <h2 className="text-xl font-semibold text-purple-400 mb-3 break-words">{children}</h2>,
-                    h3: ({children}) => <h3 className="text-lg font-medium text-purple-500 mb-2 break-words">{children}</h3>,
-                    p: ({children}) => <p className="text-gray-300 mb-3 leading-relaxed break-words">{children}</p>,
-                    ul: ({children}) => <ul className="list-disc list-inside text-gray-300 mb-3 space-y-1 break-words">{children}</ul>,
-                    ol: ({children}) => <ol className="list-decimal list-inside text-gray-300 mb-3 space-y-1 break-words">{children}</ol>,
-                    li: ({children}) => <li className="text-gray-300 break-words">{children}</li>,
+                    h1: ({children}) => <h1 className="text-xl sm:text-2xl font-bold text-purple-300 mb-3 sm:mb-4 break-words hyphens-auto">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3 break-words hyphens-auto">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-base sm:text-lg font-medium text-purple-500 mb-2 break-words hyphens-auto">{children}</h3>,
+                    p: ({children}) => <p className="text-gray-300 mb-2 sm:mb-3 leading-relaxed break-words hyphens-auto text-sm sm:text-base">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc list-inside text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal list-inside text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ol>,
+                    li: ({children}) => <li className="text-gray-300 break-words hyphens-auto">{children}</li>,
                     code: ({className, children, ...props}) => {
                         const isBlock = /language-(\w+)/.exec(className || '');
                         return !isBlock ? (
-                            <code className="bg-gray-700 text-cyan-300 px-1.5 py-0.5 rounded text-sm font-mono break-all">
+                            <code className="bg-gray-700 text-cyan-300 px-1 sm:px-1.5 py-0.5 rounded text-xs sm:text-sm font-mono break-all">
                                 {children}
                             </code>
                         ) : (
-                            <div className="overflow-x-auto">
+                            <div className="overflow-x-auto my-2 sm:my-4 -mx-2 sm:-mx-4 px-2 sm:px-4">
                                 <SyntaxHighlighter
                                     style={atomDark}
                                     language="sql"
@@ -68,24 +68,24 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                         );
                     },
                     blockquote: ({children}) => (
-                        <blockquote className="border-l-4 border-purple-500 pl-4 italic text-gray-400 mb-3 bg-gray-900/50 py-2 rounded-r-lg break-words">
+                        <blockquote className="border-l-4 border-purple-500 pl-2 sm:pl-4 italic text-gray-400 mb-2 sm:mb-3 bg-gray-900/50 py-2 rounded-r-lg break-words text-sm sm:text-base">
                             {children}
                         </blockquote>
                     ),
                     table: ({children}) => (
-                        <div className="overflow-x-auto mb-4 w-full">
-                            <table className="min-w-full border border-gray-600 rounded-lg">
+                        <div className="overflow-x-auto mb-2 sm:mb-4 w-full -mx-2 sm:-mx-4 px-2 sm:px-4">
+                            <table className="min-w-full border border-gray-600 rounded-lg text-xs sm:text-sm">
                                 {children}
                             </table>
                         </div>
                     ),
                     th: ({children}) => (
-                        <th className="border border-gray-600 px-3 py-2 bg-gray-700 text-purple-300 font-semibold text-left break-words">
+                        <th className="border border-gray-600 px-2 sm:px-3 py-1 sm:py-2 bg-gray-700 text-purple-300 font-semibold text-left break-words">
                             {children}
                         </th>
                     ),
                     td: ({children}) => (
-                        <td className="border border-gray-600 px-3 py-2 text-gray-300 break-words">
+                        <td className="border border-gray-600 px-2 sm:px-3 py-1 sm:py-2 text-gray-300 break-words">
                             {children}
                         </td>
                     ),

@@ -118,10 +118,10 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
         
         <div className="p-6">
           {activeTab === 'theory' && (
-            <div className="relative w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden -mx-6 px-2 sm:px-6">
               {/* AI Chat Button */}
                 <AIChatButton openAIChat={openAIChat}/>
-                <div className="w-full overflow-hidden">
+                <div className="w-full overflow-hidden max-w-full">
                   <CustomReactViewer selectedLesson={selectedLesson}/>
                 </div>
             </div>

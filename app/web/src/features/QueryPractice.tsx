@@ -101,19 +101,19 @@ const QueryPractice: React.FC = () => {
                 placeholder={t('queryPractice.enterSQLQuery')}
               />
               
-              <div className="flex justify-between items-center mt-4">
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 text-sm text-gray-400">
+              <div className="flex flex-col space-y-4 mt-4 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
+                <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-3">
+                  <div className="flex items-center space-x-2 text-sm text-gray-400 justify-center sm:justify-start">
                     <Info className="h-4 w-4" />
                     <span>{t('queryPractice.useStandardSQL')}</span>
                   </div>
 
                   {/* Sandbox controls */}
-                  <div className="flex items-center space-x-2">
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
                     <button
                       onClick={handleCreateSandbox}
                       disabled={isSandboxReady || isSandboxLoading}
-                      className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-lg hover:from-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center justify-center space-x-2 px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-lg hover:from-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm w-full sm:w-auto"
                     >
                       <Database className="h-4 w-4" />
                       <span className="text-sm">{isSandboxLoading && !isSandboxReady ? t('queryPractice.creating') : t('queryPractice.createSandbox')}</span>
@@ -122,7 +122,7 @@ const QueryPractice: React.FC = () => {
                     <button
                       onClick={handleDeleteSandbox}
                       disabled={!isSandboxReady || isSandboxLoading}
-                      className="flex items-center space-x-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center justify-center space-x-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm w-full sm:w-auto"
                     >
                       <XCircle className="h-4 w-4" />
                       <span className="text-sm">{isSandboxLoading && !isSandboxReady ? t('queryPractice.deleting') : t('queryPractice.deleteSandbox')}</span>
@@ -130,10 +130,10 @@ const QueryPractice: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex space-x-2">
+                <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                   <button
                     onClick={handleReset}
-                    className="flex items-center space-x-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                    className="flex items-center justify-center space-x-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors text-sm w-full sm:w-auto"
                   >
                     <RotateCcw className="h-4 w-4" />
                     <span>{t('queryPractice.reset')}</span>
@@ -142,7 +142,7 @@ const QueryPractice: React.FC = () => {
                   <button
                     onClick={handleExecuteQuery}
                     disabled={isLoading || !query.trim() || !isSandboxReady}
-                    className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+                    className="flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-purple-500/25 text-sm w-full sm:w-auto"
                   >
                     <Play className="h-4 w-4" />
                     <span>{isLoading ? t('queryPractice.executing') : t('queryPractice.execute')}</span>
