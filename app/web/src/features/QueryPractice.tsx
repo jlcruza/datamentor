@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Play, RotateCcw, Database, CheckCircle, XCircle, Info } from 'lucide-react';
+import { Play, RotateCcw, Database, CircleCheck as CheckCircle, Circle as XCircle, Info } from 'lucide-react';
 import {createSandbox, runSandboxQuery, deleteSandbox} from "../services/SandboxService.ts";
 import DatabaseSchemaViewer from "../components/DatabaseSchemaViewer.tsx";
 import {getErrorMessage, getResultRows} from "../services/OracleResponseService.ts";
