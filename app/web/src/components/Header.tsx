@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
   const { t } = useTranslation();
 
   return (
-    <header className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4 shadow-lg">
+    <header className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4 shadow-lg relative z-50">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center space-x-3">
           <img 

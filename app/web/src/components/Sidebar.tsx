@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
       {/* Mobile hamburger button */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-100"
+        className="md:hidden fixed top-20 left-4 z-40 p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-100 shadow-lg"
         aria-label="Open menu"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
