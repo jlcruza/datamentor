@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { X, LogIn, UserPlus, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient.ts';
 import {VITE_APP_BASE_URL} from "../constants/environmentConfigs.ts";
+import logo from '../images/logo.png';
 
 interface LoginModalProps {
   onLogin: (email: string, password: string) => void;
@@ -135,6 +136,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
   return (
     <div className={`${isRequired ? '' : 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4'}`}>
       <div className="bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-700 mx-auto">
+        <div className="flex justify-center pt-6 pb-2">
+          <img 
+            src={logo} 
+            alt="DataMentor Logo" 
+            className="h-16 w-auto"
+          />
+        </div>
         <div className="flex justify-between items-center p-6 border-b border-gray-700">
           <h2 className="text-xl font-semibold text-white">
             {getTitle()}

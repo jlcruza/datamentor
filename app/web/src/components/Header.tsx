@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Database, LogOut, User as UserIcon} from 'lucide-react';
+import { LogOut, User as UserIcon} from 'lucide-react';
 import {User} from "../types/user";
 import LanguageSelector from './LanguageSelector';
+import logo from '../images/logo.png';
 
 interface HeaderProps {
   user: User | null;
@@ -13,20 +14,14 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
   const { t } = useTranslation();
 
   return (
-    <header className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4 shadow-lg">
+    <header className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4 shadow-lg relative z-50">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-gradient-to-br from-purple-600 to-cyan-600 rounded-xl shadow-lg">
-            <Database className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">
-              {t('header.title')}
-            </h1>
-            <p className="text-sm text-gray-400">
-              {t('header.subtitle')}
-            </p>
-          </div>
+          <img 
+            src={logo} 
+            alt="DataMentor Logo" 
+            className="h-10 w-auto"
+          />
         </div>
 
         <div className="flex items-center space-x-4">

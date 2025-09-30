@@ -62,4 +62,47 @@
   .sidebar-item.active {
     @apply bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25;
   }
+  
+  /* Ensure prose content doesn't overflow */
+  .prose {
+    @apply w-full max-w-none overflow-hidden;
+  }
+  
+  .prose * {
+    @apply max-w-full overflow-hidden;
+  }
+  
+  /* Handle long words and URLs */
+  .prose p,
+  .prose li,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply break-words hyphens-auto overflow-hidden;
+  }
+  
+  /* Ensure code blocks are scrollable horizontally when needed */
+  .prose pre {
+    @apply overflow-x-auto max-w-full min-w-0;
+  }
+  
+  /* Ensure inline code breaks properly */
+  .prose code {
+    @apply break-all overflow-hidden;
+  }
+  
+  /* Ensure tables don't cause horizontal overflow */
+  .prose table {
+    @apply min-w-0 max-w-full;
+  }
+  
+  /* Better mobile text sizing */
+  @media (max-width: 640px) {
+    .prose {
+      @apply text-sm leading-relaxed;
+    }
+  }
 }
