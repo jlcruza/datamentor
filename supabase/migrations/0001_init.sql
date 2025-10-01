@@ -76,9 +76,9 @@ CREATE VIEW practice_exercises AS
 
 INSERT INTO difficulties (difficulty_id, difficulty_name)
 VALUES
-    (1, 'beginner'),
-    (2, 'intermediate'),
-    (3, 'advanced');
+    (1, 'principiante'),
+    (2, 'intermedio'),
+    (3, 'avanzado');
 
 INSERT INTO modules (module_id, module_name)
 VALUES

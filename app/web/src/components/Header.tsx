@@ -25,7 +25,8 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <LanguageSelector />
+          {/*  Commenting out language selector for now*/}
+          {/*<LanguageSelector />*/}
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600">
               <UserIcon className="h-4 w-4 text-gray-400" />
