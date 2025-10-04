@@ -4,6 +4,8 @@
 
 Por defecto, una base de datos no te garantiza que los resultados de una consulta `SELECT` vengan en un orden específico. Podrían aparecer en el orden en que se insertaron, en el orden en que están almacenados físicamente, o en cualquier otro orden que el motor de la base de datos considere eficiente. Para presentar los datos de una manera lógica y legible (por ejemplo, alfabéticamente, por fecha, de mayor a menor), necesitas tomar el control. `ORDER BY` es tu herramienta para hacerlo.
 
+---
+
 ### ¿Cómo Funciona `ORDER BY`?
 
 La cláusula `ORDER BY` es casi siempre la última cláusula en una sentencia `SELECT`. Le dices por qué columna (o columnas) quieres ordenar los resultados.
@@ -45,6 +47,8 @@ ORDER BY Apellido ASC, Nombre ASC;
 - **Posición en la Consulta:** Recuerda, `ORDER BY` va al final (después de `FROM` y `WHERE`).
 - **Ordenar por Posición:** Aunque es posible, evita ordenar por el número de la columna (ej: `ORDER BY 2`). Es frágil, si cambias el orden de las columnas en tu `SELECT`, el orden de tus resultados cambiará inesperadamente. Siempre es mejor usar el nombre de la columna.
 - **Rendimiento:** Ordenar es una operación que puede consumir recursos, especialmente con grandes volúmenes de datos. Si una consulta que necesita un orden específico se ejecuta con frecuencia, un índice en la columna de ordenación puede mejorar drásticamente el rendimiento.
+
+---
 
 ### Resumen
 

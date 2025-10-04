@@ -3,6 +3,8 @@
 ### ¿Por qué debo aprender esto?
 Imagina construir una casa sin un plano. Podrías terminar con la cocina en el segundo piso y sin escaleras para llegar. El modelado de datos es el plano de tu base de datos. Define la estructura, asegura que todo encaje correctamente y te ahorra innumerables dolores de cabeza en el futuro. Pensar antes de construir es clave para crear sistemas eficientes y fáciles de mantener.
 
+---
+
 ### Explicación del Concepto
 El **modelado de datos** es el proceso de crear un diagrama o esquema visual que representa los datos de una organización y cómo se relacionan entre sí. Es un paso fundamental en el diseño de una base de datos.
 
@@ -15,10 +17,12 @@ El **modelado de datos** es el proceso de crear un diagrama o esquema visual que
 *   **El Plano de una Casa:** Un buen modelo de datos es como el plano de un arquitecto. Muestra dónde va cada "habitación" (tabla), qué "objetos" hay dentro (columnas) y cómo se conectan los espacios.
 *   **La Organización de una Biblioteca:** Para encontrar un libro fácilmente, necesitas un sistema (fichas, categorías, códigos). Un modelo de datos es ese sistema para tu información. Sin él, tendrías un caos de datos.
 
-### Tips from the Experts
+### Consejos de los Expertos
 *   **Empieza con Lápiz y Papel:** Antes de tocar el teclado, dibuja tus ideas. Esbozar las tablas y relaciones te ayuda a clarificar tu pensamiento sin la distracción de la sintaxis.
 *   **Piensa en las Preguntas, no solo en los Datos:** Diseña tu modelo para que pueda responder a las preguntas que necesitarás hacer. Por ejemplo: "¿Cuál es el total de ventas por cliente para el último mes?".
 *   **Involucra a los Usuarios:** Las personas que usarán la aplicación a diario tienen el conocimiento más valioso sobre qué datos son importantes y cómo se usan.
+
+---
 
 ### Resumen
 El modelado de datos es el paso de diseño crucial que se realiza antes de construir una base de datos. Actúa como un plano, garantizando eficiencia, precisión y facilidad de mantenimiento. Es la base sobre la que se construye un sistema de información sólido.

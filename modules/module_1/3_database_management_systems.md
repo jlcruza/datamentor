@@ -21,12 +21,12 @@ El SGBD se encarga de todo el trabajo pesado:
 
 **Analogía:** Piensa en el SGBD como el **bibliotecario de nuestra biblioteca digital**. No solo sabe dónde está cada libro, sino que también gestiona los préstamos, se asegura de que nadie arranque páginas y mantiene el catálogo actualizado. Tú le pides un libro, y el bibliotecario te lo trae.
 
-### ¿Cómo funcionan? Los dos grandes sabores: SQL y NoSQL
+### ¿Cómo funcionan? Los dos categorías principales: SQL y NoSQL
 
 Los SGBD se dividen principalmente en dos grandes familias:
 
 #### 1. Relacionales (SQL)
-Organizan los datos en **tablas** con filas y columnas, muy parecido a una hoja de cálculo pero con superpoderes. Usan un lenguaje llamado **SQL** (*Structured Query Language*) para comunicarse. Son el estándar para la mayoría de las aplicaciones empresariales porque son extremadamente fiables y consistentes.
+Organizan los datos en **tablas** con filas y columnas, muy parecido a una hoja de cálculo. Usan un lenguaje llamado **SQL** (*Structured Query Language*) para comunicarse. Son el estándar para la mayoría de las aplicaciones empresariales porque son extremadamente fiables y consistentes.
 - **Ejemplos:** Oracle (¡el que aprenderemos!), MySQL, PostgreSQL, SQL Server.
 - **Ideal para:** Sistemas bancarios, inventarios, aplicaciones de recursos humanos; cualquier lugar donde la estructura y la consistencia sean cruciales.
 

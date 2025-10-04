@@ -4,6 +4,8 @@
 
 Antes de poder guardar tus cosas en cajas, necesitas las cajas. Y no usarías una caja de zapatos para guardar agua, ¿verdad? Crear una tabla es como diseñar un formulario o una hoja de cálculo: defines qué columnas tendrá y qué tipo de información irá en cada una. Esto garantiza que los datos sean consistentes, organizados y fiables.
 
+---
+
 ### Creando una Tabla con `CREATE TABLE`
 
 El comando `CREATE TABLE` te permite construir la estructura de una tabla. Para cada columna, debes especificar un nombre y un tipo de dato.
@@ -48,6 +50,8 @@ En este ejemplo:
 - **Elige el Tipo Correcto:** Usar el tipo de dato correcto ahorra espacio y previene errores. No uses `VARCHAR2` para almacenar fechas o números que necesites calcular.
 - **`VARCHAR2` sobre `CHAR`:** Prefiere siempre `VARCHAR2` a `CHAR`. `CHAR(50)` siempre usará 50 bytes de espacio, incluso si guardas "Ana". `VARCHAR2(50)` solo usará el espacio que necesite el texto.
 - **Define Restricciones:** Usa `PRIMARY KEY`, `NOT NULL`, `UNIQUE` y otras restricciones para proteger la integridad de tus datos desde el principio.
+
+---
 
 ### Resumen
 

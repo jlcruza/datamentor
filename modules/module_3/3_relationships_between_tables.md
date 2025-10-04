@@ -3,6 +3,8 @@
 ### ¿Por qué debo aprender esto?
 En el mundo real, las cosas no existen de forma aislada. Los clientes hacen pedidos, los estudiantes se inscriben en cursos, los autores escriben libros. Las relaciones nos permiten conectar nuestras tablas de datos para reflejar estas conexiones del mundo real, haciendo que nuestra base de datos sea infinitamente más potente.
 
+---
+
 ### Explicación del Concepto
 Existen tres tipos principales de relaciones entre tablas:
 
@@ -30,10 +32,12 @@ CREATE TABLE Inscripciones (
 );
 ```
 
-### Tips from the Experts
+### Consejos de los Expertos
 *   **La Relación Uno a Muchos es la Columna Vertebral:** La mayoría de los diseños de bases de datos relacionales se construyen alrededor de relaciones 1:N. Domínalas bien.
 *   **Resuelve Siempre las Relaciones M:N con una Tabla de Unión:** No intentes "hacer trampa" metiendo una lista de IDs en una columna de texto. Esto viola la primera forma normal y es una pésima práctica.
 *   **Piensa en la Cardinalidad:** Al diseñar, pregúntate: "¿Un libro *debe* tener un autor?" (relación obligatoria) o "¿Un autor *puede* no tener libros?" (relación opcional).
+
+---
 
 ### Resumen
 Las relaciones (Uno a Uno, Uno a Muchos, Muchos a Muchos) son el pegamento que une nuestras tablas. Nos permiten crear un modelo de datos que refleja con precisión las complejas interacciones del mundo real. Las relaciones de muchos a muchos siempre se resuelven con una tabla de unión intermedia.

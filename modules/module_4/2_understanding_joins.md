@@ -6,6 +6,8 @@ Imagina que estás organizando un evento entre dos clubes. A veces, solo querrá
 
 Los `JOIN` son la herramienta principal y más explícita para combinar tablas. Los diferentes tipos de `JOIN` te dan control total sobre *cómo* se combinan esas filas y qué hacer cuando no hay una coincidencia.
 
+---
+
 ### Sintaxis y Comandos Fundamentales
 
 La sintaxis moderna de `JOIN` separa la lógica de combinación (`ON`) de la lógica de filtrado (`WHERE`), haciendo las consultas mucho más claras.
@@ -18,12 +20,12 @@ Devuelve solo las filas que tienen una coincidencia en ambas tablas. Es el tipo 
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-e.NOMBRE,
-d.NOMBRE_DEPTO
+    e.NOMBRE,
+    d.NOMBRE_DEPTO
 FROM
-EMPLEADOS e
+    EMPLEADOS e
 INNER JOIN
-DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
 ```
 
 Este código produce el mismo resultado que el ejemplo de la lección anterior, pero es más legible y es la forma estándar de escribir uniones.
@@ -36,12 +38,12 @@ Devuelve **todas** las filas de la tabla de la izquierda (la primera tabla menci
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-e.NOMBRE,
-d.NOMBRE_DEPTO
+    e.NOMBRE,
+    d.NOMBRE_DEPTO
 FROM
-EMPLEADOS e
+    EMPLEADOS e
 LEFT JOIN
-DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
 ```
 
 Si tuviéramos un empleado `Juan` con `ID_DEPARTAMENTO` igual a `NULL`, el resultado sería:
@@ -61,12 +63,12 @@ Es lo opuesto a `LEFT JOIN`. Devuelve **todas** las filas de la tabla de la dere
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-e.NOMBRE,
-d.NOMBRE_DEPTO
+    e.NOMBRE,
+    d.NOMBRE_DEPTO
 FROM
-EMPLEADOS e
+    EMPLEADOS e
 RIGHT JOIN
-DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
 ```
 
 Si tuviéramos un departamento de "Innovación" sin empleados, el resultado sería:
@@ -86,12 +88,12 @@ Devuelve **todas** las filas cuando hay una coincidencia en una de las tablas. C
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-e.NOMBRE,
-d.NOMBRE_DEPTO
+    e.NOMBRE,
+    d.NOMBRE_DEPTO
 FROM
-EMPLEADOS e
+    EMPLEADOS e
 FULL OUTER JOIN
-DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
 
 ```
 El resultado incluiría tanto a `Juan` (empleado sin departamento) como a "Innovación" (departamento sin empleados).
@@ -100,6 +102,8 @@ El resultado incluiría tanto a `Juan` (empleado sin departamento) como a "Innov
 - **Prefiere `JOIN` explícito:** Usa siempre la sintaxis `INNER JOIN`, `LEFT JOIN`, etc., en lugar de la sintaxis antigua con comas en el `FROM` y condiciones en el `WHERE`. Es el estándar ANSI, más seguro y mucho más legible.
 - **`LEFT` vs. `RIGHT`:** La mayoría de los desarrolladores usan `LEFT JOIN` por convención. Un `RIGHT JOIN` siempre puede reescribirse como un `LEFT JOIN` simplemente invirtiendo el orden de las tablas. Esto hace que el código sea más consistente.
 - **Piensa en diagramas de Venn:** Si te confundes, dibuja dos círculos que se solapan. `INNER` es la parte solapada. `LEFT` es todo el círculo izquierdo. `FULL` es ambos círculos completos.
+
+---
 
 ### Resumen
 Los `JOIN` son la forma correcta y más poderosa de combinar tablas. Cada tipo te da un control preciso sobre el resultado: `INNER` para coincidencias, `LEFT`/`RIGHT` para incluir todos los datos de una tabla, y `FULL` para incluir todos los datos de ambas. Dominar los `JOIN` es un paso crucial para convertirte en un experto en SQL.

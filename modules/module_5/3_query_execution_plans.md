@@ -7,6 +7,8 @@ Cuando le pides a un GPS que te lleve a un lugar, no solo te da la ruta, sino qu
 
 Revisar este plan es la herramienta más poderosa para diagnosticar por qué una consulta es lenta. Te permite ver si la base de datos está usando un índice o si está haciendo un recorrido completo e ineficiente de la tabla (`FULL TABLE SCAN`).
 
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 Para ver el plan de ejecución en Oracle, se usan dos comandos:
@@ -60,6 +62,8 @@ Esto es un **`TABLE ACCESS FULL`** (o Full Table Scan), la señal de alerta más
 *   **Busca `TABLE ACCESS FULL`:** En tablas grandes, esta operación suele ser la causa de la lentitud. No siempre es mala (a veces necesitas leer toda la tabla), pero si esperabas que se usara un índice, aquí está tu problema.
 *   **Analiza los costos:** El plan de ejecución muestra un "costo" estimado. Usa esto para comparar la eficiencia de diferentes versiones de una consulta.
 *   **Verifica las uniones (Joins):** El plan te muestra cómo se unen las tablas (`NESTED LOOPS`, `HASH JOIN`, `MERGE JOIN`). Entender esto te ayuda a optimizar consultas complejas.
+
+---
 
 ### Resumen
 

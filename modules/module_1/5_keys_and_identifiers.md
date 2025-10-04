@@ -10,12 +10,12 @@ Esa es la misión de la **clave primaria** (*Primary Key*).
 
 ### ¿Por qué las claves son la pieza más importante del puzzle?
 
-Sin un identificador único, tus datos son un desastre esperando a ocurrir.
-- **Ambigüedad:** No puedes estar seguro de qué registro estás modificando o eliminando.
+Sin un identificador único, puede ocurrir:
+- **Ambiguedad:** No puedes estar seguro de qué registro estás modificando o eliminando.
 - **Duplicados:** Podrías insertar al mismo estudiante dos veces por error.
 - **Sin relaciones:** Como veremos más adelante, las claves son el pegamento que nos permite conectar unas tablas con otras (por ejemplo, para saber qué cursos ha tomado un estudiante).
 
-La clave primaria impone la **integridad y unicidad** de los datos. Es una regla no negociable.
+La clave primaria impone la **integridad y unicidad** de los datos.
 
 ### ¿Cómo funciona? Las dos reglas de oro de la Clave Primaria
 
@@ -51,7 +51,7 @@ Si ahora intentáramos insertar dos alumnos con el mismo `ID_ALUMNO`, Oracle nos
 
 ### Consejos de los Experts
 
-> A menudo, el mejor tipo de clave primaria es un número entero que se incrementa automáticamente por cada nueva fila. Esto se conoce como **clave subrogada** (*surrogate key*). No tiene ningún significado "de negocio" (como un DNI), pero es perfecta para la base de datos porque es simple, numérica y su unicidad está garantizada. En Oracle, esto se logra con un objeto llamado `SEQUENCE` y/o con columnas de identidad (`IDENTITY COLUMNS`).
+> A menudo, el mejor tipo de clave primaria es un número entero que se incrementa automáticamente por cada nueva fila. Esto se conoce como **clave subrogada** (*surrogate key*). No tiene ningún significado "de negocio", pero es perfecta para la base de datos porque es simple, numérica y su unicidad está garantizada. En Oracle, esto se logra con un objeto llamado `SEQUENCE` y/o con columnas de identidad (`IDENTITY COLUMNS`).
 
 ---
 
@@ -59,7 +59,7 @@ Si ahora intentáramos insertar dos alumnos con el mismo `ID_ALUMNO`, Oracle nos
 
 - Una **clave primaria** es una columna (o columnas) que identifica de forma única cada fila de una tabla.
 - **Reglas:** Debe ser **única** y **no nula**.
-- **Propósito:** Evitar la duplicidad y la ambigüedad, y servir como base para relacionar tablas.
+- **Propósito:** Evitar la duplicidad y la ambiguedad, y servir como base para relacionar tablas.
 - En Oracle, se define con la restricción `PRIMARY KEY`.
 
-¡Felicidades! Has completado el Módulo 1. Ahora tienes los cimientos teóricos para entender por qué las bases de datos son tan poderosas y cómo se estructuran. En el Módulo 2, nos arremangaremos y empezaremos a escribir código SQL para interactuar con ellas.
+¡Felicidades! Has completado el Módulo 1. Ahora tienes los cimientos teóricos para entender por qué las bases de datos son tan poderosas y cómo se estructuran. En el Módulo 2 empezaremos a escribir código SQL para interactuar con ellas.

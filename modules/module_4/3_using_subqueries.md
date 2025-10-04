@@ -6,6 +6,8 @@ Imagina que necesitas encontrar a los empleados que ganan más que el salario pr
 
 Una **subconsulta** (o *subquery*) es una consulta `SELECT` anidada dentro de otra consulta. Te permite realizar operaciones en varios pasos, donde el resultado de la consulta interna se usa para alimentar a la consulta externa. Es una herramienta poderosa para resolver problemas complejos.
 
+---
+
 ### Tipos de Subconsultas
 
 #### 1. Subconsulta Anidada (o No Correlacionada)
@@ -20,7 +22,9 @@ SELECT
 FROM
     EMPLEADOS
 WHERE
-    ID_DEPARTAMENTO = (SELECT ID_DEPARTAMENTO FROM DEPARTAMENTOS WHERE NOMBRE_DEPTO = 'Ventas');
+    ID_DEPARTAMENTO = (SELECT ID_DEPARTAMENTO 
+                       FROM DEPARTAMENTOS 
+                       WHERE NOMBRE_DEPTO = 'Ventas');
 ```
 
 La subconsulta `(SELECT ID_DEPARTAMENTO ...)` se ejecuta primero y devuelve `101`. Luego, la consulta principal se convierte en: `SELECT NOMBRE FROM EMPLEADOS WHERE ID_DEPARTAMENTO = 101;`.
@@ -33,7 +37,9 @@ SELECT
 FROM
     EMPLEADOS
 WHERE
-    ID_DEPARTAMENTO IN (SELECT ID_DEPARTAMENTO FROM DEPARTAMENTOS WHERE UBICACION = 'Edificio A');
+    ID_DEPARTAMENTO IN (SELECT ID_DEPARTAMENTO 
+                        FROM DEPARTAMENTOS 
+                        WHERE UBICACION = 'Edificio A');
 ```
 
 #### 2. Subconsulta Correlacionada
@@ -60,6 +66,8 @@ Aquí, la subconsulta se ejecuta para cada empleado (`e1`). Para Ana (depto 101)
 - **Cuidado con el rendimiento:** Las subconsultas correlacionadas pueden ser muy lentas en tablas grandes, ya que se ejecutan repetidamente. A menudo, un `JOIN` o una Expresión de Tabla Común (CTE) es una alternativa mucho más eficiente.
 - **`EXISTS` vs. `IN`:** Para subconsultas correlacionadas donde solo necesitas verificar si existe *alguna* fila que cumpla una condición, `EXISTS` suele ser más eficiente que `IN`. `EXISTS` se detiene tan pronto como encuentra una coincidencia.
 - **Legibilidad:** Aunque son potentes, las subconsultas anidadas profundamente pueden hacer que el código sea difícil de leer. Si una consulta se vuelve demasiado compleja, considera refactorizarla con `JOIN` o CTEs.
+
+---
 
 ### Resumen
 Las subconsultas te permiten construir consultas más sofisticadas al anidar una dentro de otra. Las anidadas se ejecutan una vez y son excelentes para filtros simples, mientras que las correlacionadas se ejecutan para cada fila de la consulta principal y resuelven problemas más complejos, aunque con un posible costo de rendimiento. Son una herramienta esencial, pero siempre considera si un `JOIN` podría hacer el trabajo de manera más eficiente y legible.

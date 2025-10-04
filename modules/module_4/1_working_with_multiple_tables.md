@@ -6,6 +6,8 @@ Imagina que tu información está organizada en diferentes archivadores para man
 
 En las bases de datos relacionales, los datos se dividen en tablas para evitar la redundancia y mejorar la integridad (¿recuerdas la normalización del Módulo 3?). Para obtener una visión completa, necesitamos una forma de conectar y combinar la información de estas tablas. Aquí es donde entra en juego la consulta de múltiples tablas.
 
+---
+
 ### ¿Cómo se conectan las tablas?
 
 Las tablas se relacionan mediante **claves primarias y foráneas**. Una clave foránea en una tabla apunta a la clave primaria de otra, creando un vínculo. Al escribir una consulta, usamos este vínculo para combinar filas de ambas tablas.
@@ -52,6 +54,8 @@ WHERE
 ### Consejos de los Expertos
 - **Usa Alias de Tabla:** Al trabajar con múltiples tablas, los nombres de las columnas pueden ser ambiguos. Usa alias cortos y descriptivos para las tablas (como `e` para `EMPLEADOS` y `d` para `DEPARTAMENTOS`) para hacer tu código más legible y corto.
 - **Califica los Nombres de Columna:** Siempre especifica de qué tabla proviene una columna (`tabla.columna` o `alias.columna`), incluso si el nombre no es ambiguo. Esto evita errores y facilita la comprensión de la consulta.
+
+---
 
 ### Resumen
 Consultar múltiples tablas es fundamental en SQL. Nos permite combinar datos relacionados que están almacenados de forma separada, dándonos una visión completa y coherente. La clave está en entender las relaciones (claves foráneas) y usar la cláusula `WHERE` (o `JOIN`, que veremos a continuación) para especificar cómo se conectan.

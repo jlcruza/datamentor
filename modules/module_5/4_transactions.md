@@ -10,6 +10,8 @@ Imagina transferir 100€ de tu cuenta de ahorros a tu cuenta corriente. La oper
 
 Las transacciones garantizan la integridad de los datos siguiendo el principio de "todo o nada".
 
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 En Oracle, una transacción comienza implícitamente con la primera instrucción DML (`INSERT`, `UPDATE`, `DELETE`). No necesitas un comando `BEGIN TRANSACTION` como en otros sistemas.
@@ -52,6 +54,8 @@ ROLLBACK;
 *   **Mantén las transacciones cortas:** Transacciones largas pueden bloquear recursos y disminuir la concurrencia (la capacidad de otros usuarios para trabajar).
 *   **No esperes la entrada del usuario dentro de una transacción:** Nunca dejes una transacción abierta mientras la aplicación espera una respuesta del usuario. Esto puede bloquear filas durante minutos.
 *   **`COMMIT` o `ROLLBACK` explícitamente:** Siempre termina tus transacciones. Dejar transacciones abiertas es una de las principales causas de problemas de bloqueo en bases de datos multiusuario.
+
+---
 
 ### Resumen
 

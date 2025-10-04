@@ -120,8 +120,7 @@ VALUES
     (17, 'Relaciones entre tablas', 3, 1, 'Explora las relaciones uno a uno, uno a muchos y muchos a muchos.', 'module_3/3_relationships_between_tables.md'),
     (18, 'Claves primarias y foráneas', 3, 1, 'Descubre cómo las claves identifican de forma única los registros y enlazan tablas.', 'module_3/4_primary_and_foreign_keys.md'),
     (19, 'Diagramas entidad–relación', 3, 1, 'Visualiza el diseño de bases de datos con diagramas ER.', 'module_3/5_entity_relationship_diagrams.md'),
-    (20, 'Normalización', 3, 1, 'Organiza los datos para eliminar la redundancia y mejorar la integridad.', 'module_3/6_normalization.md'),
-    (21, 'Cuándo y por qué desnormalizar', 3, 1, 'Aprende cuándo la desnormalización puede mejorar el rendimiento a pesar de la redundancia añadida.', 'module_3/7_when_and_why_to_denormalize.md');
+    (20, 'Normalización', 3, 1, 'Organiza los datos para eliminar la redundancia y mejorar la integridad.', 'module_3/6_normalization.md');
 
 -- Lessons for Module 4: Intermediate SQL
 INSERT INTO lessons (lesson_id, lesson_name, module_id, difficulty_id, description, content_path)

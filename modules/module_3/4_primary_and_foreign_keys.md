@@ -3,6 +3,8 @@
 ### ¿Por qué debo aprender esto?
 Ya sabemos que las tablas se relacionan, pero ¿cómo se implementa esa conexión a nivel técnico? La respuesta son las claves. Las claves primarias actúan como el "DNI" de cada registro, asegurando que sea único. Las claves foráneas son el "puente" que conecta un registro con otro en una tabla diferente. Son la maquinaria que hace que las relaciones funcionen.
 
+---
+
 ### Explicación del Concepto
 *   **Clave Primaria (Primary Key - PK):** Es una columna (o un conjunto de columnas) que identifica de forma única cada fila en una tabla.
     *   **Reglas:** No puede contener valores `NULL` y su valor debe ser único para toda la tabla.
@@ -33,10 +35,12 @@ CREATE TABLE Libros (
 );
 ```
 
-### Tips from the Experts
+### Consejos de los Expertos
 *   **Prefiere Claves Primarias Numéricas ("Surrogadas"):** Es una práctica común y muy recomendada usar una simple columna numérica autoincremental como PK (en Oracle se logra con secuencias e identificadores). Son más eficientes que usar un "valor natural" como un email o un nombre de usuario.
 *   **Nombra tus Constraints (Restricciones):** Dar un nombre explícito a tu clave foránea como `fk_libros_autores` hace que los mensajes de error de la base de datos sean mucho más fáciles de entender.
 *   **Las Claves Foráneas Protegen tus Datos:** Este mecanismo, llamado **integridad referencial**, impide que crees un libro con un `autor_id` que no existe en la tabla `Autores`. ¡La base de datos se convierte en tu guardián!
+
+---
 
 ### Resumen
 Las Claves Primarias (PK) garantizan la unicidad de cada registro en una tabla. Las Claves Foráneas (FK) son las que materializan las relaciones, apuntando a la PK de otra tabla. Juntas, forman el esqueleto de una base de datos relacional robusta y coherente.

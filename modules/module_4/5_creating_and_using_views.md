@@ -21,15 +21,15 @@ Se utiliza el comando `CREATE VIEW`. Opcionalmente, `CREATE OR REPLACE VIEW` act
 ```oracle
 CREATE OR REPLACE VIEW vista_empleados_departamento AS
 SELECT
-e.NOMBRE AS NOMBRE_EMPLEADO,
-e.PUESTO,
-d.NOMBRE_DEPTO AS DEPARTAMENTO
+    e.NOMBRE AS NOMBRE_EMPLEADO,
+    e.PUESTO,
+    d.NOMBRE_DEPTO AS DEPARTAMENTO
 FROM
-EMPLEADOS e
+    EMPLEADOS e
 JOIN
-DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO
+    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO
 WHERE
-d.NOMBRE_DEPTO IN ('Ventas', 'Marketing');
+    d.NOMBRE_DEPTO IN ('Ventas', 'Marketing');
 ```
 
 Una vez creada, esta vista se comporta como una tabla.
@@ -48,6 +48,8 @@ SELECT * FROM vista_empleados_departamento WHERE DEPARTAMENTO = 'Ventas';
 - **Rendimiento de las Vistas:** Recuerda que una vista es solo una consulta almacenada. Si la consulta subyacente es lenta, la vista también lo será. Para vistas muy complejas que se usan con frecuencia, a veces se usan "vistas materializadas", que sí almacenan físicamente los resultados y se actualizan periódicamente (un concepto más avanzado).
 - **No abuses de las vistas anidadas:** Puedes crear una vista que se base en otra vista. Sin embargo, anidar vistas una sobre otra puede hacer que el rendimiento sea difícil de predecir y depurar.
 - **Actualización de datos a través de vistas:** Es posible usar `INSERT`, `UPDATE` o `DELETE` en una vista, pero solo si la vista es "actualizable" (generalmente, si se basa en una sola tabla y no contiene agregaciones, `GROUP BY`, etc.). Es una práctica que debe usarse con cuidado.
+
+---
 
 ### Resumen
 Las vistas son una herramienta poderosa para la abstracción en SQL. Te permiten encapsular la lógica de una consulta compleja en un objeto reutilizable y seguro que se comporta como una tabla. Son ideales para simplificar el acceso a los datos para los usuarios finales, reforzar la seguridad y garantizar la consistencia en la lógica de negocio a través de diferentes reportes y aplicaciones.

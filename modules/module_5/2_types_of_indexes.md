@@ -1,4 +1,3 @@
-
 ## 2. Tipos de Índices: Clustered vs. Non-Clustered
 
 ### ¿Por qué existen diferentes tipos de índices? El diccionario vs. el índice del libro
@@ -9,6 +8,8 @@ Pensemos en dos formas de organizar la información:
 2.  **El índice de un libro de historia:** El libro está organizado por capítulos y temas. Al final, hay un índice alfabético que te dice en qué página encontrar "Napoleón". Este índice es una estructura separada que apunta a los datos. Esto es análogo a un **índice no agrupado (non-clustered)**.
 
 En Oracle, el concepto de "índice agrupado" se implementa a través de **Tablas Organizadas por Índice (Index-Organized Tables - IOT)**. Los índices estándar (`CREATE INDEX`) son no agrupados.
+
+---
 
 ### Sintaxis y Conceptos Clave (Oracle SQL)
 
@@ -43,6 +44,8 @@ Imagina una tabla de `usuarios` con un `id_usuario` como clave primaria.
 *   **Tablas Organizadas por Índice (IOTs):** Son ideales para tablas de búsqueda estáticas (como una lista de países o códigos postales) o para cualquier tabla donde el acceso se realiza principalmente a través de la clave primaria.
 *   **Índices Bitmap:** Oracle también ofrece índices `BITMAP`, que son excelentes para columnas con baja cardinalidad (pocos valores distintos, como 'Género' o 'Estado Civil') en entornos de solo lectura o con pocas modificaciones.
 *   **La mayoría de las veces, usarás índices B-Tree no agrupados**, que es el tipo por defecto en Oracle y es muy versátil.
+
+---
 
 ### Resumen
 

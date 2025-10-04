@@ -4,6 +4,8 @@
 
 Tener tablas vacías no es muy útil. El verdadero poder de una base de datos se desata cuando la llenas de información y la mantienes actualizada. Insertar datos es como añadir una nueva fila a tu hoja de cálculo. Actualizar es como corregir un error o cambiar un dato que ha quedado obsoleto.
 
+---
+
 ### Insertando Filas con `INSERT INTO`
 
 El comando `INSERT INTO` te permite añadir nuevos registros (filas) a una tabla.
@@ -49,8 +51,10 @@ WHERE ID_Estudiante = 1;
 
 ### Consejos de los Expertos
 
-- **`UPDATE` y `DELETE` con `WHERE`:** ¡Regla de oro! **Siempre** usa una cláusula `WHERE` con `UPDATE` y `DELETE`. Para estar seguro, puedes ejecutar primero un `SELECT` con la misma condición `WHERE` para ver exactamente qué filas se verán afectadas.
+- **`UPDATE` y `DELETE` con `WHERE`:** ¡IMPORTANTE! **Siempre** usa una cláusula `WHERE` con `UPDATE` y `DELETE`. Para estar seguro, puedes ejecutar primero un `SELECT` con la misma condición `WHERE` para ver exactamente qué filas se verán afectadas.
 - **Insersión Explícita:** Prefiere siempre la sintaxis de `INSERT` que especifica los nombres de las columnas. Si en el futuro alguien añade una nueva columna a la tabla, tu consulta no se romperá.
+
+---
 
 ### Resumen
 

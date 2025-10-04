@@ -4,6 +4,8 @@
 
 Rara vez querrás ver *toda* la información de una tabla. Lo más común es que busques respuestas a preguntas específicas: "¿Qué estudiantes nacieron después del año 2000?", "¿Qué productos cuestan menos de $50?", "¿Quién es el usuario 'admin'?". La cláusula `WHERE` es la herramienta que te permite hacer estas preguntas y filtrar los datos para obtener solo las filas que te interesan. Es el detective de SQL.
 
+---
+
 ### ¿Cómo Funciona `WHERE`?
 
 La cláusula `WHERE` se coloca después de la cláusula `FROM` y antes de otras como `ORDER BY`. Contiene una o más condiciones que deben ser verdaderas para que una fila se incluya en el resultado.
@@ -59,6 +61,8 @@ WHERE Email LIKE '%@example.com';
 - **Manejo de `NULL`:** Un valor `NULL` significa "desconocido" o "no aplicable". No puedes compararlo con `=` o `!=`. En su lugar, debes usar `IS NULL` o `IS NOT NULL`.
   `WHERE Apellido IS NULL` (encuentra estudiantes sin apellido registrado).
 - **Orden de los Operadores:** Usa paréntesis `()` para agrupar condiciones `AND` y `OR` y asegurar que se evalúen en el orden que deseas, evitando ambigüedades.
+
+---
 
 ### Resumen
 

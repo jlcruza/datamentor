@@ -504,30 +504,6 @@ VALUES
     (60, 'Atributos no atómicos (violación de 1NF).', FALSE),
     (60, 'No presenta ningún problema de normalización.', FALSE);
 
--- Lesson 21: Cuándo y por qué desnormalizar
-INSERT INTO exercises (exercise_id, lesson_id, question, reason)
-VALUES
-    (61, 21, '¿Cuál es la razón más común para desnormalizar una base de datos?', 'La desnormalización se realiza principalmente para mejorar el rendimiento de las consultas, especialmente para aplicaciones de lectura intensiva, al reducir la necesidad de uniones complejas y costosas.'),
-    (62, 21, '¿Cuál es el principal inconveniente de la desnormalización?', 'Al introducir redundancia, la desnormalización aumenta los requisitos de almacenamiento y, lo que es más importante, introduce el riesgo de inconsistencias en los datos si los datos duplicados no se actualizan correctamente.'),
-    (63, 21, 'En una aplicación de comercio electrónico, el nombre de un producto se almacena tanto en la tabla `Productos` como en cada registro de la tabla `LineasDePedido`. ¿Qué justificación podría haber para esta desnormalización?', 'Almacenar el nombre del producto en `LineasDePedido` evita tener que unir con la tabla `Productos` cada vez que se muestran los detalles de un pedido, mejorando el rendimiento. También preserva el nombre del producto en el momento de la compra, incluso si el nombre cambia más tarde en la tabla `Productos`.');
-
-INSERT INTO exercise_options (exercise_id, text, is_correct)
-VALUES
-    -- Options for exercise 61
-    (61, 'Para mejorar la integridad de los datos.', FALSE),
-    (61, 'Para mejorar el rendimiento de las consultas al reducir los `JOINs`.', TRUE),
-    (61, 'Para reducir el espacio de almacenamiento.', FALSE),
-    (61, 'Para simplificar las operaciones de escritura (INSERT/UPDATE).', FALSE),
-    -- Options for exercise 62
-    (62, 'Mejora de la integridad de los datos.', FALSE),
-    (62, 'Aumento de la redundancia y riesgo de inconsistencia de los datos.', TRUE),
-    (62, 'Disminución del rendimiento de las consultas.', FALSE),
-    (62, 'Reducción de la complejidad de las consultas.', FALSE),
-    -- Options for exercise 63
-    (63, 'No hay una buena justificación; es un mal diseño.', FALSE),
-    (63, 'Mejora el rendimiento de lectura de los pedidos y preserva los datos históricos.', TRUE),
-    (63, 'Es requerido por la Primera Forma Normal.', FALSE),
-    (63, 'Reduce el espacio de almacenamiento total.', FALSE);
 
 -- Exercises for Module 4: Intermediate SQL
 

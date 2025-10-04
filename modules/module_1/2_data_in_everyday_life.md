@@ -2,7 +2,7 @@
 
 ### ¿Por qué usar una herramienta más compleja si ya tengo Excel?
 
-¡Gran pregunta! Muchos de nosotros usamos hojas de cálculo (como Microsoft Excel o Google Sheets) todos los días. Son fantásticas para muchas tareas, pero tienen límites. Esta lección te enseñará a reconocer cuándo necesitas dar el salto a una base de datos.
+Muchos de nosotros usamos hojas de cálculo (como Microsoft Excel o Google Sheets) todos los días. Son fantásticas para muchas tareas, pero tienen límites. Esta lección te enseñará a reconocer cuándo necesitas dar el salto a una base de datos.
 
 ---
 
@@ -37,7 +37,7 @@ Aquí es donde las hojas de cálculo fallan. Una base de datos está diseñada p
 
 ### Consejos de los Expertos
 
-> La regla de oro: si varias personas o sistemas necesitan acceder y modificar los mismos datos de forma fiable, has superado los límites de una hoja de cálculo. Es hora de pensar en una base de datos. No esperes a que el caos de los datos te abrume.
+> La regla de oro: si varias personas o sistemas necesitan acceder y modificar los mismos datos de forma fiable, has superado los límites de una hoja de cálculo. Es hora de pensar en una base de datos.
 
 ---
 

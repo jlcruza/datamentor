@@ -1,10 +1,12 @@
 ## 5. Concurrencia y Niveles de Aislamiento
 
-### ¿Por qué es esto importante? Evitar el caos en una edición compartida
+### ¿Por qué es esto importante?
 
 Imagina que tú y un colega están editando el mismo documento en línea. Si ambos escriben en la misma frase al mismo tiempo, ¿qué versión se guarda? ¿Se mezclan las palabras? La **concurrencia** se ocupa de cómo la base de datos maneja a múltiples usuarios que leen y escriben datos simultáneamente, y los **niveles de aislamiento** son las reglas que evitan que se pisen unos a otros.
 
 Un nivel de aislamiento más alto protege más contra interferencias, pero puede reducir el rendimiento al hacer que los usuarios esperen más.
+
+---
 
 ### Fenómenos de Concurrencia a Evitar
 
@@ -56,8 +58,10 @@ Si hubieras usado `ISOLATION LEVEL SERIALIZABLE`, la segunda consulta habría de
 ### Consejos de los Expertos
 
 *   **Usa el nivel por defecto (`READ COMMITTED`) a menos que tengas una buena razón:** Ofrece un excelente equilibrio entre consistencia y concurrencia. La mayoría de las aplicaciones funcionan perfectamente con él.
-*   **Usa `SERIALIZABLE` para informes complejos:** Si necesitas ejecutar una serie de consultas para un informe y es crucial que los datos no cambien en absoluto durante el proceso, `SERIALIZABLE` es la opción correcta. Prepárate para manejar el error `ORA-08177` reintentando la transacción.
+*   **Usa `SERIALIZABLE` para informes complejos:** Si necesitas ejecutar una serie de consultas para un informe y es crucial que los datos no cambien en absoluto durante el proceso, `SERIALIZABLE` es la opción correcta. Planifica para manejar el error `ORA-08177` reintentando la transacción.
 *   **`FOR UPDATE`:** Si solo necesitas bloquear unas pocas filas para modificarlas y evitar conflictos, considera usar `SELECT ... FOR UPDATE`. Esto bloquea las filas seleccionadas hasta que hagas `COMMIT` o `ROLLBACK`.
+
+---
 
 ### Resumen
 

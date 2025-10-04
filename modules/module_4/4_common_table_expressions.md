@@ -6,6 +6,8 @@ Imagina que estás construyendo algo complejo con legos. En lugar de buscar cada
 
 Te permite crear una especie de **tabla temporal con nombre** que existe solo durante la ejecución de tu consulta. Es una forma de dividir una consulta larga y compleja en pasos lógicos y más legibles. En lugar de anidar subconsultas que hacen que el código sea un laberinto, defines cada paso de forma clara al principio.
 
+---
+
 ### Sintaxis y Comandos Fundamentales
 
 Un CTE se define usando la cláusula `WITH` al inicio de una consulta. Puedes definir uno o varios CTEs, y luego referenciarlos en tu consulta principal como si fueran tablas normales.
@@ -16,12 +18,13 @@ WITH nombre_cte AS (
 -- Tu consulta SELECT va aquí
 SELECT columna1, columna2 FROM alguna_tabla
 )
-SELECT
-*
-FROM
-nombre_cte
-WHERE
-condicion;
+
+SELECT 
+    * 
+FROM 
+    nombre_cte
+WHERE 
+    condicion;
 ```
 
 **Ejemplo Ilustrativo:**
@@ -78,6 +81,8 @@ Como puedes ver, el CTE (`DepartamentosConSalarioAlto`) define claramente el pri
     SELECT ... FROM Ventas2023 JOIN Ventas2024 ON ...
     ```
 - **Recursión con CTEs:** Los CTEs también pueden ser recursivos (referenciarse a sí mismos), lo cual es extremadamente útil para consultar datos jerárquicos, como organigramas o árboles de categorías. (Este es un tema avanzado, ¡pero es bueno saber que existe!).
+
+---
 
 ### Resumen
 Las Expresiones de Tabla Comunes (CTEs) son una herramienta fantástica para mejorar la legibilidad y la organización de tus consultas SQL. Al usar la cláusula `WITH`, puedes descomponer la lógica compleja en bloques nombrados y manejables, haciendo tu código más fácil de escribir, depurar y mantener. Siempre que te enfrentes a una consulta con múltiples niveles de subconsultas, considera si un CTE podría simplificarla.

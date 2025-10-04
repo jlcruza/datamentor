@@ -4,6 +4,8 @@
 
 El ciclo de vida de los datos no siempre es para siempre. La información puede volverse irrelevante, incorrecta o simplemente ya no ser necesaria. Eliminar registros mantiene tu base de datos limpia y relevante. Es como hacer limpieza en tu disco duro para liberar espacio y deshacerte de archivos viejos.
 
+---
+
 ### Eliminando Filas con `DELETE FROM`
 
 El comando `DELETE` se usa para eliminar una o más filas de una tabla. Su sintaxis es simple, pero debe usarse con extremo cuidado.
@@ -41,6 +43,8 @@ WHERE ID_Estudiante = 1;
 ```
 
 - **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite "deshacer" (`ROLLBACK`) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (`COMMIT`).
+
+---
 
 ### Resumen
 

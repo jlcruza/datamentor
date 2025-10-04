@@ -3,6 +3,8 @@
 ### ¿Por qué debo aprender esto?
 Una imagen vale más que mil líneas de código `CREATE TABLE`. Un Diagrama Entidad-Relación (DER o ERD en inglés) es el mapa visual de tu base de datos. Te permite a ti, a tu equipo y a tus clientes ver el diseño de un solo vistazo, facilitando la discusión, la detección de errores y la comprensión general del sistema antes de escribir una sola línea de SQL.
 
+---
+
 ### Explicación del Concepto
 Un **DER** es una representación gráfica de las entidades, sus atributos y las relaciones que existen entre ellas.
 
@@ -27,10 +29,12 @@ Una línea conecta los dos.
 
 **Lectura:** "Un `AUTOR` puede tener cero, uno o muchos `LIBROS`. Cada `LIBRO` debe pertenecer a uno y solo un `AUTOR`."
 
-### Tips from the Experts
+### Consejos de los Expertos
 *   **Usa una Notación Estándar:** La notación de "Pata de Gallo" (Crow's Foot) es la más popular y fácil de entender en la industria. Adóptala.
 *   **No Satures el Diagrama:** Para una visión general de alto nivel, puedes omitir los atributos y mostrar solo las entidades y sus relaciones. Crea diagramas más detallados cuando sea necesario para discutir aspectos específicos.
 *   **Los DER son Herramientas de Comunicación:** Úsalos para validar tu diseño con las partes interesadas (stakeholders). Es mucho más barato corregir un error en un diagrama que en una base de datos en producción.
+
+---
 
 ### Resumen
 Los Diagramas Entidad-Relación son el lenguaje visual para el diseño de bases de datos. Permiten modelar, comunicar y validar la estructura de las entidades (tablas), sus atributos (columnas) y las relaciones que las conectan de una manera clara y universalmente entendida.

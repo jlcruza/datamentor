@@ -6,6 +6,8 @@ Imagina que tienes que encontrar información en un libro de 1,000 páginas sin 
 
 En una base de datos, un **índice** funciona de la misma manera. En lugar de escanear cada fila de una tabla (lo que se conoce como "Full Table Scan"), la base de datos utiliza el índice para encontrar la ubicación exacta de los datos que necesita, acelerando drásticamente las consultas.
 
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 Crear un índice es muy sencillo. La sintaxis básica es la siguiente:
@@ -44,6 +46,8 @@ WHERE apellido = 'Smith';
 *   **Usa índices en columnas de búsqueda frecuente:** Aplícalos en columnas que usas a menudo en cláusulas `WHERE` o en `JOINs`.
 *   **No abuses de los índices:** Cada índice consume espacio y ralentiza las operaciones de escritura (`INSERT`, `UPDATE`, `DELETE`), ya que el índice también debe actualizarse. No crees índices en tablas pequeñas o en columnas que no se usan para buscar.
 *   **Considera índices compuestos:** Si a menudo buscas por varias columnas juntas, puedes crear un índice sobre todas ellas. El orden de las columnas en el índice es importante.
+
+---
 
 ### Resumen
 

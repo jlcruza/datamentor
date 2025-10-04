@@ -1,12 +1,12 @@
 ## Lección 1: ¿Qué es una Base de Datos?
 
-### ¡Hola! Empecemos nuestro viaje por el mundo de los datos.
+### ¡Bienvenido a tu primera lección!
 
-Bienvenido a tu primera lección. Hoy vamos a responder una pregunta fundamental: ¿qué es exactamente una base de datos y, lo que es más importante, por qué debería importarte?
+Hoy vamos a responder una pregunta fundamental: ¿qué es exactamente una base de datos y, lo que es más importante, por qué debería importarte?
 
 ---
 
-### ¿Por qué necesitamos bases de datos? El problema del caos.
+### ¿Por qué necesitamos bases de datos?
 
 Imagina que tienes una tienda de música con miles de CDs. Al principio, podrías anotar las ventas en un cuaderno. Pero pronto, surgen preguntas:
 - ¿Cuántas copias vendimos de un álbum específico el mes pasado?
@@ -17,7 +17,7 @@ Buscar en un cuaderno sería una pesadilla. Los archivos de texto o las hojas de
 
 **La razón de ser de una base de datos es traer orden al caos.** Es un sistema diseñado para almacenar, gestionar y recuperar grandes volúmenes de información de manera eficiente, segura y fiable.
 
-### ¿Cómo lo hace? La magia de la estructura.
+### ¿Cómo lo hace? 
 
 Una base de datos no es solo un "almacén" de datos; es un **almacén organizado**.
 
@@ -41,5 +41,3 @@ Una base de datos hace lo mismo con la información digital. La organiza de form
 - **¿Qué es?** Una base de datos es una colección organizada de información digital.
 - **¿Por qué existe?** Para resolver los problemas de los sistemas de archivos simples: desorganización, redundancia y dificultad para consultar la información.
 - **¿Cómo funciona?** Impone una estructura a los datos, permitiendo un acceso, gestión y actualización rápidos y eficientes.
-
-¡Felicidades por completar tu primera lección! Ahora ya entiendes el "porqué" de las bases de datos. En la siguiente lección, compararemos su poder con las hojas de cálculo que probablemente ya conoces.

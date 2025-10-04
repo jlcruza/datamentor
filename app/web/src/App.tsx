@@ -10,13 +10,6 @@ import {LearningContentDto} from './repository/db_types/learningContentDto.ts';
 import {LearningContentService} from './services/LearningContentService.ts';
 import useSupabaseAuth from './hooks/useSupabaseAuth.ts';
 
-export interface ChatMessage {
-    id: string;
-    content: string;
-    sender: 'user' | 'ai';
-    timestamp: Date;
-}
-
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
 function App() {

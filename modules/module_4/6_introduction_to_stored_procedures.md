@@ -11,6 +11,8 @@ Hacer esto desde una aplicación externa requiere enviar tres comandos SQL separ
 
 Un **Procedimiento Almacenado** (*Stored Procedure*) es un conjunto de comandos SQL y lógica de programación (bucles, condicionales, etc.) que se guarda y se compila dentro de la propia base de datos. En lugar de enviar múltiples comandos, la aplicación solo tiene que hacer una llamada: `EXECUTA registrar_nuevo_pedido(...)`.
 
+---
+
 ### ¿Cuáles son las ventajas?
 1.  **Rendimiento:** El procedimiento está precompilado en la base de datos, y se reduce el tráfico de red, lo que a menudo resulta en una ejecución más rápida.
 2.  **Reutilización y Consistencia:** La lógica de negocio se centraliza en un solo lugar. Cualquier aplicación que necesite realizar esa tarea simplemente llama al procedimiento, asegurando que las reglas se apliquen siempre de la misma manera.
@@ -84,6 +86,8 @@ END;
 - **Manejo de Transacciones:** Un procedimiento es el lugar ideal para gestionar transacciones (`COMMIT` y `ROLLBACK`). Si una de las operaciones dentro del procedimiento falla, puedes deshacer todos los cambios para mantener la base de datos en un estado consistente.
 - **Procedimientos vs. Funciones:** En Oracle, un *procedimiento* realiza una acción, mientras que una *función* se utiliza para calcular y **devolver un valor único**. Las funciones se pueden usar directamente en una sentencia `SELECT`, mientras que los procedimientos no.
 - **No abuses de la lógica de negocio:** Si bien es poderoso, poner *toda* la lógica de tu aplicación en la base de datos puede hacerla menos portable y más difícil de mantener para los desarrolladores de aplicaciones. Encuentra un equilibrio saludable entre la lógica de la aplicación y la lógica de la base de datos.
+
+---
 
 ### Resumen
 Los procedimientos almacenados te permiten agrupar comandos SQL y lógica de programación en unidades reutilizables y seguras que viven en la base de datos. Son excelentes para encapsular operaciones de negocio complejas, mejorar el rendimiento al reducir la comunicación de red y garantizar la consistencia y la integridad de los datos. Son un pilar de la programación avanzada de bases de datos.

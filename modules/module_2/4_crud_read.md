@@ -4,6 +4,8 @@
 
 Has creado tus tablas y las has llenado de datos valiosos. ¿Ahora qué? El propósito principal de una base de datos es permitirte consultar esa información para responder preguntas, generar informes y alimentar aplicaciones. `SELECT` es tu herramienta principal para explorar y extraer los datos. Es como hacerle una pregunta a tu base de datos.
 
+---
+
 ### La Anatomía de `SELECT`
 
 `SELECT` es el comando más versátil de SQL. En su forma más simple, se ve así:
@@ -49,6 +51,8 @@ SELECT Nombre AS Nombre_Estudiante, Email AS Correo_Electronico
 FROM Estudiantes;
 ```
 
+---
+
 ### Resumen
 
-`SELECT` es tu puerta de entrada para leer y analizar los datos. Te permite elegir exactamente qué piezas de información quieres ver de tus tablas. Ser específico con las columnas que seleccionas es una práctica clave para escribir consultas eficientes y mantenibles.
+`SELECT` te permite leer y analizar los datos. Puedes elegir exactamente qué piezas de información quieres ver de tus tablas. Ser específico con las columnas que seleccionas es una práctica clave para escribir consultas eficientes y mantenibles.

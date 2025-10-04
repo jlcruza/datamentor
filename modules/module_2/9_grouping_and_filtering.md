@@ -4,6 +4,8 @@
 
 Las funciones de agregación son geniales para resumir una tabla entera. Pero, ¿qué pasa si quieres resúmenes de *subconjuntos* de datos? Por ejemplo, no solo "¿cuántos estudiantes hay?", sino "¿cuántos estudiantes hay *por cada ciudad*?". `GROUP BY` te permite dividir tus datos en grupos y aplicar funciones de agregación a cada uno de ellos. Es la base del análisis de datos segmentado.
 
+---
+
 ### Agrupando con `GROUP BY`
 
 La cláusula `GROUP BY` se usa con funciones de agregación. Consolida todas las filas que tienen el mismo valor en una columna (o columnas) en una sola fila de resumen.
@@ -55,6 +57,8 @@ WHERE Anio = 2023 -- Filtra filas: solo calificaciones del año 2023
 GROUP BY Ciudad
 HAVING AVG(Nota) > 7.5; -- Filtra grupos: solo ciudades cuyo promedio fue mayor a 7.5
 ```
+
+---
 
 ### Resumen
 

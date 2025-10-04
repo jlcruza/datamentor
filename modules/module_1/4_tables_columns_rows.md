@@ -6,7 +6,7 @@ Hemos hablado de que las bases de datos relacionales (como Oracle) organizan los
 
 ---
 
-### ¿Por qué esta estructura? La belleza de la simplicidad.
+### ¿Por qué esta estructura?
 
 Imagina que quieres almacenar información sobre los estudiantes de una universidad. ¿Cómo lo harías? Probablemente crearías una cuadrícula, ¿verdad?
 
@@ -42,10 +42,10 @@ Así es como esta estructura se traduce a código. ¡No te preocupes por memoriz
 -- CREATE TABLE es el comando para crear una nueva tabla.
 CREATE TABLE ALUMNOS (
     -- Aquí definimos las columnas y sus tipos de datos.
-    ID_ALUMNO      NUMBER,         -- NUMBER para números enteros.
-    NOMBRE         VARCHAR2(50),   -- VARCHAR2 para texto de longitud variable.
-    APELLIDO       VARCHAR2(50),
-    FECHA_NACIMIENTO DATE            -- DATE para fechas.
+    ID_ALUMNO           NUMBER,         -- NUMBER para números enteros.
+    NOMBRE              VARCHAR2(50),   -- VARCHAR2 para texto de longitud variable.
+    APELLIDO            VARCHAR2(50),
+    FECHA_NACIMIENTO    DATE            -- DATE para fechas.
 );
 ```
 

@@ -4,6 +4,8 @@
 
 A veces no necesitas la lista completa de datos, sino un resumen de ellos. Quieres ver el panorama general, no los detalles individuales. Las funciones de agregación te permiten calcular un valor único a partir de un conjunto de filas. Son como la calculadora de tu base de datos.
 
+---
+
 ### ¿Qué son las Funciones de Agregación?
 
 Estas funciones toman múltiples valores de una columna y los "agregan" en un único resultado.
@@ -44,6 +46,8 @@ FROM Calificaciones;
 - **`COUNT(*)` vs `COUNT(columna)`:** `COUNT(*)` cuenta todas las filas del grupo, sin excepción. `COUNT(nombre_columna)` cuenta solo las filas donde `nombre_columna` tiene un valor no nulo (`NULL`). Esta diferencia es sutil pero importante.
 - **Usa Alias con `AS`:** Las columnas calculadas por funciones de agregación no tienen un nombre por defecto. Usa `AS` para darles un nombre descriptivo y que sea fácil de referenciar en tu aplicación.
 - **Tipos de Datos:** Asegúrate de usar `SUM` y `AVG` solo en columnas numéricas. `MIN` y `MAX` funcionan en números, fechas y texto (orden alfabético).
+
+---
 
 ### Resumen
 
