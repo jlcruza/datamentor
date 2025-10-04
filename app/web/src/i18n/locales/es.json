@@ -55,6 +55,7 @@
     "passwordsDoNotMatch": "Las contraseñas no coinciden",
     "accountCreatedSuccess": "¡Cuenta creada exitosamente! Revisa tu correo para confirmar tu dirección.",
     "resetEmailSent": "Correo de restablecimiento de contraseña enviado. Revisa tu bandeja de entrada.",
+    "pleaseSetNewPassword": "Ingresa una nueva contraseña para su cuenta",
     "emailConfirmation": "Confirmación de Correo",
     "emailConfirmed": "Correo confirmado. Ahora puedes iniciar sesión en tu cuenta.",
     "emailConfirmedRedirecting": "Tu correo ha sido confirmado. Redirigiendo a la aplicación...",

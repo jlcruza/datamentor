@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.ts';
+import logo from "../images/logo.png";
 
 // Handles redirects from Supabase for password recovery.
 // When the user arrives here via the reset link, Supabase provides a temporary session.
@@ -86,6 +87,13 @@ const ResetComplete: React.FC = () => {
   return (
     <div className={baseClasses}>
       <div className={panelClasses}>
+          <div className="flex justify-center pt-6 pb-2">
+              <img
+                  src={logo}
+                  alt="DataMentor Logo"
+                  className="h-16 w-auto"
+              />
+          </div>
         <h1 className="text-xl font-semibold text-white mb-4">{t('auth.setNewPassword')}</h1>
 
         {message && (

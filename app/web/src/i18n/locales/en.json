@@ -55,6 +55,7 @@
     "passwordsDoNotMatch": "Passwords do not match",
     "accountCreatedSuccess": "Account created successfully! Check your email to confirm your address.",
     "resetEmailSent": "Password reset email sent. Check your inbox.",
+    "pleaseSetNewPassword": "Please set a new password for your account.",
     "emailConfirmation": "Email Confirmation",
     "emailConfirmed": "Email confirmed. You can now log in to your account.",
     "emailConfirmedRedirecting": "Your email has been confirmed. Redirecting to app...",
