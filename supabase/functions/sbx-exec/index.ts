@@ -7,8 +7,17 @@ import {
     DataMentorResponse_UNAUTHORIZED
 } from "../services/dataMentorResponse.ts";
 import {getSupabaseUser} from "../services/supabaseClient.ts";
+import {SBX_OWNER_PASS, SBX_OWNER_USER} from "../_shared/environment.ts";
+
 
 serve(async (req) => {
+    const ALTER_SYSTEM: RegExp = /ALTER\s+SYSTEM/i
+    const CREATE_USER: RegExp = /CREATE\s+USER/i
+    const DROP_USER: RegExp = /DROP\s+USER/i
+    const CREATE_TABLE: RegExp = /CREATE\s+TABLE/i
+    const ALTER_TABLE: RegExp = /ALTER\s+TABLE/i
+    const DROP_TABLE: RegExp = /DROP\s+TABLE/i
+
     try {
         if (req.method === "OPTIONS") {
             console.log("CORS preflight");
@@ -27,7 +36,7 @@ serve(async (req) => {
         }
 
         // Guardrails (optional): reject dangerous statements
-        const blacklist = [/ALTER\s+SYSTEM/i, /CREATE\s+USER/i, /DROP\s+USER/i];
+        const blacklist = [ALTER_SYSTEM, CREATE_USER, DROP_USER];
         if (blacklist.some((re) => re.test(sql))) {
             return DataMentorResponse_BAD_REQUEST(req, "Statement not allowed")
         }
@@ -41,14 +50,18 @@ serve(async (req) => {
 
         let resText;
         try {
-            console.log("Executing SQL:", sql);
-            // resText = await ordsSql({
-            //     schema: sandbox.oracle_username.toLowerCase(),
-            //     sql,
-            //     authUser: sandbox.oracle_username,
-            //     authPass: sandbox.oracle_password
-            // });
-            resText = await runAsAdmin(sql);
+            console.log("Executing SQL: ", sql);
+            console.log("Executing AS: ", sandbox.oracle_username);
+            resText = await ordsSql({
+                schema: sandbox.oracle_username.toLowerCase(),
+                sql,
+                authUser: sandbox.oracle_username,
+                authPass: sandbox.oracle_password,
+            });
+        }
+        catch (e) {
+            console.error("Error executing SQL:", e);
+            throw e;
         }
         finally {
             // Do nothing

@@ -1,11 +1,15 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import {
-    runAsAdmin,
     randomSandboxUser,
     randomOraclePassword,
 } from "../_shared/oracle.ts";
-import {SBX_OWNER, SANDBOX_TTL_MIN} from "../_shared/environment.ts";
-import {ALL_TABLES} from "../_shared/tables.ts";
+import {
+    SANDBOX_TTL_MIN,
+    ORDS_ADMIN_USER,
+    ORDS_ADMIN_PASS,
+    ORDS_BASE,
+    ORDS_CREATE_SANDBOX_ENDPOINT
+} from "../_shared/environment.ts";
 import {SandboxDto} from "../repository/dtos/sandboxDto.ts";
 import {SandboxRepository} from "../repository/sandboxRepository.ts";
 import {
@@ -51,50 +55,39 @@ serve(async (req) => {
             expire_at: new Date(Date.now() + TTL_MIN * 60_000).toISOString()
         };
 
-        const quotedUser = `"${sandbox.oracle_username}"`;
-        const quotedOwner = `"${SBX_OWNER}"`;
-        const seedCtas = ALL_TABLES.map(
-            (t) =>
-                `EXECUTE IMMEDIATE 'CREATE TABLE ${quotedUser}."${t}" AS SELECT * FROM ${quotedOwner}."${t}"';`,
-        ).join("\n");
+        const requestBody = {
+            USER_ID: sandbox.oracle_username,
+            PASSWORD: sandbox.oracle_password,
+        };
 
-        const sql = `
-DECLARE
-  v_exists NUMBER;
-BEGIN
-  -- 1) Create user (tablespace names on ADB are typically DATA & TEMP)
-  EXECUTE IMMEDIATE 'CREATE USER ${quotedUser} IDENTIFIED BY "${sandbox.oracle_password}" QUOTA 100M ON DATA';
-  -- 2) Grants (minimum viable for CRUD + basic DDL/PLSQL demos)
-  EXECUTE IMMEDIATE 'GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE, CREATE PROCEDURE, CREATE TRIGGER TO ${quotedUser}';
-  -- Optional: allow synonyms, types if you need them
-  -- EXECUTE IMMEDIATE 'GRANT CREATE TYPE, CREATE SYNONYM TO ${quotedUser}';
+        // 3. Prepare Basic Auth Header for Oracle
+        const basicAuth = btoa(`${ORDS_ADMIN_USER}:${ORDS_ADMIN_PASS}`);
 
-  -- 3) Copy seed tables (explicit list)
-  ${seedCtas}
+        // 4. Call Oracle ORDS Endpoint
+        const createSandboxUrl = `${ORDS_BASE}/${ORDS_CREATE_SANDBOX_ENDPOINT}`;
+        const oracleResponse = await fetch(createSandboxUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${basicAuth}`,
+            },
+            body: JSON.stringify(requestBody),
+        });
 
-  -- 4) Enable ORDS on the new schema
-  ORDS.ENABLE_SCHEMA(
-    p_enabled             => TRUE,
-    p_schema              => ${quotedUser},
-    p_url_mapping_type    => 'BASE_PATH',
-    p_url_mapping_pattern => LOWER(${quotedUser}),
-    p_auto_rest_auth      => FALSE
-  );
-  COMMIT;
-END;
-/
-`;
-
-        // Run the provisioning script
-        await runAsAdmin(sql);
+        console.log("Oracle Response: ", oracleResponse);
+        console.log("Oracle Response Status: ", oracleResponse.status);
+        console.log("Oracle Response Status Text: ", oracleResponse.statusText);
+        console.log("Oracle Response Text: ", oracleResponse.text());
+        console.log("Oracle Response Body: ", oracleResponse.body);
 
         await SandboxRepository.insertSandbox(req, sandbox);
 
         return DataMentorResponse_OK(
             req,
             JSON.stringify({
-                sandboxId: sandbox.oracle_username,  // e.g. "SBX_7H4F2KQ9"
+                sandboxId: sandbox.oracle_username,
                 expiresAt: sandbox.expire_at,
+                result: oracleResponse.text,
             }),
         );
     } catch (e) {

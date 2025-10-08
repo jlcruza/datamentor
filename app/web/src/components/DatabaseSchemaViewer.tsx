@@ -20,7 +20,7 @@ const DatabaseSchemaViewer: React.FC<DatabaseSchemaViewerProps> = (
     const sampleQueries = [
         {
             title: t('queryPractice.basicSelect'),
-            query: 'SELECT * FROM students WHERE ROWNUM <= 10;;',
+            query: 'SELECT * FROM students WHERE ROWNUM <= 5;;',
             description: t('queryPractice.getFirstStudents')
         },
         {

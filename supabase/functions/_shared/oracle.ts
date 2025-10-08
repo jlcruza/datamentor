@@ -1,4 +1,4 @@
-import {ORDS_BASE, ORDS_ADMIN_USER, ORDS_ADMIN_PASS, SBX_OWNER} from "./environment.ts";
+import {ORDS_BASE, ORDS_ADMIN_USER, ORDS_ADMIN_PASS, SBX_OWNER, SBX_OWNER_USER, SBX_OWNER_PASS} from "./environment.ts";
 
 function b64(username: string, password: string) {
     return typeof btoa === "function"
@@ -35,20 +35,19 @@ export async function ordsSql({
     return text; // ORDS returns JSON text (string). Let caller JSON.parse if needed.
 }
 
-// Provisioning runs as the admin/provisioning user against ADMIN (or any schema path)
-// We’ll still call via /ords/<any>/_/sql; the schema in the SQL determines privileges.
+
 export async function runAsAdmin(sql: string) {
     console.log("Running as admin:", sql);
     const schemaPath = SBX_OWNER.toLowerCase();
     return ordsSql({
         schema: schemaPath,
         sql,
-        authUser: ORDS_ADMIN_USER,
-        authPass: ORDS_ADMIN_PASS,
+        authUser: SBX_OWNER_USER,
+        authPass: SBX_OWNER_PASS,
     });
 }
 
-// tiny helper
+
 export function randomSandboxUser(prefix = "SBX", len = 8) {
     const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let s = prefix + "_";
@@ -64,7 +63,7 @@ export function randomOraclePassword() {
     const U = "ABCDEFGHJKLMNPQRSTUVWXYZ";
     const L = "abcdefghijkmnopqrstuvwxyz";
     const D = "23456789";
-    const S = "#$%&*+-_!?";
+    const S = "#$*+-";
     const pick = (set: string) => set[Math.floor(Math.random() * set.length)];
     let pwd = pick(U) + pick(L) + pick(D) + pick(S);
     const all = U + L + D + S;
