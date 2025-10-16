@@ -100,8 +100,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
 
   if (selectedLesson) {
     return (
-      <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <BackToLessonButton onSelectedLesson={setSelectedLesson}/>
           
           <div className="flex items-start justify-between mb-4">
@@ -111,7 +111,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-1 bg-gray-700 p-1 rounded-lg">
+          <div className="flex space-x-1 bg-gray-200 dark:bg-gray-700 p-1 rounded-lg">
               <LessonTabButton activeTab={activeTab}
                                onActiveTabSet={setActiveTab}
                                stateText={'theory'}
@@ -137,8 +137,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
           {activeTab === 'practice' && (
             <div className="space-y-6">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-white mb-2">{t('learningContent.practiceQuestions')}</h2>
-                <p className="text-gray-400">{t('learningContent.practiceSubtitle')}</p>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('learningContent.practiceQuestions')}</h2>
+                <p className="text-gray-600 dark:text-gray-400">{t('learningContent.practiceSubtitle')}</p>
               </div>
 
               {questions.length > 0 ? (
@@ -150,7 +150,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                       )})}
                 </div>
               ) : (
-                <div className="text-center py-12 text-gray-400">
+                <div className="text-center py-12 text-gray-600 dark:text-gray-400">
                   <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>{t('learningContent.noPracticeQuestions')}</p>
                   <p className="text-sm mt-1">{t('learningContent.checkBackLater')}</p>
@@ -160,7 +160,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
           )}
           
           {/* Mark Complete Button */}
-          <div className="mt-8 pt-6 border-t border-gray-700">
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
               <CompletedLessonFooter isCompleted={isCompleted}
                                      onMarkComplete={markLessonComplete}/>
           </div>
@@ -180,8 +180,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('learningContent.title')}</h1>
-        <p className="text-gray-400">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('learningContent.title')}</h1>
+        <p className="text-gray-600 dark:text-gray-400">
           {t('learningContent.subtitle')}
         </p>
       </div>

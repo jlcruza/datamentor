@@ -74,8 +74,8 @@ const QueryPractice: React.FC = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('queryPractice.title')}</h1>
-        <p className="text-gray-400">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('queryPractice.title')}</h1>
+        <p className="text-gray-600 dark:text-gray-400">
           {t('queryPractice.subtitle')}
         </p>
       </div>
@@ -89,21 +89,21 @@ const QueryPractice: React.FC = () => {
         {/* Query Editor and Results */}
         <div className="lg:col-span-2 space-y-6">
           {/* Query Editor */}
-          <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-            <div className="p-4 border-b border-gray-700">
-              <h2 className="font-semibold text-white">{t('queryPractice.sqlQueryEditor')}</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="font-semibold text-gray-900 dark:text-white">{t('queryPractice.sqlQueryEditor')}</h2>
             </div>
             <div className="p-4">
               <textarea
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full h-32 p-3 bg-gray-900 border border-gray-600 rounded-lg font-mono text-sm text-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                className="w-full h-32 p-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent resize-none"
                 placeholder={t('queryPractice.enterSQLQuery')}
               />
               
               <div className="flex flex-col space-y-4 mt-4 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
                 <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-3">
-                  <div className="flex items-center space-x-2 text-sm text-gray-400 justify-center sm:justify-start">
+                  <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 justify-center sm:justify-start">
                     <Info className="h-4 w-4" />
                     <span>{t('queryPractice.useStandardSQL')}</span>
                   </div>
@@ -133,7 +133,7 @@ const QueryPractice: React.FC = () => {
                 <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                   <button
                     onClick={handleReset}
-                    className="flex items-center justify-center space-x-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors text-sm w-full sm:w-auto"
+                    className="flex items-center justify-center space-x-2 px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-sm w-full sm:w-auto"
                   >
                     <RotateCcw className="h-4 w-4" />
                     <span>{t('queryPractice.reset')}</span>
@@ -142,7 +142,7 @@ const QueryPractice: React.FC = () => {
                   <button
                     onClick={handleExecuteQuery}
                     disabled={isLoading || !query.trim() || !isSandboxReady}
-                    className="flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-purple-500/25 text-sm w-full sm:w-auto"
+                    className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25 text-sm w-full sm:w-auto"
                   >
                     <Play className="h-4 w-4" />
                     <span>{isLoading ? t('queryPractice.executing') : t('queryPractice.execute')}</span>
@@ -153,9 +153,9 @@ const QueryPractice: React.FC = () => {
           </div>
 
           {/* Results */}
-          <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-            <div className="p-4 border-b border-gray-700">
-              <h2 className="font-semibold text-white flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="font-semibold text-gray-900 dark:text-white flex items-center">
                 {t('queryPractice.results')}
                 {result && (
                   <CheckCircle className="h-5 w-5 ml-2 text-green-600" />
@@ -169,8 +169,8 @@ const QueryPractice: React.FC = () => {
             <div className="p-4">
               {isLoading && (
                 <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
-                  <p className="text-gray-400 mt-2">{t('queryPractice.executingQuery')}</p>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-purple-600 mx-auto"></div>
+                  <p className="text-gray-600 dark:text-gray-400 mt-2">{t('queryPractice.executingQuery')}</p>
                 </div>
               )}
 
@@ -186,17 +186,17 @@ const QueryPractice: React.FC = () => {
 
               {result && !error && (
                 <div>
-                  <div className="mb-3 text-sm text-gray-400">
+                  <div className="mb-3 text-sm text-gray-600 dark:text-gray-400">
                     {t('queryPractice.rowsReturned', { count: result.length })}
                   </div>
                   
                   {result.length > 0 ? (
                     <div className="overflow-x-auto">
-                      <table className="min-w-full border border-gray-600 rounded-lg">
-                        <thead className="bg-gray-700">
+                      <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg">
+                        <thead className="bg-gray-200 dark:bg-gray-700">
                           <tr>
                             {Object.keys(result[0]).map(column => (
-                              <th key={column} className="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase border-b border-gray-600">
+                              <th key={column} className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border-b border-gray-300 dark:border-gray-600">
                                 {column}
                               </th>
                             ))}
@@ -204,10 +204,10 @@ const QueryPractice: React.FC = () => {
                         </thead>
                         <tbody>
                           {result.map((row: any, index: number) => (
-                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-750'}>
+                            <tr key={index} className={index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-750'}>
                               {Object.values(row).map((value: any, cellIndex: number) => (
-                                <td key={cellIndex} className="px-4 py-2 text-sm text-gray-300 border-b border-gray-600">
-                                  {value === null ? <span className="text-gray-500 italic">NULL</span> : String(value)}
+                                <td key={cellIndex} className="px-4 py-2 text-sm text-gray-900 dark:text-gray-300 border-b border-gray-300 dark:border-gray-600">
+                                  {value === null ? <span className="text-gray-600 dark:text-gray-500 italic">NULL</span> : String(value)}
                                 </td>
                               ))}
                             </tr>
@@ -216,13 +216,13 @@ const QueryPractice: React.FC = () => {
                       </table>
                     </div>
                   ) : (
-                    <p className="text-gray-400 italic">{t('queryPractice.noResults')}</p>
+                    <p className="text-gray-600 dark:text-gray-400 italic">{t('queryPractice.noResults')}</p>
                   )}
                 </div>
               )}
 
               {!result && !error && !isLoading && (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-gray-600 dark:text-gray-400">
                   <Database className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>{t('queryPractice.executeQueryToSeeResults')}</p>
                 </div>

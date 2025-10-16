@@ -4,63 +4,63 @@
 
 @layer base {
   * {
-    @apply border-gray-600;
+    @apply border-gray-300 dark:border-gray-600;
   }
-  
+
   body {
-    @apply bg-gray-900 text-gray-100;
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
   }
-  
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
-    @apply bg-gray-800;
+    @apply bg-gray-200 dark:bg-gray-800;
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-600 rounded-full;
+    @apply bg-gray-400 dark:bg-gray-600 rounded-full;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-500;
+    @apply bg-gray-500 dark:bg-gray-500;
   }
 }
 
 @layer components {
   .progress-bar {
-    @apply w-full bg-gray-700 rounded-full h-2 overflow-hidden;
+    @apply w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2 overflow-hidden;
   }
-  
+
   .progress-fill {
-    @apply h-full bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full transition-all duration-500 ease-out;
+    @apply h-full bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-purple-500 dark:to-cyan-500 rounded-full transition-all duration-500 ease-out;
   }
-  
+
   .lesson-card {
-    @apply bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer;
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-blue-500 dark:hover:border-purple-500 hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer;
   }
-  
+
   .lesson-card:hover {
     transform: translateY(-2px);
   }
-  
+
   .completed-lesson {
-    @apply border-green-500 bg-gradient-to-br from-gray-800 to-green-900/20;
+    @apply border-green-500 bg-gradient-to-br from-white to-green-50 dark:from-gray-800 dark:to-green-900/20;
   }
-  
+
   .sidebar-item {
     @apply w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200;
   }
-  
+
   .sidebar-item:hover {
-    @apply bg-gray-800 text-purple-300 transform translate-x-1;
+    @apply bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-purple-300 transform translate-x-1;
   }
-  
+
   .sidebar-item.active {
-    @apply bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25;
+    @apply bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white shadow-lg shadow-blue-500/25 dark:shadow-purple-500/25;
   }
   
   /* Ensure prose content doesn't overflow */

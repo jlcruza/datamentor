@@ -135,7 +135,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
 
   return (
     <div className={`${isRequired ? '' : 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4'}`}>
-      <div className="bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-700 mx-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 mx-auto">
         <div className="flex justify-center pt-6 pb-2">
           <img 
             src={logo} 
@@ -143,14 +143,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
             className="h-16 w-auto"
           />
         </div>
-        <div className="flex justify-between items-center p-6 border-b border-gray-700">
-          <h2 className="text-xl font-semibold text-white">
+        <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {getTitle()}
           </h2>
           {!isRequired && (
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-white rounded-lg transition-colors"
+              className="p-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -160,14 +160,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {authMode === 'register' && (
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {t('auth.fullName')}
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
                 placeholder={t('auth.enterFullName')}
               />
@@ -175,14 +175,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               {t('auth.email')}
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               placeholder={t('auth.enterEmail')}
             />
@@ -190,14 +190,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
 
           {authMode !== 'reset' && (
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {t('auth.password')}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
                 placeholder={t('auth.enterPassword')}
                 minLength={authMode === 'register' ? 6 : undefined}
@@ -207,14 +207,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
 
           {authMode === 'register' && (
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {t('auth.confirmPassword')}
               </label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
                 placeholder={t('auth.confirmYourPassword')}
                 minLength={6}

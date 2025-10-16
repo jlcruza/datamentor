@@ -5,6 +5,7 @@ import './i18n';
 import App from './App.tsx';
 import AuthCallback from './pages/AuthCallback.tsx';
 import ResetComplete from './pages/ResetComplete.tsx';
+import { ThemeProvider } from './contexts/ThemeContext';
 import './index.css';
 
 // SPA routing:
@@ -13,12 +14,14 @@ import './index.css';
 // - /auth/reset-complete → landing after clicking password reset link
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/auth/reset-complete" element={<ResetComplete />} />
-        <Route path="/*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/auth/reset-complete" element={<ResetComplete />} />
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>
 );
