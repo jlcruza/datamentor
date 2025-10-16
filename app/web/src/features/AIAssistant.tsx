@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
+import CustomReactViewer from "../components/CustomReactViewer.tsx";
 
 const AIAssistant: React.FC = () => {
   const { t } = useTranslation();
@@ -32,6 +33,8 @@ const AIAssistant: React.FC = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+      console.log("User Message: ", userMessage);
+      console.log("All Messages: ", messages);
     setInputMessage('');
     setIsLoading(true);
 
@@ -106,8 +109,9 @@ const AIAssistant: React.FC = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
+              {messages.map((message, index) => (
                 <div
+                  key={index}  // Add this key prop
                   className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
@@ -125,10 +129,9 @@ const AIAssistant: React.FC = () => {
                         <User className="h-4 w-4 mt-0.5 text-white/80" />
                       )}
                       <div className="flex-1">
-                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                        <p className={`text-xs mt-1 ${
-                          message.role === USER_ROLE ? 'text-white/60' : 'text-gray-400'
-                        }`}></p>
+                        <div className="text-sm">
+                            <CustomReactViewer fitParent selectedLesson={null} markdownText={message.content}/>
+                        </div>
                       </div>
                     </div>
                   </div>

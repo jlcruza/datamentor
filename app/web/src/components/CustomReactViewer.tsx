@@ -11,12 +11,16 @@ import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql';
 SyntaxHighlighter.registerLanguage('sql', sql);
 
 type CustomReactViewerProps = {
-    selectedLesson: LearningContentDto;
+    selectedLesson: LearningContentDto | null;
+    markdownText: string | null;
+    fitParent?: boolean;
 };
 
 const CustomReactViewer: React.FC<CustomReactViewerProps> = (
     {
         selectedLesson,
+        markdownText,
+        fitParent = false,
     }
 ) => {
     const [md, setMd] = useState<string>('');
@@ -24,20 +28,32 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
     useEffect(() => {
         let isMounted = true;
         (async () => {
-            // Public bucket: you can either build a public URL and fetch(),
-            // or use storage.download which returns a Blob.
-            const { data, error } = await supabase.storage.from(VITE_SUPABASE_BUCKET_NAME).download(selectedLesson.content_path);
-            if (!error && data && isMounted) {
-                const text = await data.text();
-                setMd(text);
+            if (markdownText != null && markdownText != "")
+            {
+                setMd(markdownText);
+            }
+            else
+            {
+                const { data, error } = await supabase.storage.from(VITE_SUPABASE_BUCKET_NAME).download(selectedLesson.content_path);
+                if (!error && data && isMounted) {
+                    const text = await data.text();
+                    setMd(text);
+                }
             }
         })();
         return () => { isMounted = false; };
     });
 
+    const containerPadding = fitParent ? "" : "px-2 sm:px-4";
+    const codeWrapperClass = fitParent
+        ? "overflow-x-auto my-2 sm:my-4"
+        : "overflow-x-auto my-2 sm:my-4 -mx-2 sm:-mx-4 px-2 sm:px-4";
+    const tableWrapperClass = fitParent
+        ? "overflow-x-auto mb-2 sm:mb-4 w-full"
+        : "overflow-x-auto mb-2 sm:mb-4 w-full -mx-2 sm:-mx-4 px-2 sm:px-4";
 
     return (
-        <div className="prose prose-invert max-w-none w-full overflow-hidden px-2 sm:px-4">
+        <div className={`prose prose-invert max-w-none w-full overflow-hidden ${containerPadding}`}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -55,7 +71,7 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                                 {children}
                             </code>
                         ) : (
-                            <div className="overflow-x-auto my-2 sm:my-4 -mx-2 sm:-mx-4 px-2 sm:px-4">
+                            <div className={codeWrapperClass}>
                                 <SyntaxHighlighter
                                     style={atomDark}
                                     language="sql"
@@ -73,7 +89,7 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                         </blockquote>
                     ),
                     table: ({children}) => (
-                        <div className="overflow-x-auto mb-2 sm:mb-4 w-full -mx-2 sm:-mx-4 px-2 sm:px-4">
+                        <div className={tableWrapperClass}>
                             <table className="min-w-full border border-gray-600 rounded-lg text-xs sm:text-sm">
                                 {children}
                             </table>

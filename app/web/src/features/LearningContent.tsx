@@ -20,11 +20,12 @@ import {PracticeExerciseService} from "../services/PracticeExerciseService.ts";
 import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
 
 interface LearningContentProps {
-  lessons: LearningContentDto[];
-  user: User | null;
+    lessons: LearningContentDto[];
+    onLessonsSet: (newLessons: LearningContentDto[]) => void;
+    user: User | null;
 }
 
-const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
+const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet, user }) => {
   const { t } = useTranslation();
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [questions, setQuestions] = useState<PracticeExerciseQuestionBoxDto[]>([]);
@@ -56,9 +57,15 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
     if (selectedLesson && user != null) {
         await ProgressRepository.saveProgress(user, selectedLesson, true);
         setIsCompleted(true);
-      
-      // Force re-render by updating state
-      setSelectedLesson({...selectedLesson});
+
+      // Update the lessons array with the completed status
+      const updatedLessons = lessons.map(lesson =>
+        lesson.lesson_id === selectedLesson.lesson_id
+          ? { ...lesson, completed: true }
+          : lesson
+      );
+      onLessonsSet(updatedLessons);
+      setSelectedLesson({...selectedLesson, completed: true});
     }
   };
 
@@ -122,7 +129,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, user }) => {
               {/* AI Chat Button */}
                 <AIChatButton openAIChat={openAIChat}/>
                 <div className="w-full overflow-hidden max-w-full">
-                  <CustomReactViewer selectedLesson={selectedLesson}/>
+                  <CustomReactViewer selectedLesson={selectedLesson} markdownText={null}/>
                 </div>
             </div>
           )}

@@ -13,6 +13,7 @@ export async function getResponse(messages: Msg[], hint: string): Promise<string
         "Prefer short explanations, then show a correct code example. Offer one quick follow-up question at the end.",
         "Be careful with facts. If you’re unsure or the answer depends on version-specific details, say so briefly and explain how to verify.",
         "Always answer in the same language as the student.",
+        "Your response will be displayed in a markdown reader, leverage the markdown syntax to make it more readable.",
         hint ? `Student context: ${hint}` : null
     ].filter(Boolean).join("\n");
 

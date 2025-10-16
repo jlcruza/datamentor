@@ -61,13 +61,13 @@ function App() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'learn':
-        return <LearningContent lessons={lessons} user={user}/>;
+        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user}/>;
       case 'practice':
         return <QueryPractice />;
       case 'chat':
         return <AIAssistant />;
       default:
-        return <LearningContent lessons={lessons} user={user}/>;
+        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user}/>;
     }
   };
 
