@@ -12,10 +12,10 @@ const DatabaseTableColumnList: React.FC<DatabaseTableColumnListProps> = (
 
     return (
         <div className="mt-2 ml-2 text-xs">
-            <div className="font-medium text-gray-300 mb-1">{t('queryPractice.columns')}</div>
+            <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">{t('queryPractice.columns')}</div>
             <div className="space-y-1">
                 {tableData.length > 0 && Object.keys(tableData[0]).map(column => (
-                    <div key={column} className="text-gray-400">
+                    <div key={column} className="text-gray-600 dark:text-gray-400">
                         • {column}
                     </div>
                 ))}
