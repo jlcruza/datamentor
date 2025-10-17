@@ -39,8 +39,8 @@ function App() {
   // While we check for an existing session, render a minimal shell (optional UX)
   if (initializing) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-        <div className="text-gray-300">{t('common.loading')}</div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="text-gray-700 dark:text-gray-300">{t('common.loading')}</div>
       </div>
     );
   }
@@ -48,10 +48,10 @@ function App() {
   // If no user is logged in, show login page (email+password only)
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-        <LoginModal 
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <LoginModal
           onLogin={handleLogin}
-          onClose={() => {}} // No close option since login is required
+          onClose={() => {}}
           isRequired={true}
         />
       </div>
@@ -72,20 +72,20 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col">
-      <Header 
-        user={user} 
-        onLogout={handleLogout} 
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+      <Header
+        user={user}
+        onLogout={handleLogout}
       />
-      
+
       <div className="flex flex-1">
-        <Sidebar 
+        <Sidebar
           activeSection={activeSection}
           onSectionChange={setActiveSection}
           lessons={lessons}
         />
-        
-        <main className="flex-1 p-4 lg:p-6 md:ml-64 lg:ml-72 bg-gray-900">
+
+        <main className="flex-1 p-4 lg:p-6 md:ml-64 lg:ml-72 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto">
             {renderActiveSection()}
           </div>

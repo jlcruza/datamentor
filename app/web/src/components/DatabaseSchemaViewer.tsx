@@ -36,9 +36,9 @@ const DatabaseSchemaViewer: React.FC<DatabaseSchemaViewerProps> = (
     ];
 
     return (
-        <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-4 sticky top-4">
-            <h2 className="font-semibold text-white mb-4 flex items-center">
-                <Database className="h-5 w-5 mr-2 text-purple-400" />
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 sticky top-4">
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                <Database className="h-5 w-5 mr-2 text-blue-600 dark:text-purple-400" />
                 {t('queryPractice.databaseSchema')}
             </h2>
 
@@ -57,7 +57,7 @@ const DatabaseSchemaViewer: React.FC<DatabaseSchemaViewerProps> = (
             </div>
 
             <div className="mt-6">
-                <h3 className="font-medium text-white mb-3">{t('queryPractice.sampleQueries')}</h3>
+                <h3 className="font-medium text-gray-900 dark:text-white mb-3">{t('queryPractice.sampleQueries')}</h3>
                 <div className="space-y-2">
                     {sampleQueries.map((sample, index) => (
                         // Shows the sample query and description
