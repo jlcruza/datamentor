@@ -6,7 +6,9 @@ import {supabase} from "../lib/supabaseClient.ts";
 import {VITE_SUPABASE_BUCKET_NAME} from "../constants/environmentConfigs.ts"
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {prism} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql';
+import {useTheme} from "../contexts/ThemeContext.tsx";
 
 SyntaxHighlighter.registerLanguage('sql', sql);
 
@@ -24,6 +26,7 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
     }
 ) => {
     const [md, setMd] = useState<string>('');
+    const { theme } = useTheme();
 
     useEffect(() => {
         let isMounted = true;
@@ -53,27 +56,27 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
         : "overflow-x-auto mb-2 sm:mb-4 w-full -mx-2 sm:-mx-4 px-2 sm:px-4";
 
     return (
-        <div className={`prose prose-invert max-w-none w-full overflow-hidden ${containerPadding}`}>
+        <div className={`prose dark:prose-invert max-w-none w-full overflow-hidden ${containerPadding}`}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                    h1: ({children}) => <h1 className="text-xl sm:text-2xl font-bold text-purple-300 mb-3 sm:mb-4 break-words hyphens-auto">{children}</h1>,
-                    h2: ({children}) => <h2 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3 break-words hyphens-auto">{children}</h2>,
-                    h3: ({children}) => <h3 className="text-base sm:text-lg font-medium text-purple-500 mb-2 break-words hyphens-auto">{children}</h3>,
-                    p: ({children}) => <p className="text-gray-300 mb-2 sm:mb-3 leading-relaxed break-words hyphens-auto text-sm sm:text-base">{children}</p>,
-                    ul: ({children}) => <ul className="list-disc list-inside text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ul>,
-                    ol: ({children}) => <ol className="list-decimal list-inside text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ol>,
-                    li: ({children}) => <li className="text-gray-300 break-words hyphens-auto">{children}</li>,
+                    h1: ({children}) => <h1 className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-purple-300 mb-3 sm:mb-4 break-words hyphens-auto">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-purple-400 mb-2 sm:mb-3 break-words hyphens-auto">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-base sm:text-lg font-medium text-blue-800 dark:text-purple-500 mb-2 break-words hyphens-auto">{children}</h3>,
+                    p: ({children}) => <p className="text-gray-800 dark:text-gray-300 mb-2 sm:mb-3 leading-relaxed break-words hyphens-auto text-sm sm:text-base">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc list-inside text-gray-800 dark:text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal list-inside text-gray-800 dark:text-gray-300 mb-2 sm:mb-3 space-y-1 break-words text-sm sm:text-base pl-2 sm:pl-4">{children}</ol>,
+                    li: ({children}) => <li className="text-gray-800 dark:text-gray-300 break-words hyphens-auto">{children}</li>,
                     code: ({className, children, ...props}) => {
                         const isBlock = /language-(\w+)/.exec(className || '');
                         return !isBlock ? (
-                            <code className="bg-gray-700 text-cyan-300 px-1 sm:px-1.5 py-0.5 rounded text-xs sm:text-sm font-mono break-all">
+                            <code className="bg-gray-200 dark:bg-gray-700 text-blue-700 dark:text-cyan-300 px-1 sm:px-1.5 py-0.5 rounded text-xs sm:text-sm font-mono break-all">
                                 {children}
                             </code>
                         ) : (
                             <div className={codeWrapperClass}>
                                 <SyntaxHighlighter
-                                    style={atomDark}
+                                    style={theme === 'light' ? prism : atomDark}
                                     language="sql"
                                     PreTag="div"
                                     {...props}
@@ -84,24 +87,24 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                         );
                     },
                     blockquote: ({children}) => (
-                        <blockquote className="border-l-4 border-purple-500 pl-2 sm:pl-4 italic text-gray-400 mb-2 sm:mb-3 bg-gray-900/50 py-2 rounded-r-lg break-words text-sm sm:text-base">
+                        <blockquote className="border-l-4 border-blue-500 dark:border-purple-500 pl-2 sm:pl-4 italic text-gray-600 dark:text-gray-400 mb-2 sm:mb-3 bg-blue-50 dark:bg-gray-900/50 py-2 rounded-r-lg break-words text-sm sm:text-base">
                             {children}
                         </blockquote>
                     ),
                     table: ({children}) => (
                         <div className={tableWrapperClass}>
-                            <table className="min-w-full border border-gray-600 rounded-lg text-xs sm:text-sm">
+                            <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg text-xs sm:text-sm">
                                 {children}
                             </table>
                         </div>
                     ),
                     th: ({children}) => (
-                        <th className="border border-gray-600 px-2 sm:px-3 py-1 sm:py-2 bg-gray-700 text-purple-300 font-semibold text-left break-words">
+                        <th className="border border-gray-300 dark:border-gray-600 px-2 sm:px-3 py-1 sm:py-2 bg-gray-200 dark:bg-gray-700 text-blue-700 dark:text-purple-300 font-semibold text-left break-words">
                             {children}
                         </th>
                     ),
                     td: ({children}) => (
-                        <td className="border border-gray-600 px-2 sm:px-3 py-1 sm:py-2 text-gray-300 break-words">
+                        <td className="border border-gray-300 dark:border-gray-600 px-2 sm:px-3 py-1 sm:py-2 text-gray-800 dark:text-gray-300 break-words">
                             {children}
                         </td>
                     ),
