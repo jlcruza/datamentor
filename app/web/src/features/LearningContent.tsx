@@ -18,14 +18,17 @@ import {ProgressRepository} from "../repository/progressRepository.ts";
 import {ASSISTANT_ROLE, Msg} from "../services/OpenAiService.ts";
 import {PracticeExerciseService} from "../services/PracticeExerciseService.ts";
 import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
+import { AIQuotaInfo } from "../services/AIUsageService.ts";
 
 interface LearningContentProps {
     lessons: LearningContentDto[];
     onLessonsSet: (newLessons: LearningContentDto[]) => void;
     user: User | null;
+    aiQuota?: AIQuotaInfo | null;
+    onRefreshQuota?: () => Promise<void>;
 }
 
-const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet, user }) => {
+const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet, user, aiQuota, onRefreshQuota }) => {
   const { t } = useTranslation();
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [questions, setQuestions] = useState<PracticeExerciseQuestionBoxDto[]>([]);
@@ -171,7 +174,9 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
             <AIChatMessageBox selectedLesson={selectedLesson}
                               chatMessages={chatMessages}
                               setShowAIChat={setShowAIChat}
-                              setChatMessages={setChatMessages}/>
+                              setChatMessages={setChatMessages}
+                              aiQuota={aiQuota}
+                              onRefreshQuota={onRefreshQuota} />
         )}
       </div>
     );

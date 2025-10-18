@@ -4,14 +4,18 @@ import { LogOut, User as UserIcon} from 'lucide-react';
 import {User} from "../types/user";
 import LanguageSelector from './LanguageSelector';
 import ThemeToggle from './ThemeToggle';
+import AIQuotaIndicator from './AIQuotaIndicator';
 import logo from '../images/logo.png';
+import { AIQuotaInfo } from '../services/AIUsageService';
 
 interface HeaderProps {
   user: User | null;
   onLogout: () => void;
+  aiQuota?: AIQuotaInfo | null;
+  isQuotaLoading?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
+const Header: React.FC<HeaderProps> = ({ user, onLogout, aiQuota, isQuotaLoading }) => {
   const { t } = useTranslation();
 
   return (
@@ -29,6 +33,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
           <ThemeToggle />
           {/*  Commenting out language selector for now*/}
           {/*<LanguageSelector />*/}
+          {user && <AIQuotaIndicator quota={aiQuota ?? null} isLoading={isQuotaLoading} />}
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600">
               <UserIcon className="h-4 w-4 text-gray-600 dark:text-gray-400" />

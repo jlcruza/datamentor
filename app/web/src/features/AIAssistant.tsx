@@ -3,8 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import CustomReactViewer from "../components/CustomReactViewer.tsx";
+import AIQuotaProgress from "../components/AIQuotaProgress.tsx";
+import { AIQuotaInfo } from '../services/AIUsageService.ts';
 
-const AIAssistant: React.FC = () => {
+interface AIAssistantProps {
+  aiQuota?: AIQuotaInfo | null;
+  onRefreshQuota?: () => Promise<void>;
+}
+
+const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) => {
   const { t } = useTranslation();
   const [messages, setMessages] = useState<Msg[]>([
     {
@@ -27,6 +34,10 @@ const AIAssistant: React.FC = () => {
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    if (aiQuota && !aiQuota.isUnderLimit) {
+      return;
+    }
 
     const userMessage: Msg = {
       content: inputMessage,
@@ -54,6 +65,11 @@ const AIAssistant: React.FC = () => {
 
       // Add AI response to the list
       setMessages(prev => [...prev, aiResponse]);
+
+      // Refresh quota after successful AI response
+      if (onRefreshQuota) {
+        await onRefreshQuota();
+      }
     } catch (error) {
       console.error("Error getting AI response:", error);
     } finally {
@@ -91,6 +107,10 @@ const AIAssistant: React.FC = () => {
                   {question}
                 </button>
               ))}
+            </div>
+
+            <div className="mt-6 mb-4">
+              <AIQuotaProgress quota={aiQuota ?? null} />
             </div>
 
             <div className="mt-6 p-3 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-purple-900/50 dark:to-cyan-900/50 rounded-lg border border-blue-200 dark:border-purple-500/30">
@@ -175,13 +195,17 @@ const AIAssistant: React.FC = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder={t('aiAssistant.askAboutDatabases')}
+                  placeholder={
+                    aiQuota && !aiQuota.isUnderLimit
+                      ? "AI quota limit reached"
+                      : t('aiAssistant.askAboutDatabases')
+                  }
                   className="flex-1 px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent"
-                  disabled={isLoading}
+                  disabled={isLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
                 />
                 <button
                   onClick={handleSendMessage}
-                  disabled={!inputMessage.trim() || isLoading}
+                  disabled={!inputMessage.trim() || isLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25"
                 >
                   <Send className="h-4 w-4" />
