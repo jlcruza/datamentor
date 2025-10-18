@@ -87,7 +87,11 @@
     "markComplete": "Mark as Complete",
     "completed": "Lesson completed! Great job!",
     "completedBadge": "Completed",
-    "chatWithAI": "Chat with AI about this lesson"
+    "chatWithAI": "Chat with AI about this lesson",
+    "wantMorePractice": "Want more practice?",
+    "generateAdditionalAiQuestions": "Generate additional AI-powered questions",
+    "generating": "Generating...",
+    "generateAiQuestions": "Generate AI Questions"
   },
   "queryPractice": {
     "title": "SQL Query Practice",

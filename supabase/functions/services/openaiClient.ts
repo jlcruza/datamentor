@@ -1,5 +1,8 @@
-import {OPENAI_API_KEY, OPENAI_GPT_MODEL, OPENAI_TEMPERATURE} from "../_shared/environment.ts";
+import {OPENAI_API_KEY, OPENAI_GPT_MODEL} from "../_shared/environment.ts";
 import OpenAI from "jsr:@openai/openai";
+import {GeneratedQuestionsDto} from "./dto/generatedQuestionsDto.ts";
+import { zodTextFormat } from "jsr:@openai/openai/helpers/zod";
+import { z } from "npm:zod@^3.23.8";
 
 export type Msg = { role: "system" | "user" | "assistant"; content: string };
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
@@ -33,8 +36,73 @@ export async function getResponse(messages: Msg[], hint: string): Promise<Object
     return response;
 }
 
+export async function getGeneratedQuestions(hint: string, description: string): Promise<Object> {
+
+    const QuestionFormat = z.object({
+        question: z.string().min(1),
+        options: z.array(z.string().min(1)).min(3).max(6),
+        correct_answer_index: z.number().int().nonnegative(),
+        reason: z.string().min(1),
+    }).refine(
+        (q) => q.correct_answer_index < q.options.length,
+        {message: "correct_answer_index must be within options bounds"}
+    );
+
+    // Wrap the questions array in an object to comply with JSON Schema object requirement
+    const QuestionsEnvelope = z.object({
+        questions: z.array(QuestionFormat).min(3).max(5),
+    });
+
+    // Single, strong system prompt + optional context line
+    const system = [
+        "You are a concise, friendly database tutor for Computer Engineering students.",
+        "Generate 3–5 multiple-choice questions about the lesson.",
+        "Output must be ONLY JSON that strictly matches the provided schema. No extra text, markdown, or code fences.",
+        "Constraint 1: Language: Spanish (neutral).",
+        "Constraint 2: SQL dialect: Oracle only; do not use features from other SQL variants.",
+        "Constraint 3: Bloom’s taxonomy: include a mix of levels (e.g., recordar, aplicar, analizar).",
+        "Constraint 4: Each question must have 3–6 unique options, exactly one correct answer.",
+        "Constraint 5: Ensure correct_answer_index is within the options array bounds.",
+        hint ?`Context 1: Lesson name is ${hint}` : null,
+        description ?`Context 2: Lesson description is ${description}` : null,
+    ].filter(Boolean).join("\n");
+
+    // Compose the request for OpenAI Responses API, with streaming
+    const response = await openai.responses.create({
+        model: OPENAI_GPT_MODEL,
+        input: [
+            {role: "system", content: system},
+            {role: "user", content: "Genera entre 3 y 5 preguntas siguiendo el formato estrictamente."}
+        ],
+        text: {format: zodTextFormat(QuestionsEnvelope, "questions")},
+        stream: false
+    });
+
+    console.log("Response: ", response);
+    console.log("Response object: ",getGeneratedQuestionsOutputObject(response));
+
+    return response;
+}
+
 export function getResponseText(response): string{
     return response.output_text ?? "";
+}
+
+export function getGeneratedQuestionsOutputObject(response): GeneratedQuestionsDto[]{
+    if (response.output_parsed?.questions) {
+        return response.output_parsed.questions;
+    }
+    // Fallback: try to parse the raw text
+    try {
+        const parsed = JSON.parse(response.output_text ?? "null");
+        // If you used an envelope { questions: [...] }
+        if (parsed && Array.isArray(parsed.questions))
+            return parsed.questions;
+        // If the model emitted an array directly
+        if (Array.isArray(parsed))
+            return parsed;
+    } catch {}
+    return [];
 }
 export function getResponseInputTokenUsage(response): number{
     return response?.usage?.input_tokens ?? 0;

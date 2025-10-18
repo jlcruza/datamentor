@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Sparkles } from 'lucide-react';
 import CourseDirectory from "../components/CourseDirectory.tsx";
 import LessonCard from "../components/LessonCard.tsx";
 import BackToLessonButton from "../components/BackToLessonButton.tsx";
@@ -19,6 +19,7 @@ import {ASSISTANT_ROLE, Msg} from "../services/OpenAiService.ts";
 import {PracticeExerciseService} from "../services/PracticeExerciseService.ts";
 import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
 import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
+import {generateQuestions} from "../services/AiPracticeExerciseService.ts";
 
 interface LearningContentProps {
     lessons: LearningContentDto[];
@@ -32,6 +33,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
   const { t } = useTranslation();
   const [selectedLesson, setSelectedLesson] = useState<LearningContentDto | null>(null);
   const [questions, setQuestions] = useState<PracticeExerciseQuestionBoxDto[]>([]);
+  const [aiGeneratedQuestions, setAiGeneratedQuestions] = useState<PracticeExerciseQuestionBoxDto[]>([]);
+  const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showAIChat, setShowAIChat] = useState(false);
   const [chatMessages, setChatMessages] = useState<Msg[]>([]);
@@ -45,6 +48,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
           const progress = await ProgressRepository.getStudentProgressOnLesson(user as User, selectedLesson);
           const exercises = await PracticeExerciseService.getPracticeExerciseByLessonId(selectedLesson.lesson_id);
           setQuestions(exercises);
+          setAiGeneratedQuestions([]);
           if (isMounted) setIsCompleted(!!progress?.completed);
         } catch {
           if (isMounted) setIsCompleted(false);
@@ -55,6 +59,30 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
     })();
     return () => { isMounted = false; };
   }, [selectedLesson, user]);
+
+  const handleGenerateAIQuestions = async () => {
+    if (!selectedLesson || isGeneratingQuestions || (aiQuota && !aiQuota.isUnderLimit)) {
+      return;
+    }
+
+    setIsGeneratingQuestions(true);
+    try {
+      const generatedQuestions = await generateQuestions(
+        selectedLesson.lesson_name,
+        selectedLesson.description,
+        selectedLesson.lesson_id
+      );
+      setAiGeneratedQuestions(generatedQuestions);
+
+      if (onRefreshQuota) {
+        await onRefreshQuota();
+      }
+    } catch (error) {
+      console.error('Error generating AI questions:', error);
+    } finally {
+      setIsGeneratingQuestions(false);
+    }
+  };
 
   const markLessonComplete = async () => {
     if (selectedLesson && user != null) {
@@ -149,7 +177,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                   {questions.map((question, index) =>
                   {
                       return (
-                          <PracticeQuestionBox question={question} index={index}/>
+                          <PracticeQuestionBox key={`db-${index}`} question={question} index={index}/>
                       )})}
                 </div>
               ) : (
@@ -157,6 +185,35 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                   <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>{t('learningContent.noPracticeQuestions')}</p>
                   <p className="text-sm mt-1">{t('learningContent.checkBackLater')}</p>
+                </div>
+              )}
+
+              {questions.length > 0 && (
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('learningContent.wantMorePractice')}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t('learningContent.generateAdditionalAiQuestions')}</p>
+                    </div>
+                    <button
+                      onClick={handleGenerateAIQuestions}
+                      disabled={isGeneratingQuestions || (aiQuota !== null && !aiQuota?.isUnderLimit)}
+                      className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>{isGeneratingQuestions ? t('learningContent.generating') : t('learningContent.generateAiQuestions')}</span>
+                    </button>
+                  </div>
+
+                  {aiGeneratedQuestions.length > 0 && (
+                    <div className="space-y-6">
+                      {aiGeneratedQuestions.map((question, index) =>
+                      {
+                          return (
+                              <PracticeQuestionBox key={`ai-${index}`} question={question} index={questions.length + index}/>
+                          )})}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
