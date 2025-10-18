@@ -1,10 +1,10 @@
 import React from 'react';
 import { AlertCircle, Sparkles } from 'lucide-react';
-import { AIQuotaInfo } from '../services/AIUsageService';
 import { useTranslation } from 'react-i18next';
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIQuotaProgressProps {
-    quota: AIQuotaInfo | null;
+    quota: AIQuotaInfoDto | null;
     isLoading?: boolean;
 }
 

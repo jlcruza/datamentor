@@ -5,14 +5,14 @@ import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 import {useTranslation} from "react-i18next";
 import {useTheme} from "../contexts/ThemeContext.tsx";
 import AIQuotaProgress from "./AIQuotaProgress.tsx";
-import { AIQuotaInfo } from "../services/AIUsageService.ts";
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 type AIChatMessageBoxProps = {
     selectedLesson: LearningContentDto;
     chatMessages: Msg[];
     setShowAIChat: (state: boolean) => void;
     setChatMessages: React.Dispatch<React.SetStateAction<Msg[]>>;
-    aiQuota?: AIQuotaInfo | null;
+    aiQuota?: AIQuotaInfoDto | null;
     onRefreshQuota?: () => Promise<void>;
 }
 
@@ -137,11 +137,11 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
                                     : "Ask about this lesson..."
                             }
                             className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent text-sm"
-                            disabled={isChatLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
+                            disabled={isChatLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
                         />
                         <button
                             onClick={sendChatMessage}
-                            disabled={!chatInput.trim() || isChatLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
+                            disabled={!chatInput.trim() || isChatLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
                             className="px-3 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center shadow-lg"
                         >
                             <Send className="h-4 w-4" />

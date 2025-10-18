@@ -6,12 +6,12 @@ import LanguageSelector from './LanguageSelector';
 import ThemeToggle from './ThemeToggle';
 import AIQuotaIndicator from './AIQuotaIndicator';
 import logo from '../images/logo.png';
-import { AIQuotaInfo } from '../services/AIUsageService';
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface HeaderProps {
   user: User | null;
   onLogout: () => void;
-  aiQuota?: AIQuotaInfo | null;
+  aiQuota?: AIQuotaInfoDto | null;
   isQuotaLoading?: boolean;
 }
 

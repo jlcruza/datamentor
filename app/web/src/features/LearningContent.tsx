@@ -18,13 +18,13 @@ import {ProgressRepository} from "../repository/progressRepository.ts";
 import {ASSISTANT_ROLE, Msg} from "../services/OpenAiService.ts";
 import {PracticeExerciseService} from "../services/PracticeExerciseService.ts";
 import {PracticeExerciseQuestionBoxDto} from "../services/dto/PracticeExerciseQuestionBoxDto.ts";
-import { AIQuotaInfo } from "../services/AIUsageService.ts";
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface LearningContentProps {
     lessons: LearningContentDto[];
     onLessonsSet: (newLessons: LearningContentDto[]) => void;
     user: User | null;
-    aiQuota?: AIQuotaInfo | null;
+    aiQuota?: AIQuotaInfoDto | null;
     onRefreshQuota?: () => Promise<void>;
 }
 

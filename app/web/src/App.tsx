@@ -9,7 +9,8 @@ import LoginModal from './components/LoginModal.tsx';
 import {LearningContentDto} from './repository/db_types/learningContentDto.ts';
 import {LearningContentService} from './services/LearningContentService.ts';
 import useSupabaseAuth from './hooks/useSupabaseAuth.ts';
-import { fetchAIUsage, AIQuotaInfo } from './services/AIUsageService.ts';
+import { fetchAIUsage } from './services/AIUsageService.ts';
+import {AIQuotaInfoDto} from "./services/dto/aiQuotaInfoDto.ts";
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
@@ -18,7 +19,7 @@ function App() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('learn');
   const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
   const [lessons, setLessons] = useState<LearningContentDto[]>([]);
-  const [aiQuota, setAiQuota] = useState<AIQuotaInfo | null>(null);
+  const [aiQuota, setAiQuota] = useState<AIQuotaInfoDto | null>(null);
   const [isQuotaLoading, setIsQuotaLoading] = useState(false);
 
   // Load lessons on mount; service already handles errors and returns []

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
-import { AIQuotaInfo } from '../services/AIUsageService';
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIQuotaIndicatorProps {
-    quota: AIQuotaInfo | null;
+    quota: AIQuotaInfoDto | null;
     isLoading?: boolean;
 }
 

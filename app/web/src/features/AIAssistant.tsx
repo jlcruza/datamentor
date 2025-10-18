@@ -4,10 +4,10 @@ import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import CustomReactViewer from "../components/CustomReactViewer.tsx";
 import AIQuotaProgress from "../components/AIQuotaProgress.tsx";
-import { AIQuotaInfo } from '../services/AIUsageService.ts';
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIAssistantProps {
-  aiQuota?: AIQuotaInfo | null;
+  aiQuota?: AIQuotaInfoDto | null;
   onRefreshQuota?: () => Promise<void>;
 }
 
@@ -201,11 +201,11 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
                       : t('aiAssistant.askAboutDatabases')
                   }
                   className="flex-1 px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent"
-                  disabled={isLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
+                  disabled={isLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
                 />
                 <button
                   onClick={handleSendMessage}
-                  disabled={!inputMessage.trim() || isLoading || (aiQuota !== null && !aiQuota.isUnderLimit)}
+                  disabled={!inputMessage.trim() || isLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25"
                 >
                   <Send className="h-4 w-4" />

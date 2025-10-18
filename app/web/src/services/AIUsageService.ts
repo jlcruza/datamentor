@@ -1,56 +1,25 @@
-import { VITE_SUPABASE_ANON_KEY, VITE_SUPABASE_URL } from "../constants/environmentConfigs";
+import {supabase} from "../lib/supabaseClient.ts";
+import {AIQuotaInfoDto} from "./dto/aiQuotaInfoDto.ts";
 
-export type AIUsageResponse = {
-    user_input_usage: number;
-    user_output_usage: number;
-    user_total_usage: number;
-    ai_system_limit: {
-        system_id: number;
-        token_limit: number;
-        created_date: string;
-        modified_date: string;
-    };
-    is_usage_under_limit: boolean;
-    billing_period: string;
-};
+const AI_USAGE_FUNCTION = 'ai-usage';
 
-export type AIQuotaInfo = {
-    usedTokens: number;
-    totalTokens: number;
-    percentageUsed: number;
-    isUnderLimit: boolean;
-    billingPeriod: string;
-};
-
-export const fetchAIUsage = async (): Promise<AIQuotaInfo | null> => {
+export const fetchAIUsage = async (): Promise<AIQuotaInfoDto | null> => {
     try {
-        const apiUrl = `${VITE_SUPABASE_URL}/functions/v1/ai-usage`;
 
-        const headers = {
-            'Authorization': `Bearer ${VITE_SUPABASE_ANON_KEY}`,
-            'Content-Type': 'application/json',
-        };
+        const { data, error } = await supabase.functions
+            .invoke(AI_USAGE_FUNCTION)
 
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch AI usage:', response.statusText);
-            return null;
-        }
-
-        const data: AIUsageResponse = await response.json();
+        if (error)
+            throw error;
 
         const usedTokens = data.user_total_usage;
         const totalTokens = data.ai_system_limit.token_limit;
         const percentageUsed = totalTokens > 0 ? Math.round((usedTokens / totalTokens) * 100) : 0;
 
         return {
-            usedTokens,
-            totalTokens,
-            percentageUsed,
+            usedTokens: usedTokens,
+            totalTokens: totalTokens,
+            percentageUsed: percentageUsed,
             isUnderLimit: data.is_usage_under_limit,
             billingPeriod: data.billing_period
         };
