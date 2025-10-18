@@ -4,10 +4,15 @@ import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import CustomReactViewer from "../components/CustomReactViewer.tsx";
 
+interface MessageWithId extends Msg {
+  id: string;
+}
+
 const AIAssistant: React.FC = () => {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<Msg[]>([
+  const [messages, setMessages] = useState<MessageWithId[]>([
     {
+      id: 'welcome-msg',
       content: t('aiAssistant.welcomeMessage', "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?"),
       role: ASSISTANT_ROLE
     }
@@ -27,27 +32,44 @@ const AIAssistant: React.FC = () => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
-    const userMessage: Msg = {
+    const userMessage: MessageWithId = {
+      id: `user-${Date.now()}`,
       content: inputMessage,
       role: USER_ROLE
     };
 
-    setMessages(prev => [...prev, userMessage]);
-      console.log("User Message: ", userMessage);
-      console.log("All Messages: ", messages);
+    const currentInput = inputMessage;
     setInputMessage('');
     setIsLoading(true);
 
-      const aiResponse = await askTutor({
-          prompt: inputMessage,
-          hint: "",
-          messages: messages
-      });
+    // Update messages with the user's message
+    setMessages(prev => {
+      const updatedMessages = [...prev, userMessage];
 
-      console.log("AI Response: ", aiResponse);
+      // Send request with the updated messages list
+      (async () => {
+        try {
+          const aiResponse = await askTutor({
+            prompt: currentInput,
+            hint: "",
+            messages: updatedMessages
+          });
 
-      setMessages(prev => [...prev, aiResponse]);
-      setIsLoading(false);
+          const aiMessageWithId: MessageWithId = {
+            id: `assistant-${Date.now()}`,
+            ...aiResponse
+          };
+
+          setMessages(prevMsgs => [...prevMsgs, aiMessageWithId]);
+        } catch (error) {
+          console.error("Error getting AI response:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      })();
+
+      return updatedMessages;
+    });
   };
 
   const quickQuestions = t('aiAssistant.quickQuestionsList', { returnObjects: true }) as string[];
@@ -109,13 +131,13 @@ const AIAssistant: React.FC = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message, index) => (
+              {messages.map((message) => (
                 <div
-                  key={index}  // Add this key prop
+                  key={message.id}
                   className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs lg:max-w-md xl:max-w-lg ${
+                    className={`max-w-xs lg:max-w-md xl:max-w-lg break-words overflow-hidden ${
                       message.role === USER_ROLE
                         ? 'bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
@@ -123,12 +145,12 @@ const AIAssistant: React.FC = () => {
                   >
                     <div className="flex items-start space-x-2">
                       {message.role === ASSISTANT_ROLE && (
-                        <Bot className="h-4 w-4 mt-0.5 text-gray-600 dark:text-gray-400" />
+                        <Bot className="h-4 w-4 mt-0.5 flex-shrink-0 text-gray-600 dark:text-gray-400" />
                       )}
                       {message.role === USER_ROLE && (
-                        <User className="h-4 w-4 mt-0.5 text-white/80" />
+                        <User className="h-4 w-4 mt-0.5 flex-shrink-0 text-white/80" />
                       )}
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0 overflow-hidden">
                         <div className="text-sm">
                             <CustomReactViewer fitParent selectedLesson={null} markdownText={message.content}/>
                         </div>
