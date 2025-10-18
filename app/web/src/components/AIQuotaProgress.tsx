@@ -15,10 +15,10 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
     const totalTokens = quota?.totalTokens ?? 1;
     const isUnderLimit = quota?.isUnderLimit ?? true;
 
-    const getProgressColor = (percentage: number) => {
+    const getProgressFillClass = (percentage: number) => {
         if (percentage >= 90) return 'bg-red-600';
         if (percentage >= 70) return 'bg-yellow-500';
-        return 'bg-blue-600 dark:bg-blue-500';
+        return 'progress-fill';
     };
 
     const getContainerColor = (percentage: number) => {
@@ -60,9 +60,9 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
                 </span>
             </div>
 
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+            <div className="progress-bar mb-2">
                 <div
-                    className={`h-2 rounded-full transition-all duration-500 ${getProgressColor(percentageUsed)}`}
+                    className={getProgressFillClass(percentageUsed)}
                     style={{ width: `${Math.min(percentageUsed, 100)}%` }}
                 />
             </div>
