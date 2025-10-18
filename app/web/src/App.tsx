@@ -45,6 +45,7 @@ function App() {
     (async () => {
       const quota = await fetchAIUsage();
       if (isMounted) {
+          console.log("Setting quota:", quota)
         setAiQuota(quota);
       }
     })();
@@ -58,6 +59,7 @@ function App() {
   const refreshQuota = async () => {
     if (!user) return;
     const quota = await fetchAIUsage();
+      console.log("Setting quota:", quota)
     setAiQuota(quota);
   };
 

@@ -12,17 +12,23 @@ export const fetchAIUsage = async (): Promise<AIQuotaInfoDto | null> => {
         if (error)
             throw error;
 
+        console.log("Found quota: ", data)
+
         const usedTokens = data.user_total_usage;
-        const totalTokens = data.ai_system_limit.token_limit;
+        const totalTokens = data.ai_system_limit;
         const percentageUsed = totalTokens > 0 ? Math.round((usedTokens / totalTokens) * 100) : 0;
 
-        return {
+        const aiQuotaInfo: AIQuotaInfoDto = {
             usedTokens: usedTokens,
             totalTokens: totalTokens,
             percentageUsed: percentageUsed,
             isUnderLimit: data.is_usage_under_limit,
             billingPeriod: data.billing_period
-        };
+        }
+
+        console.log("Quota: ", aiQuotaInfo)
+
+        return aiQuotaInfo;
     } catch (error) {
         console.error('Error fetching AI usage:', error);
         return null;

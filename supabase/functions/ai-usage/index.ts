@@ -34,7 +34,7 @@ Deno.serve(async (req) => {
         user_input_usage: nonNullUsage.total_input_token,
         user_output_usage: nonNullUsage.total_output_token,
         user_total_usage: nonNullUsage.total_input_token + nonNullUsage.total_output_token,
-        ai_system_limit: nonNullLimit,
+        ai_system_limit: nonNullLimit.token_limit,
         is_usage_under_limit: isUsageUnderLimit(nonNullUsage, nonNullLimit),
         billing_period: nonNullUsage.billing_period
     }

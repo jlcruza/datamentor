@@ -218,6 +218,9 @@ GRANT USAGE, SELECT ON SEQUENCE public.progress_progress_id_seq TO authenticated
 GRANT USAGE, SELECT ON SEQUENCE public.sandboxes_sandbox_id_seq TO authenticated;
 GRANT USAGE, SELECT ON SEQUENCE public.ai_usage_usage_id_seq TO authenticated;
 
+CREATE POLICY "ai_system readable to all authenticated" ON public.ai_system
+    FOR SELECT TO authenticated USING (true);
+
 -- RLS policies: ownership-based CRUD for progress
 CREATE POLICY "Progress select own rows" ON public.progress
     FOR SELECT TO authenticated
