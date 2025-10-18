@@ -10,7 +10,7 @@ import {LearningContentDto} from './repository/db_types/learningContentDto.ts';
 import {LearningContentService} from './services/LearningContentService.ts';
 import useSupabaseAuth from './hooks/useSupabaseAuth.ts';
 import { fetchAIUsage } from './services/AIUsageService.ts';
-import {AIQuotaInfoDto} from "./services/dto/aiQuotaInfoDto.ts";
+import { AIQuotaInfoDto } from "./services/dto/aiQuotaInfoDto.ts";
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
@@ -20,7 +20,6 @@ function App() {
   const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
   const [lessons, setLessons] = useState<LearningContentDto[]>([]);
   const [aiQuota, setAiQuota] = useState<AIQuotaInfoDto | null>(null);
-  const [isQuotaLoading, setIsQuotaLoading] = useState(false);
 
   // Load lessons on mount; service already handles errors and returns []
   useEffect(() => {
@@ -42,13 +41,11 @@ function App() {
     }
 
     let isMounted = true;
-    setIsQuotaLoading(true);
 
     (async () => {
       const quota = await fetchAIUsage();
       if (isMounted) {
         setAiQuota(quota);
-        setIsQuotaLoading(false);
       }
     })();
 
@@ -56,16 +53,6 @@ function App() {
       isMounted = false;
     };
   }, [user]);
-
-  // Refresh quota when switching to chat section
-  useEffect(() => {
-    if (activeSection === 'chat' && user) {
-      (async () => {
-        const quota = await fetchAIUsage();
-        setAiQuota(quota);
-      })();
-    }
-  }, [activeSection, user]);
 
   // Function to refresh quota (can be called from child components)
   const refreshQuota = async () => {
@@ -121,7 +108,6 @@ function App() {
         user={user}
         onLogout={handleLogout}
         aiQuota={aiQuota}
-        isQuotaLoading={isQuotaLoading}
       />
 
       <div className="flex flex-1">

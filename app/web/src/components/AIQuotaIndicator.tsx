@@ -4,22 +4,10 @@ import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIQuotaIndicatorProps {
     quota: AIQuotaInfoDto | null;
-    isLoading?: boolean;
 }
 
-const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota, isLoading }) => {
-    if (isLoading) {
-        return (
-            <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600">
-                <Sparkles className="h-4 w-4 text-gray-400 animate-pulse" />
-                <span className="text-sm text-gray-500 dark:text-gray-400">...</span>
-            </div>
-        );
-    }
-
-    if (!quota) {
-        return null;
-    }
+const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota }) => {
+    const percentageUsed = quota?.percentageUsed ?? 0;
 
     const getColorClasses = (percentage: number) => {
         if (percentage >= 90) {
@@ -45,13 +33,13 @@ const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota, isLoading })
         };
     };
 
-    const colors = getColorClasses(quota.percentageUsed);
+    const colors = getColorClasses(percentageUsed);
 
     return (
         <div className={`flex items-center space-x-2 ${colors.bg} px-3 py-1.5 rounded-lg border ${colors.border}`}>
             <Sparkles className={`h-4 w-4 ${colors.icon}`} />
             <span className={`text-sm font-medium ${colors.text}`}>
-                {quota.percentageUsed}%
+                {percentageUsed}%
             </span>
         </div>
     );

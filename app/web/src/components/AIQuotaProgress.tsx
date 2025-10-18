@@ -5,26 +5,15 @@ import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIQuotaProgressProps {
     quota: AIQuotaInfoDto | null;
-    isLoading?: boolean;
 }
 
-const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota, isLoading }) => {
+const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
     useTranslation();
 
-    if (isLoading) {
-        return (
-            <div className="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center space-x-2">
-                    <Sparkles className="h-4 w-4 text-gray-400 animate-pulse" />
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Loading quota...</span>
-                </div>
-            </div>
-        );
-    }
-
-    if (!quota) {
-        return null;
-    }
+    const percentageUsed = quota?.percentageUsed ?? 0;
+    const usedTokens = quota?.usedTokens ?? 0;
+    const totalTokens = quota?.totalTokens ?? 1;
+    const isUnderLimit = quota?.isUnderLimit ?? true;
 
     const getProgressColor = (percentage: number) => {
         if (percentage >= 90) return 'bg-red-600';
@@ -42,11 +31,11 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota, isLoading }) =
         return 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800';
     };
 
-    const isNearLimit = quota.percentageUsed >= 70;
-    const isAtLimit = !quota.isUnderLimit;
+    const isNearLimit = percentageUsed >= 70;
+    const isAtLimit = !isUnderLimit;
 
     return (
-        <div className={`p-3 rounded-lg border ${getContainerColor(quota.percentageUsed)}`}>
+        <div className={`p-3 rounded-lg border ${getContainerColor(percentageUsed)}`}>
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-2">
                     <Sparkles className={`h-4 w-4 ${
@@ -67,20 +56,20 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota, isLoading }) =
                             ? 'text-yellow-700 dark:text-yellow-300'
                             : 'text-blue-700 dark:text-blue-300'
                 }`}>
-                    {quota.percentageUsed}%
+                    {percentageUsed}%
                 </span>
             </div>
 
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
                 <div
-                    className={`h-2 rounded-full transition-all duration-500 ${getProgressColor(quota.percentageUsed)}`}
-                    style={{ width: `${Math.min(quota.percentageUsed, 100)}%` }}
+                    className={`h-2 rounded-full transition-all duration-500 ${getProgressColor(percentageUsed)}`}
+                    style={{ width: `${Math.min(percentageUsed, 100)}%` }}
                 />
             </div>
 
             <div className="flex items-center justify-between text-xs">
                 <span className="text-gray-600 dark:text-gray-400">
-                    {quota.usedTokens.toLocaleString()} / {quota.totalTokens.toLocaleString()} tokens
+                    {usedTokens.toLocaleString()} / {totalTokens.toLocaleString()} tokens
                 </span>
                 {isAtLimit && (
                     <div className="flex items-center space-x-1 text-red-600 dark:text-red-400">
