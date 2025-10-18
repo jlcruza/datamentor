@@ -8,7 +8,7 @@ import {
 import {getSupabaseUser} from "../services/supabaseClient.ts";
 import {AiUsageRepository} from "../repository/aiUsageRepository.ts";
 import {AiUsageDto} from "../repository/dtos/aiUsageDto.ts";
-import {AiUsageValidator} from "../services/aiUsageValidator.ts";
+import {nullUsageToDefault, nullLimitToDefault, isUsageUnderLimit} from "../services/aiUsageValidator.ts";
 import {AiSystemDto} from "../repository/dtos/aiSystemDto.ts";
 import {AiSystemRepository} from "../repository/aiSystemRepository.ts";
 
@@ -24,20 +24,18 @@ Deno.serve(async (req) => {
         return DataMentorResponse_UNAUTHORIZED(req);
     }
 
-    const validator = new AiUsageValidator();
-
     const currentAiUsage: AiUsageDto = await AiUsageRepository.getAiUsage(req);
     const aiSystemLimit: AiSystemDto = await AiSystemRepository.getAiSystemLimit(req);
 
-    const nonNullUsage: AiUsageDto = validator.nullUsageToDefault(currentAiUsage);
-    const nonNullLimit: AiSystemDto = validator.nullLimitToDefault(aiSystemLimit);
+    const nonNullUsage: AiUsageDto = nullUsageToDefault(currentAiUsage);
+    const nonNullLimit: AiSystemDto = nullLimitToDefault(aiSystemLimit);
 
     const response = {
         user_input_usage: nonNullUsage.total_input_token,
         user_output_usage: nonNullUsage.total_output_token,
         user_total_usage: nonNullUsage.total_input_token + nonNullUsage.total_output_token,
         ai_system_limit: nonNullLimit,
-        is_usage_under_limit: AiUsageValidator.isUsageUnderLimit(nonNullUsage, nonNullLimit),
+        is_usage_under_limit: isUsageUnderLimit(nonNullUsage, nonNullLimit),
         billing_period: nonNullUsage.billing_period
     }
 
