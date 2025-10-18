@@ -22,17 +22,16 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const messageIdCounter = useRef(0);
+    useRef(0);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSendMessage = async () => {
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+    const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
     if (aiQuota && !aiQuota.isUnderLimit) {

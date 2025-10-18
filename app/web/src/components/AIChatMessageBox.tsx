@@ -29,7 +29,7 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
     const [chatInput, setChatInput] = useState('');
     const [isChatLoading, setIsChatLoading] = useState(false);
     const { t } = useTranslation();
-    const { theme } = useTheme();
+    useTheme();
 
     const sendChatMessage = async () => {
         if (!chatInput.trim() || isChatLoading) return;

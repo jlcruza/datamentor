@@ -32,10 +32,11 @@ Deno.serve(async (req) => {
         return DataMentorResponse_UNAUTHORIZED(req);
     }
 
+    const validator = new AiUsageValidator();
     const currentAiUsage: AiUsageDto = await AiUsageRepository.getAiUsage(req);
     const aiSystemLimit: AiSystemDto = await AiSystemRepository.getAiSystemLimit(req);
 
-    if (!AiUsageValidator.isUsageUnderLimit(currentAiUsage, aiSystemLimit)){
+    if (!validator.isUsageUnderLimit(currentAiUsage, aiSystemLimit)){
         console.log("Usage limit exceeded");
         return DataMentorResponse_BAD_REQUEST(req, "Usage limit exceeded");
     }

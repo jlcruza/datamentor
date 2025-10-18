@@ -24,11 +24,13 @@ Deno.serve(async (req) => {
         return DataMentorResponse_UNAUTHORIZED(req);
     }
 
+    const validator = new AiUsageValidator();
+
     const currentAiUsage: AiUsageDto = await AiUsageRepository.getAiUsage(req);
     const aiSystemLimit: AiSystemDto = await AiSystemRepository.getAiSystemLimit(req);
 
-    const nonNullUsage: AiUsageDto = AiUsageValidator.nullUsageToDefault(currentAiUsage);
-    const nonNullLimit: AiSystemDto = AiUsageValidator.nullLimitToDefault(aiSystemLimit);
+    const nonNullUsage: AiUsageDto = validator.nullUsageToDefault(currentAiUsage);
+    const nonNullLimit: AiSystemDto = validator.nullLimitToDefault(aiSystemLimit);
 
     const response = {
         user_input_usage: nonNullUsage.total_input_token,

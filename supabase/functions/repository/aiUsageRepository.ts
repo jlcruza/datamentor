@@ -6,7 +6,7 @@ const AI_MONTH_USAGE_VIEW = 'current_month_ai_usage';
 
 export class AiUsageRepository {
 
-    static getCurrentMonth(): string{
+    static getCurrentMonth(): string {
         // Set billing_period to the first day of the current month (UTC)
         const now = new Date();
         return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0));
@@ -31,22 +31,32 @@ export class AiUsageRepository {
     }
 
     static async saveAiUsage(req, currentUsage: AiUsageDto | null, aiUsage: AiUsageDto): Promise<void> {
-        if (currentUsage !== null)
-        {
+        aiUsage.modified_date = new Date().toISOString();
+        const isNewRecord: boolean = (currentUsage == null || currentUsage.usage_id < 1);
+
+        if (isNewRecord) {
+            const {data, error} = await getSupabaseClient(req).from(AI_USAGE_TABLE)
+                .insert(aiUsage);
+
+            if (error) {
+                console.error('[AiUsageRepository] saveAiUsage: error inserting aiUsage:', error);
+            } else {
+                console.log('[AiUsageRepository] saveAiUsage: inserted aiUsage successfully:', data);
+            }
+        } else {
             aiUsage.total_input_token += currentUsage.total_input_token;
             aiUsage.total_output_token += currentUsage.total_output_token;
+            aiUsage.usage_id = currentUsage.usage_id;
+
+            const {data, error} = await getSupabaseClient(req).from(AI_USAGE_TABLE)
+                .update(aiUsage)
+                .eq('usage_id', aiUsage.usage_id);
+
+            if (error) {
+                console.error('[AiUsageRepository] saveAiUsage: error updating aiUsage:', error);
+            } else {
+                console.log('[AiUsageRepository] saveAiUsage: updated aiUsage successfully:', data);
+            }
         }
-
-        aiUsage.modified_date = new Date().toISOString();
-
-        const {data, error} = await getSupabaseClient(req).from(AI_USAGE_TABLE)
-            .insert(aiUsage);
-
-        if (error) {
-            console.error('[AiUsageRepository] saveAiUsage: error inserting aiUsage:', error);
-        } else {
-            console.log('[AiUsageRepository] saveAiUsage: inserted aiUsage successfully:', data);
-        }
-        
     }
 }

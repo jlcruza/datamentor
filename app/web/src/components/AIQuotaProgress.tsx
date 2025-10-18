@@ -9,7 +9,7 @@ interface AIQuotaProgressProps {
 }
 
 const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota, isLoading }) => {
-    const { t } = useTranslation();
+    useTranslation();
 
     if (isLoading) {
         return (

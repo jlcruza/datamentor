@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LogOut, User as UserIcon} from 'lucide-react';
 import {User} from "../types/user";
-import LanguageSelector from './LanguageSelector';
 import ThemeToggle from './ThemeToggle';
 import AIQuotaIndicator from './AIQuotaIndicator';
 import logo from '../images/logo.png';
