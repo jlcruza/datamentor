@@ -15,6 +15,7 @@ const AIAssistant: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messageIdCounter = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,22 +33,32 @@ const AIAssistant: React.FC = () => {
       role: USER_ROLE
     };
 
-    setMessages(prev => [...prev, userMessage]);
-      console.log("User Message: ", userMessage);
-      console.log("All Messages: ", messages);
+    const currentInput = inputMessage;
     setInputMessage('');
     setIsLoading(true);
 
+    // Add user message to the list
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+
+    // Small delay to ensure the UI updates before making the API call
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    try {
+      // Send request with the updated messages list (without id property)
       const aiResponse = await askTutor({
-          prompt: inputMessage,
-          hint: "",
-          messages: messages
+        prompt: currentInput,
+        hint: "",
+        messages: updatedMessages
       });
 
-      console.log("AI Response: ", aiResponse);
-
+      // Add AI response to the list
       setMessages(prev => [...prev, aiResponse]);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+    } finally {
       setIsLoading(false);
+    }
   };
 
   const quickQuestions = t('aiAssistant.quickQuestionsList', { returnObjects: true }) as string[];
@@ -111,11 +122,11 @@ const AIAssistant: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
                 <div
-                  key={index}  // Add this key prop
+                  key={`${message.role}-${index}-${message.content.substring(0, 20)}`}
                   className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs lg:max-w-md xl:max-w-lg ${
+                    className={`max-w-xs lg:max-w-md xl:max-w-lg break-words overflow-hidden ${
                       message.role === USER_ROLE
                         ? 'bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
@@ -123,12 +134,12 @@ const AIAssistant: React.FC = () => {
                   >
                     <div className="flex items-start space-x-2">
                       {message.role === ASSISTANT_ROLE && (
-                        <Bot className="h-4 w-4 mt-0.5 text-gray-600 dark:text-gray-400" />
+                        <Bot className="h-4 w-4 mt-0.5 flex-shrink-0 text-gray-600 dark:text-gray-400" />
                       )}
                       {message.role === USER_ROLE && (
-                        <User className="h-4 w-4 mt-0.5 text-white/80" />
+                        <User className="h-4 w-4 mt-0.5 flex-shrink-0 text-white/80" />
                       )}
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0 overflow-hidden">
                         <div className="text-sm">
                             <CustomReactViewer fitParent selectedLesson={null} markdownText={message.content}/>
                         </div>

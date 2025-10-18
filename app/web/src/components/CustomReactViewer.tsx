@@ -49,14 +49,14 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
 
     const containerPadding = fitParent ? "" : "px-2 sm:px-4";
     const codeWrapperClass = fitParent
-        ? "overflow-x-auto my-2 sm:my-4"
+        ? "overflow-x-auto my-2 max-w-full"
         : "overflow-x-auto my-2 sm:my-4 -mx-2 sm:-mx-4 px-2 sm:px-4";
     const tableWrapperClass = fitParent
         ? "overflow-x-auto mb-2 sm:mb-4 w-full"
         : "overflow-x-auto mb-2 sm:mb-4 w-full -mx-2 sm:-mx-4 px-2 sm:px-4";
 
     return (
-        <div className={`prose dark:prose-invert max-w-none w-full overflow-hidden ${containerPadding}`}>
+        <div className={`prose dark:prose-invert max-w-none w-full ${fitParent ? 'overflow-x-auto' : 'overflow-hidden'} ${containerPadding}`}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -79,6 +79,11 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
                                     style={theme === 'light' ? prism : atomDark}
                                     language="sql"
                                     PreTag="div"
+                                    customStyle={fitParent ? {
+                                        maxWidth: '100%',
+                                        fontSize: '0.75rem',
+                                        margin: 0,
+                                    } : undefined}
                                     {...props}
                                 >
                                     {String(children).replace(/\n$/, '')}
