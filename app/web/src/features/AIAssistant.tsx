@@ -42,34 +42,30 @@ const AIAssistant: React.FC = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Update messages with the user's message
-    setMessages(prev => {
-      const updatedMessages = [...prev, userMessage];
+    // Add user message to the list
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
 
+    try {
       // Send request with the updated messages list
-      (async () => {
-        try {
-          const aiResponse = await askTutor({
-            prompt: currentInput,
-            hint: "",
-            messages: updatedMessages
-          });
+      const aiResponse = await askTutor({
+        prompt: currentInput,
+        hint: "",
+        messages: updatedMessages
+      });
 
-          const aiMessageWithId: MessageWithId = {
-            id: `assistant-${Date.now()}`,
-            ...aiResponse
-          };
+      const aiMessageWithId: MessageWithId = {
+        id: `assistant-${Date.now()}`,
+        ...aiResponse
+      };
 
-          setMessages(prevMsgs => [...prevMsgs, aiMessageWithId]);
-        } catch (error) {
-          console.error("Error getting AI response:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      })();
-
-      return updatedMessages;
-    });
+      // Add AI response to the list
+      setMessages(prev => [...prev, aiMessageWithId]);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const quickQuestions = t('aiAssistant.quickQuestionsList', { returnObjects: true }) as string[];
