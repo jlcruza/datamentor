@@ -69,6 +69,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
     try {
       const generatedQuestions = await generateQuestions(
         selectedLesson.lesson_name,
+        selectedLesson.description,
         selectedLesson.lesson_id
       );
       setAiGeneratedQuestions(generatedQuestions);
@@ -196,7 +197,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                     </div>
                     <button
                       onClick={handleGenerateAIQuestions}
-                      disabled={isGeneratingQuestions || (aiQuota !== null && !aiQuota.isUnderLimit)}
+                      disabled={isGeneratingQuestions || (aiQuota !== null && !aiQuota?.isUnderLimit)}
                       className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25"
                     >
                       <Sparkles className="h-4 w-4" />

@@ -4,11 +4,11 @@ import {GeneratedQuestionsDto} from "./dto/generatedQuestionsDto.ts";
 
 const AI_QUESTIONS_FUNCTION = 'ai-questions';
 
-export async function generateQuestions(hint: string, lesson_id: number): Promise<PracticeExerciseQuestionBoxDto[]> {
+export async function generateQuestions(hint: string, description: string, lesson_id: number): Promise<PracticeExerciseQuestionBoxDto[]> {
     try {
         const { data, error } = await supabase.functions
             .invoke(AI_QUESTIONS_FUNCTION, {
-                body: { hint },
+                body: { hint, description},
             })
 
         if (error)

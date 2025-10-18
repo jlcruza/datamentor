@@ -2,7 +2,7 @@ import {OPENAI_API_KEY, OPENAI_GPT_MODEL} from "../_shared/environment.ts";
 import OpenAI from "jsr:@openai/openai";
 import {GeneratedQuestionsDto} from "./dto/generatedQuestionsDto.ts";
 import { zodTextFormat } from "jsr:@openai/openai/helpers/zod";
-import { z } from "jsr:@std/zod";
+import { z } from "npm:zod@^3.23.8";
 
 export type Msg = { role: "system" | "user" | "assistant"; content: string };
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
@@ -36,7 +36,7 @@ export async function getResponse(messages: Msg[], hint: string): Promise<Object
     return response;
 }
 
-export async function getGeneratedQuestions(hint: string): Promise<Object> {
+export async function getGeneratedQuestions(hint: string, description: string): Promise<Object> {
 
     const QuestionFormat = z.object({
         question: z.string().min(1),
@@ -48,7 +48,10 @@ export async function getGeneratedQuestions(hint: string): Promise<Object> {
         {message: "correct_answer_index must be within options bounds"}
     );
 
-    const QuestionsListFormat = z.array(QuestionFormat).min(3).max(5);
+    // Wrap the questions array in an object to comply with JSON Schema object requirement
+    const QuestionsEnvelope = z.object({
+        questions: z.array(QuestionFormat).min(3).max(5),
+    });
 
     // Single, strong system prompt + optional context line
     const system = [
@@ -60,7 +63,8 @@ export async function getGeneratedQuestions(hint: string): Promise<Object> {
         "Constraint 3: Bloom’s taxonomy: include a mix of levels (e.g., recordar, aplicar, analizar).",
         "Constraint 4: Each question must have 3–6 unique options, exactly one correct answer.",
         "Constraint 5: Ensure correct_answer_index is within the options array bounds.",
-        hint ?`Context:  ${hint}` : null,
+        hint ?`Context 1: Lesson name is ${hint}` : null,
+        description ?`Context 2: Lesson description is ${description}` : null,
     ].filter(Boolean).join("\n");
 
     // Compose the request for OpenAI Responses API, with streaming
@@ -70,12 +74,12 @@ export async function getGeneratedQuestions(hint: string): Promise<Object> {
             {role: "system", content: system},
             {role: "user", content: "Genera entre 3 y 5 preguntas siguiendo el formato estrictamente."}
         ],
-        text: {format: zodTextFormat(QuestionsListFormat, "questions")},
+        text: {format: zodTextFormat(QuestionsEnvelope, "questions")},
         stream: false
     });
 
     console.log("Response: ", response);
-    console.log("Response object: ", response.output_parsed);
+    console.log("Response object: ",getGeneratedQuestionsOutputObject(response));
 
     return response;
 }
@@ -85,7 +89,20 @@ export function getResponseText(response): string{
 }
 
 export function getGeneratedQuestionsOutputObject(response): GeneratedQuestionsDto[]{
-    return response.output_parsed ?? [];
+    if (response.output_parsed?.questions) {
+        return response.output_parsed.questions;
+    }
+    // Fallback: try to parse the raw text
+    try {
+        const parsed = JSON.parse(response.output_text ?? "null");
+        // If you used an envelope { questions: [...] }
+        if (parsed && Array.isArray(parsed.questions))
+            return parsed.questions;
+        // If the model emitted an array directly
+        if (Array.isArray(parsed))
+            return parsed;
+    } catch {}
+    return [];
 }
 export function getResponseInputTokenUsage(response): number{
     return response?.usage?.input_tokens ?? 0;

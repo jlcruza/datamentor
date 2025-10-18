@@ -38,13 +38,14 @@ Deno.serve(async (req) => {
         return DataMentorResponse_BAD_REQUEST(req, "Usage limit exceeded");
     }
 
-    const {hint} = await req.json()
-        .catch(() => ({hint: null})) as {
-        hint?: string | null;
+    const {hint, description} = await req.json()
+        .catch(() => ({hint: null, description: null})) as {
+        hint?: string | null,
+        description?: string | null
     };
 
     // Compose the request for OpenAI Responses API, with streaming
-    const openAIResponse = await getGeneratedQuestions(hint);
+    const openAIResponse = await getGeneratedQuestions(hint, description);
 
     let aiUsage: AiUsageDto = {
         student_id: user.id,
