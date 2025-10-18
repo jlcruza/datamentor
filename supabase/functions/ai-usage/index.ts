@@ -1,24 +1,16 @@
 // deno task serve
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import {
-    DataMentorResponse_BAD_REQUEST,
     DataMentorResponse_NO_CONTENT,
     DataMentorResponse_UNAUTHORIZED,
     getCorsHeaders
 } from "../services/dataMentorResponse.ts";
 import {getSupabaseUser} from "../services/supabaseClient.ts";
-import {
-    getResponse,
-    getResponseInputTokenUsage,
-    getResponseOutputTokenUsage,
-    getResponseText,
-    Msg
-} from "../services/openaiClient.ts";
 import {AiUsageRepository} from "../repository/aiUsageRepository.ts";
 import {AiUsageDto} from "../repository/dtos/aiUsageDto.ts";
+import {AiUsageValidator} from "../services/aiUsageValidator.ts";
 import {AiSystemDto} from "../repository/dtos/aiSystemDto.ts";
 import {AiSystemRepository} from "../repository/aiSystemRepository.ts";
-import {AiUsageValidator} from "../services/aiUsageValidator.ts";
 
 Deno.serve(async (req) => {
     if (req.method === "OPTIONS") {
@@ -35,30 +27,19 @@ Deno.serve(async (req) => {
     const currentAiUsage: AiUsageDto = await AiUsageRepository.getAiUsage(req);
     const aiSystemLimit: AiSystemDto = await AiSystemRepository.getAiSystemLimit(req);
 
-    if (!AiUsageValidator.isUsageUnderLimit(currentAiUsage, aiSystemLimit)){
-        console.log("Usage limit exceeded");
-        return DataMentorResponse_BAD_REQUEST(req, "Usage limit exceeded");
+    const nonNullUsage: AiUsageDto = AiUsageValidator.nullUsageToDefault(currentAiUsage);
+    const nonNullLimit: AiSystemDto = AiUsageValidator.nullLimitToDefault(aiSystemLimit);
+
+    const response = {
+        user_input_usage: nonNullUsage.total_input_token,
+        user_output_usage: nonNullUsage.total_output_token,
+        user_total_usage: nonNullUsage.total_input_token + nonNullUsage.total_output_token,
+        ai_system_limit: nonNullLimit,
+        is_usage_under_limit: AiUsageValidator.isUsageUnderLimit(nonNullUsage, nonNullLimit),
+        billing_period: nonNullUsage.billing_period
     }
 
-    const {messages, hint} = await req.json()
-        .catch(() => ({messages: [], hint: null})) as {
-        messages: Msg[];
-        hint?: string | null;
-    };
-
-    // Compose the request for OpenAI Responses API, with streaming
-    const openAIResponse = await getResponse(messages, hint);
-
-    let aiUsage: AiUsageDto = {
-        student_id: user.id,
-        total_input_token: getResponseInputTokenUsage(openAIResponse),
-        total_output_token: getResponseOutputTokenUsage(openAIResponse),
-        billing_period: AiUsageRepository.getCurrentMonth()
-    }
-
-    await AiUsageRepository.saveAiUsage(req, currentAiUsage, aiUsage);
-
-    return new Response(getResponseText(openAIResponse), {
+    return new Response(JSON.stringify(response), {
         headers: {
             ...getCorsHeaders(req),
             "Content-Type": "text/plain"

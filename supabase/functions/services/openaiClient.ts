@@ -4,7 +4,7 @@ import OpenAI from "jsr:@openai/openai";
 export type Msg = { role: "system" | "user" | "assistant"; content: string };
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
-export async function getResponse(messages: Msg[], hint: string): Promise<string> {
+export async function getResponse(messages: Msg[], hint: string): Promise<Object> {
 
     // Single, strong system prompt + optional context line
     const system = [
@@ -27,7 +27,18 @@ export async function getResponse(messages: Msg[], hint: string): Promise<string
         stream: false
     });
 
-    console.log("Response: ", response.output_text);
+    console.log("Response: ", response);
+    console.log("Response text: ", response.output_text);
 
+    return response;
+}
+
+export function getResponseText(response): string{
     return response.output_text ?? "";
+}
+export function getResponseInputTokenUsage(response): number{
+    return response?.usage?.input_tokens ?? 0;
+}
+export function getResponseOutputTokenUsage(response): number{
+    return response?.usage?.output_tokens ?? 0;
 }
