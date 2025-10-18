@@ -85,8 +85,7 @@ CREATE OR REPLACE VIEW learning_content AS
     FROM modules AS m
         INNER JOIN lessons AS l ON l.module_id = m.module_id
         INNER JOIN difficulties AS d ON d.difficulty_id = l.difficulty_id
-        LEFT JOIN progress AS p ON p.lesson_id = l.lesson_id
-    WHERE p.student_id is NULL OR p.student_id = auth.uid();
+        LEFT JOIN progress AS p ON p.lesson_id = l.lesson_id;
 
 CREATE OR REPLACE VIEW practice_exercises AS
     SELECT e.exercise_id, e.lesson_id, e.question, e.reason, eo.exercise_option_id, eo.text, eo.is_correct

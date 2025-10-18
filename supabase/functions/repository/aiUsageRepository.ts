@@ -33,8 +33,8 @@ export class AiUsageRepository {
     static async saveAiUsage(req, currentUsage: AiUsageDto | null, aiUsage: AiUsageDto): Promise<void> {
         if (currentUsage !== null)
         {
-            aiUsage.currentInputToken += currentUsage.input_token_usage;
-            aiUsage.currentOutputToken += currentUsage.output_token_usage;
+            aiUsage.total_input_token += currentUsage.total_input_token;
+            aiUsage.total_output_token += currentUsage.total_output_token;
         }
 
         aiUsage.modified_date = new Date().toISOString();
