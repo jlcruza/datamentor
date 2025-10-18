@@ -4,15 +4,10 @@ import { Send, Bot, User, Lightbulb, BookOpen } from 'lucide-react';
 import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import CustomReactViewer from "../components/CustomReactViewer.tsx";
 
-interface MessageWithId extends Msg {
-  id: string;
-}
-
 const AIAssistant: React.FC = () => {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<MessageWithId[]>([
+  const [messages, setMessages] = useState<Msg[]>([
     {
-      id: 'welcome-msg',
       content: t('aiAssistant.welcomeMessage', "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?"),
       role: ASSISTANT_ROLE
     }
@@ -20,6 +15,7 @@ const AIAssistant: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messageIdCounter = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,8 +28,7 @@ const AIAssistant: React.FC = () => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
-    const userMessage: MessageWithId = {
-      id: `user-${Date.now()}`,
+    const userMessage: Msg = {
       content: inputMessage,
       role: USER_ROLE
     };
@@ -46,21 +41,19 @@ const AIAssistant: React.FC = () => {
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
 
+    // Small delay to ensure the UI updates before making the API call
+    await new Promise(resolve => setTimeout(resolve, 50));
+
     try {
-      // Send request with the updated messages list
+      // Send request with the updated messages list (without id property)
       const aiResponse = await askTutor({
         prompt: currentInput,
         hint: "",
         messages: updatedMessages
       });
 
-      const aiMessageWithId: MessageWithId = {
-        id: `assistant-${Date.now()}`,
-        ...aiResponse
-      };
-
       // Add AI response to the list
-      setMessages(prev => [...prev, aiMessageWithId]);
+      setMessages(prev => [...prev, aiResponse]);
     } catch (error) {
       console.error("Error getting AI response:", error);
     } finally {
@@ -127,9 +120,9 @@ const AIAssistant: React.FC = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
+              {messages.map((message, index) => (
                 <div
-                  key={message.id}
+                  key={`${message.role}-${index}-${message.content.substring(0, 20)}`}
                   className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
