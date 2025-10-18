@@ -18,7 +18,7 @@ import {AiUsageRepository} from "../repository/aiUsageRepository.ts";
 import {AiUsageDto} from "../repository/dtos/aiUsageDto.ts";
 import {AiSystemDto} from "../repository/dtos/aiSystemDto.ts";
 import {AiSystemRepository} from "../repository/aiSystemRepository.ts";
-import {AiUsageValidator} from "../services/aiUsageValidator.ts";
+import {isUsageUnderLimit} from "../services/aiUsageValidator.ts";
 
 Deno.serve(async (req) => {
     if (req.method === "OPTIONS") {
@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
     const currentAiUsage: AiUsageDto = await AiUsageRepository.getAiUsage(req);
     const aiSystemLimit: AiSystemDto = await AiSystemRepository.getAiSystemLimit(req);
 
-    if (!AiUsageValidator.isUsageUnderLimit(currentAiUsage, aiSystemLimit)){
+    if (!isUsageUnderLimit(currentAiUsage, aiSystemLimit)){
         console.log("Usage limit exceeded");
         return DataMentorResponse_BAD_REQUEST(req, "Usage limit exceeded");
     }

@@ -1,39 +1,41 @@
 import {AiUsageDto} from "../repository/dtos/aiUsageDto.ts";
 
-export class AiUsageValidator {
+function getCurrentMonth(): string {
+    // Set billing_period to the first day of the current month (UTC)
+    const now = new Date();
+    return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0));
+}
 
-    static nullUsageToDefault(aiUsage: AiUsageDto | null): AiUsageDto {
-        return aiUsage ?? {
-            usage_id: 0,
-            student_id: "",
-            total_input_token: 0,
-            total_output_token: 0,
-            billing_period: AiUsageRepository.getCurrentMonth(),
-            created_date: new Date().toISOString(),
-            modified_date: new Date().toISOString()
-        }
+export function nullUsageToDefault(aiUsage: AiUsageDto | null): AiUsageDto {
+    return aiUsage ?? {
+        usage_id: 0,
+        student_id: "",
+        total_input_token: 0,
+        total_output_token: 0,
+        billing_period: getCurrentMonth(),
+        created_date: new Date().toISOString(),
+        modified_date: new Date().toISOString()
+    }
+}
+
+export function nullLimitToDefault(aiSystemLimit: AiSystemDto | null): AiSystemDto {
+    return aiSystemLimit ?? {
+        system_id: 0,
+        token_limit: 0,
+        created_date: new Date().toISOString(),
+        modified_date: new Date().toISOString()
+    }
+}
+
+export function isUsageUnderLimit(currentUsage: AiUsageDto, aiSystemLimit: AiSystemDto): boolean {
+    if (!aiSystemLimit || !aiSystemLimit.token_limit) {
+        console.warn("[AiUsageValidator] No AI system limit found, assuming unlimited usage.");
+        return true; // No limit defined, so usage is always under limit
     }
 
-    static nullLimitToDefault(aiSystemLimit: AiSystemDto | null): AiSystemDto {
-        return aiSystemLimit ?? {
-            system_id: 0,
-            token_limit: 0,
-            created_date: new Date().toISOString(),
-            modified_date: new Date().toISOString()
-        }
-    }
+    let currentUsageNotNull = nullUsageToDefault(currentUsage);
 
-    static isUsageUnderLimit(currentUsage: AiUsageDto, aiSystemLimit: AiSystemDto): boolean {
-        if (!aiSystemLimit || !aiSystemLimit.token_limit) {
-            console.warn("[AiUsageValidator] No AI system limit found, assuming unlimited usage.");
-            return true; // No limit defined, so usage is always under limit
-        }
+    const currentTotalUsage = currentUsageNotNull.total_input_token + currentUsageNotNull.total_output_token;
 
-        let currentUsageNotNull = AiUsageValidator.nullUsageToDefault(currentUsage);
-
-        const currentTotalUsage = currentUsageNotNull.total_input_token + currentUsageNotNull.total_output_token;
-
-        return currentTotalUsage <= aiSystemLimit.token_limit;
-    }
-
+    return currentTotalUsage <= aiSystemLimit.token_limit;
 }

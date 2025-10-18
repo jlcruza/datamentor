@@ -9,6 +9,8 @@ import LoginModal from './components/LoginModal.tsx';
 import {LearningContentDto} from './repository/db_types/learningContentDto.ts';
 import {LearningContentService} from './services/LearningContentService.ts';
 import useSupabaseAuth from './hooks/useSupabaseAuth.ts';
+import { fetchAIUsage } from './services/AIUsageService.ts';
+import { AIQuotaInfoDto } from "./services/dto/aiQuotaInfoDto.ts";
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
@@ -17,6 +19,7 @@ function App() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('learn');
   const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
   const [lessons, setLessons] = useState<LearningContentDto[]>([]);
+  const [aiQuota, setAiQuota] = useState<AIQuotaInfoDto | null>(null);
 
   // Load lessons on mount; service already handles errors and returns []
   useEffect(() => {
@@ -29,6 +32,36 @@ function App() {
       isMounted = false;
     };
   }, []);
+
+  // Load AI quota when user is available
+  useEffect(() => {
+    if (!user) {
+      setAiQuota(null);
+      return;
+    }
+
+    let isMounted = true;
+
+    (async () => {
+      const quota = await fetchAIUsage();
+      if (isMounted) {
+          console.log("Setting quota:", quota)
+        setAiQuota(quota);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
+
+  // Function to refresh quota (can be called from child components)
+  const refreshQuota = async () => {
+    if (!user) return;
+    const quota = await fetchAIUsage();
+      console.log("Setting quota:", quota)
+    setAiQuota(quota);
+  };
 
   // Wrap logout to also reset the active section (UI concern)
   const handleLogout = async () => {
@@ -61,13 +94,13 @@ function App() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'learn':
-        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user}/>;
+        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user} aiQuota={aiQuota} onRefreshQuota={refreshQuota} />;
       case 'practice':
         return <QueryPractice />;
       case 'chat':
-        return <AIAssistant />;
+        return <AIAssistant aiQuota={aiQuota} onRefreshQuota={refreshQuota} />;
       default:
-        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user}/>;
+        return <LearningContent lessons={lessons} onLessonsSet={setLessons} user={user} aiQuota={aiQuota} onRefreshQuota={refreshQuota} />;
     }
   };
 
@@ -76,6 +109,7 @@ function App() {
       <Header
         user={user}
         onLogout={handleLogout}
+        aiQuota={aiQuota}
       />
 
       <div className="flex flex-1">
