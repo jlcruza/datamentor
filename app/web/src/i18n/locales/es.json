@@ -87,7 +87,11 @@
     "markComplete": "Marcar como Completado",
     "completed": "¡Lección completada! ¡Buen trabajo!",
     "completedBadge": "Completado",
-    "chatWithAI": "Chatear con IA sobre esta lección"
+    "chatWithAI": "Chatear con IA sobre esta lección",
+    "wantMorePractice": "¿Quieres más práctica?",
+    "generateAdditionalAiQuestions": "Genera preguntas adicionales con IA",
+    "generating": "Generando...",
+    "generateAiQuestions": "Generar preguntas con IA"
   },
   "queryPractice": {
     "title": "Práctica de Consultas SQL",

@@ -192,8 +192,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Want more practice?</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Generate additional AI-powered questions</p>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('learningContent.wantMorePractice')}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t('learningContent.generateAdditionalAiQuestions')}</p>
                     </div>
                     <button
                       onClick={handleGenerateAIQuestions}
@@ -201,7 +201,7 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
                       className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-purple-600 dark:to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 dark:hover:from-purple-700 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-purple-500/25"
                     >
                       <Sparkles className="h-4 w-4" />
-                      <span>{isGeneratingQuestions ? 'Generating...' : 'Generate AI Questions'}</span>
+                      <span>{isGeneratingQuestions ? t('learningContent.generating') : t('learningContent.generateAiQuestions')}</span>
                     </button>
                   </div>
 
