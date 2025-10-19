@@ -81,11 +81,12 @@ CREATE TABLE IF NOT EXISTS ai_usage(
 INSERT INTO ai_system(token_limit) VALUES (10000);
 
 CREATE OR REPLACE VIEW learning_content AS
-    SELECT m.module_id, m.module_name, l.lesson_id, l.lesson_name, l.description, l.content_path, d.difficulty_id, d.difficulty_name, p.completed, p.student_id
-    FROM modules AS m
-        INNER JOIN lessons AS l ON l.module_id = m.module_id
-        INNER JOIN difficulties AS d ON d.difficulty_id = l.difficulty_id
-        LEFT JOIN progress AS p ON p.lesson_id = l.lesson_id;
+       SELECT m.module_id, m.module_name, l.lesson_id, l.lesson_name, l.description, l.content_path, d.difficulty_id, d.difficulty_name, p.completed, p.student_id
+       FROM modules AS m
+         INNER JOIN lessons AS l ON l.module_id = m.module_id
+         INNER JOIN difficulties AS d ON d.difficulty_id = l.difficulty_id
+         LEFT JOIN progress AS p ON p.lesson_id = l.lesson_id AND p.student_id = auth.uid()
+       ORDER BY module_id, lesson_id ASC;
 
 CREATE OR REPLACE VIEW practice_exercises AS
     SELECT e.exercise_id, e.lesson_id, e.question, e.reason, eo.exercise_option_id, eo.text, eo.is_correct

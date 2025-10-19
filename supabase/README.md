@@ -22,7 +22,7 @@ The backend follows a serverless architecture using Supabase's integrated servic
 - **Deno Runtime**: Secure TypeScript/JavaScript runtime for edge functions
 
 ### External Integrations
-- **OpenAI API**: GPT-4o model for AI tutoring and question generation
+- **OpenAI API**: GPT-5-Mini model for AI tutoring and question generation
 - **Oracle REST Data Services (ORDS)**: REST API for Oracle Autonomous Database sandbox
 
 ## Project Structure
@@ -133,7 +133,7 @@ All tables implement RLS policies ensuring:
 ## Edge Functions
 
 ### ai-questions
-Generates AI-powered practice questions using OpenAI's GPT-4o model.
+Generates AI-powered practice questions using OpenAI's GPT-5-Mini model.
 
 **Endpoint:** `POST /functions/v1/ai-questions`
 
@@ -176,7 +176,7 @@ Provides AI tutoring assistance for lesson-specific queries.
 }
 ```
 
-**Response:** Streaming text response from GPT-4o
+**Response:** Streaming text response from GPT-5-Mini
 
 **Functionality:**
 - Authenticates user

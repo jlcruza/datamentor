@@ -42,11 +42,6 @@ The frontend follows a component-based architecture using React 18.3 with TypeSc
 - **Supabase Auth UI**: Pre-built authentication UI components
 - **Row-Level Security**: Client-side enforcement of database access policies
 
-### Internationalization
-- **i18next**: Feature-rich internationalization framework
-- **react-i18next**: React bindings for i18next
-- **i18next-browser-languagedetector**: Automatic language detection
-
 ### Form Validation
 - **Zod**: TypeScript-first schema validation library
 
@@ -155,10 +150,6 @@ app/web/
 
 **Server State**: Data fetched from Supabase, managed through repositories and services
 
-### Internationalization
-
-The application supports multiple languages through i18next. Translation keys are organized by feature area, and the browser's language preference is automatically detected on initial load. Users can manually switch languages via the language selector component.
-
 ### Responsive Design
 
 The interface adapts to various screen sizes using Tailwind CSS responsive utilities. Breakpoints are configured for mobile, tablet, and desktop viewports, ensuring optimal user experience across devices.
@@ -262,7 +253,7 @@ The application is configured for deployment on Vercel. The `vercel.json` config
 - **Schema Management**: Database initialization and reset operations
 
 ### OpenAI API
-- **AI Tutoring**: Contextual assistance via GPT-4o model
+- **AI Tutoring**: Contextual assistance via GPT-5-Mini model
 - **Question Generation**: AI-powered practice question creation
 
 ## Contributing

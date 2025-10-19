@@ -154,7 +154,7 @@ To add a new lesson to the curriculum:
 
 ## Internationalization
 
-Currently, lesson content is authored in English. Future enhancements may include:
-- Spanish language translations
+Currently, lesson content is authored in Spanish. Future enhancements may include:
+- English language translations
 - Language-specific content directories
 - Dynamic content selection based on user preferences

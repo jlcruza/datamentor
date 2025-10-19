@@ -12,11 +12,9 @@ The platform provides structured learning modules covering fundamental to advanc
 - **Structured Curriculum**: Six comprehensive modules with 36 lessons spanning database fundamentals to advanced topics
 - **Progressive Difficulty Levels**: Lessons categorized as beginner, intermediate, or advanced to support learner progression
 - **Interactive Content Delivery**: Markdown-based lesson content with syntax-highlighted code examples
-- **Multi-language Support**: Internationalization (i18n) framework supporting English and Spanish
 
 ### Practice Environment
 - **SQL Sandbox**: Isolated Oracle Autonomous Database environment for hands-on query execution
-- **Database Schema Visualization**: Interactive display of table structures, columns, and relationships
 - **Practice Exercises**: Curated question sets with multiple-choice format and detailed explanations
 - **AI-Generated Questions**: On-demand generation of additional practice questions tailored to lesson content
 
@@ -46,7 +44,6 @@ The platform provides structured learning modules covering fundamental to advanc
 - **React Router**: Client-side routing for single-page application navigation
 - **React Markdown**: Rendering of lesson content from markdown files
 - **React Syntax Highlighter**: Code syntax highlighting for SQL examples
-- **i18next**: Internationalization framework with browser language detection
 
 ### Backend
 - **Supabase**: Backend-as-a-Service platform providing:
@@ -55,7 +52,7 @@ The platform provides structured learning modules covering fundamental to advanc
   - Authentication and user management
   - Serverless edge functions for business logic
 - **Deno Runtime**: Secure TypeScript/JavaScript runtime for edge functions
-- **OpenAI API**: GPT-4o model integration for AI tutoring and question generation
+- **OpenAI API**: GPT-5-Mini model integration for AI tutoring and question generation
 
 ### Development Tools
 - **ESLint**: Code quality and style enforcement
