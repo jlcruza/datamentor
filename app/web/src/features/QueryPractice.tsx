@@ -7,7 +7,7 @@ import {getErrorMessage, getResultRows} from "../services/OracleResponseService.
 
 const QueryPractice: React.FC = () => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState('SELECT * FROM students WHERE ROWNUM <= 5;');
+  const [query, setQuery] = useState('SELECT * FROM estudiantes WHERE ROWNUM <= 5;');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +66,7 @@ const QueryPractice: React.FC = () => {
   };
 
   const handleReset = () => {
-    setQuery('SELECT * FROM students WHERE ROWNUM <= 5;;');
+    setQuery('SELECT * FROM estudiantes WHERE ROWNUM <= 5;');
     setResult(null);
     setError(null);
   };

@@ -22,18 +22,18 @@ Las hojas de cálculo son ideales para:
 
 ### ¿Cuándo necesitas el poder de una base de datos?
 
-Ahora, imagina que tu "fiesta" es en realidad una tienda online con miles de clientes y productos.
-- Múltiples empleados necesitan actualizar el inventario al mismo tiempo.
-- Quieres asegurarte de que un producto vendido se descuente del stock inmediatamente.
-- Necesitas guardar el historial de compras de cada cliente de forma segura y permanente.
+Ahora, imagina que tu "fiesta" es en realidad una universidad con miles de estudiantes y cursos.
+- Múltiples administradores necesitan matricular estudiantes al mismo tiempo.
+- Quieres asegurarte de que la nota de un estudiante se asocie correctamente con el curso que tomó.
+- Necesitas guardar el historial académico de cada estudiante de forma segura y permanente.
 
 Aquí es donde las hojas de cálculo fallan. Una base de datos está diseñada para:
 - **Acceso multiusuario:** Varias personas y aplicaciones pueden leer y escribir datos de forma segura y simultánea.
-- **Integridad de los datos:** Reglas que impiden que se introduzcan datos incorrectos o inconsistentes (ej. un precio negativo).
+- **Integridad de los datos:** Reglas que impiden que se introduzcan datos incorrectos o inconsistentes (ej. una nota fuera del rango 0-100).
 - **Escalabilidad:** Manejan millones (¡o miles de millones!) de registros sin despeinarse.
-- **Relaciones complejas:** Conectan diferentes tipos de información, como clientes con sus pedidos y los productos de esos pedidos.
+- **Relaciones complejas:** Conectan diferentes tipos de información, como estudiantes con sus matrículas y los cursos en los que están inscritos.
 
-**Analogía:** Una base de datos es como el **sistema de contabilidad de una gran empresa**. Es robusto, seguro, auditable y garantiza que todas las transacciones sean consistentes.
+**Analogía:** Una base de datos es como el **sistema de registro académico de una gran universidad**. Es robusto, seguro, auditable y garantiza que toda la información sea consistente.
 
 ### Consejos de los Expertos
 
@@ -49,6 +49,6 @@ Aquí es donde las hojas de cálculo fallan. Una base de datos está diseñada p
 | **Usuarios** | Principalmente una persona | Múltiples usuarios y sistemas |
 | **Integridad** | Baja (fácil cometer errores) | Alta (se pueden forzar reglas) |
 | **Escalabilidad** | Limitada | Muy alta |
-| **Ejemplo** | Presupuesto familiar | Sistema de inventario de una tienda |
+| **Ejemplo** | Presupuesto familiar | Sistema de registro de una universidad |
 
 En resumen, elige la herramienta adecuada para el trabajo. Las hojas de cálculo son para análisis personal y datos simples; las bases de datos son para construir aplicaciones robustas y fiables.
