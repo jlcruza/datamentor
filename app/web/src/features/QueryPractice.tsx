@@ -66,7 +66,7 @@ const QueryPractice: React.FC = () => {
   };
 
   const handleReset = () => {
-    setQuery('SELECT * FROM students WHERE ROWNUM <= 5;;');
+    setQuery('SELECT * FROM estudiantes WHERE ROWNUM <= 5;');
     setResult(null);
     setError(null);
   };
