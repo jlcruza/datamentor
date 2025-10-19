@@ -20,17 +20,17 @@ const DatabaseSchemaViewer: React.FC<DatabaseSchemaViewerProps> = (
     const sampleQueries = [
         {
             title: t('queryPractice.basicSelect'),
-            query: 'SELECT * FROM students WHERE ROWNUM <= 5;;',
+            query: 'SELECT * FROM estudiantes WHERE ROWNUM <= 5;;',
             description: t('queryPractice.getFirstStudents')
         },
         {
             title: t('queryPractice.joinExample'),
-            query: 'SELECT s.name, c.title, e.grade\nFROM students s\nJOIN enrollments e ON s.id = e.student_id\nJOIN courses c ON e.course_id = c.id\nWHERE e.grade > 85;',
+            query: 'SELECT s.name, c.title, e.grade\nFROM estudiantes s\nJOIN matriculas e ON s.id = e.student_id\nJOIN cursos c ON e.course_id = c.id\nWHERE e.grade > 85;',
             description: t('queryPractice.studentsWithGrades')
         },
         {
             title: t('queryPractice.aggregateFunctions'),
-            query: 'SELECT c.title, COUNT(*) as enrolled_count\nFROM courses c\nJOIN enrollments e ON c.id = e.course_id\nGROUP BY c.id, c.title\nORDER BY enrolled_count DESC;',
+            query: 'SELECT c.title, COUNT(*) as enrolled_count\nFROM cursos c\nJOIN matriculas e ON c.id = e.course_id\nGROUP BY c.id, c.title\nORDER BY enrolled_count DESC;',
             description: t('queryPractice.courseEnrollmentCounts')
         }
     ];

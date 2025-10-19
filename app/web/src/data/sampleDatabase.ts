@@ -1,45 +1,45 @@
 // Sample database tables for query practice
 export const sampleTables = {
-  students: [
-    { id: 1, name: 'Alice Johnson', email: 'alice@email.com', major: 'Computer Science', age: 20, enrollment_date: '2023-09-01' },
-    { id: 2, name: 'Bob Smith', email: 'bob@email.com', major: 'Mathematics', age: 21, enrollment_date: '2023-09-01' },
-    { id: 3, name: 'Charlie Brown', email: 'charlie@email.com', major: 'Computer Science', age: 19, enrollment_date: '2023-09-01' },
-    { id: 4, name: 'Diana Prince', email: 'diana@email.com', major: 'Physics', age: 22, enrollment_date: '2023-09-01' },
-    { id: 5, name: 'Eve Wilson', email: 'eve@email.com', major: 'Mathematics', age: 20, enrollment_date: '2023-09-01' },
-    { id: 6, name: 'Frank Miller', email: 'frank@email.com', major: 'Computer Science', age: 21, enrollment_date: '2023-09-01' },
-    { id: 7, name: 'Grace Lee', email: 'grace@email.com', major: 'Physics', age: 19, enrollment_date: '2023-09-01' },
-    { id: 8, name: 'Henry Davis', email: 'henry@email.com', major: 'Mathematics', age: 23, enrollment_date: '2023-09-01' }
+  estudiantes: [
+    { id: 1, nombre: 'Alice Johnson', email: 'alice@email.com', especialidad: 'Ciencia de la Computación', edad: 20, fecha_matricula: '2025-09-01' },
+    { id: 2, nombre: 'Bob Smith', email: 'bob@email.com', especialidad: 'Matemáticas', edad: 21, fecha_matricula: '2025-09-01' },
+    { id: 3, nombre: 'Charlie Brown', email: 'charlie@email.com', especialidad: 'Ciencia de la Computación', edad: 19, fecha_matricula: '2025-09-01' },
+    { id: 4, nombre: 'Diana Prince', email: 'diana@email.com', especialidad: 'Física', edad: 22, fecha_matricula: '2025-09-01' },
+    { id: 5, nombre: 'Eve Wilson', email: 'eve@email.com', especialidad: 'Matemáticas', edad: 20, fecha_matricula: '2025-09-01' },
+    { id: 6, nombre: 'Frank Miller', email: 'frank@email.com', especialidad: 'Ciencia de la Computación', edad: 21, fecha_matricula: '2025-09-01' },
+    { id: 7, nombre: 'Grace Lee', email: 'grace@email.com', especialidad: 'Física', edad: 19, fecha_matricula: '2025-09-01' },
+    { id: 8, nombre: 'Henry Davis', email: 'henry@email.com', especialidad: 'Matemáticas', edad: 23, fecha_matricula: '2025-09-01' }
   ],
-  
-  courses: [
-    { id: 101, title: 'Introduction to Programming', credits: 3, department: 'Computer Science', instructor: 'Dr. Smith' },
-    { id: 102, title: 'Database Systems', credits: 4, department: 'Computer Science', instructor: 'Dr. Johnson' },
-    { id: 103, title: 'Calculus I', credits: 4, department: 'Mathematics', instructor: 'Prof. Brown' },
-    { id: 104, title: 'Linear Algebra', credits: 3, department: 'Mathematics', instructor: 'Prof. Davis' },
-    { id: 105, title: 'Physics I', credits: 4, department: 'Physics', instructor: 'Dr. Wilson' },
-    { id: 106, title: 'Data Structures', credits: 3, department: 'Computer Science', instructor: 'Dr. Miller' },
-    { id: 107, title: 'Discrete Mathematics', credits: 3, department: 'Mathematics', instructor: 'Prof. Lee' }
+
+  cursos: [
+    { id: 101, titulo: 'Introducción a la Programación', creditos: 3, departamento: 'Ciencia de la Computación', instructor: 'Dr. Smith' },
+    { id: 102, titulo: 'Sistemas de Bases de Datos', creditos: 4, departamento: 'Ciencia de la Computación', instructor: 'Dr. Johnson' },
+    { id: 103, titulo: 'Cálculo I', creditos: 4, departamento: 'Matemáticas', instructor: 'Prof. Brown' },
+    { id: 104, titulo: 'Álgebra Lineal', creditos: 3, departamento: 'Matemáticas', instructor: 'Prof. Davis' },
+    { id: 105, titulo: 'Física I', creditos: 4, departamento: 'Física', instructor: 'Dr. Wilson' },
+    { id: 106, titulo: 'Estructuras de Datos', creditos: 3, departamento: 'Ciencia de la Computación', instructor: 'Dr. Miller' },
+    { id: 107, titulo: 'Matemáticas Discretas', creditos: 3, departamento: 'Matemáticas', instructor: 'Prof. Lee' }
   ],
-  
-  enrollments: [
-    { id: 1, student_id: 1, course_id: 101, grade: 92.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 2, student_id: 1, course_id: 102, grade: 88.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 3, student_id: 2, course_id: 103, grade: 95.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 4, student_id: 2, course_id: 104, grade: 91.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 5, student_id: 3, course_id: 101, grade: 87.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 6, student_id: 3, course_id: 106, grade: 93.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 7, student_id: 4, course_id: 105, grade: 89.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 8, student_id: 5, course_id: 103, grade: 96.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 9, student_id: 5, course_id: 107, grade: 94.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 10, student_id: 6, course_id: 101, grade: 85.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 11, student_id: 6, course_id: 102, grade: 90.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 12, student_id: 7, course_id: 105, grade: 92.0, semester: 'Fall 2023', enrollment_date: '2023-09-01' },
-    { id: 13, student_id: 8, course_id: 104, grade: 88.5, semester: 'Fall 2023', enrollment_date: '2023-09-01' }
+
+  matriculas: [
+    { id: 1, id_estudiante: 1, id_curso: 101, nota: 92.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 2, id_estudiante: 1, id_curso: 102, nota: 88.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 3, id_estudiante: 2, id_curso: 103, nota: 95.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 4, id_estudiante: 2, id_curso: 104, nota: 91.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 5, id_estudiante: 3, id_curso: 101, nota: 87.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 6, id_estudiante: 3, id_curso: 106, nota: 93.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 7, id_estudiante: 4, id_curso: 105, nota: 89.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 8, id_estudiante: 5, id_curso: 103, nota: 96.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 9, id_estudiante: 5, id_curso: 107, nota: 94.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 10, id_estudiante: 6, id_curso: 101, nota: 85.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 11, id_estudiante: 6, id_curso: 102, nota: 90.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 12, id_estudiante: 7, id_curso: 105, nota: 92.0, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' },
+    { id: 13, id_estudiante: 8, id_curso: 104, nota: 88.5, semestre: 'Otoño 2025', fecha_matricula: '2025-09-01' }
   ],
-  
-  departments: [
-    { id: 1, name: 'Computer Science', head: 'Dr. Anderson', budget: 500000, building: 'Science Hall' },
-    { id: 2, name: 'Mathematics', head: 'Prof. Thompson', budget: 300000, building: 'Math Building' },
-    { id: 3, name: 'Physics', head: 'Dr. Rodriguez', budget: 400000, building: 'Physics Lab' }
+
+  departamentos: [
+    { id: 1, nombre: 'Ciencia de la Computación', director: 'Dr. Anderson', presupuesto: 500000, edificio: 'Pabellón de Ciencias' },
+    { id: 2, nombre: 'Matemáticas', director: 'Prof. Thompson', presupuesto: 300000, edificio: 'Edificio de Matemáticas' },
+    { id: 3, nombre: 'Física', director: 'Dr. Rodriguez', presupuesto: 400000, edificio: 'Laboratorio de Física' }
   ]
 };

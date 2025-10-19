@@ -27,12 +27,12 @@ Una base de datos hace lo mismo con la información digital. La organiza de form
 
 #### Analogías y Ejemplos Ilustrativos:
 
-- **Un archivador digital:** Una base de datos es como un archivador perfectamente organizado. Cada cajón está etiquetado (ej. "Clientes", "Productos"), dentro hay carpetas (los registros) y cada documento dentro de la carpeta tiene campos claros (Nombre, Dirección, etc.).
+- **Un archivador digital:** Una base de datos es como un archivador perfectamente organizado. Cada cajón está etiquetado (ej. "Estudiantes", "Cursos"), dentro hay carpetas (los registros) y cada documento dentro de la carpeta tiene campos claros (Nombre, Email, etc.).
 - **Tu lista de contactos:** La aplicación de contactos de tu teléfono es una pequeña base de datos. Cada contacto es un registro, con campos como Nombre, Apellido y Número de teléfono. No tienes que buscar en un documento de texto; la aplicación te permite buscar, ordenar y filtrar al instante.
 
 ### Consejos de los Expertos
 
-> Piensa en una base de datos no solo como un lugar para guardar datos, sino como un sistema que le da **significado y relaciones** a tu información. No solo almacenas el nombre de un cliente y el nombre de un producto; almacenas la **relación** entre ellos: "Este cliente **compró** este producto".
+> Piensa en una base de datos no solo como un lugar para guardar datos, sino como un sistema que le da **significado y relaciones** a tu información. No solo almacenas el nombre de un estudiante y el nombre de un curso; almacenas la **relación** entre ellos: "Este estudiante se **matriculó** en este curso".
 
 ---
 

@@ -11,7 +11,7 @@ Hemos hablado de que las bases de datos relacionales (como Oracle) organizan los
 Imagina que quieres almacenar información sobre los estudiantes de una universidad. ¿Cómo lo harías? Probablemente crearías una cuadrícula, ¿verdad?
 
 - El título de la cuadrícula sería "Estudiantes".
-- Las cabeceras de las columnas serían "ID del Estudiante", "Nombre", "Apellido", "Carrera".
+- Las cabeceras de las columnas serían "ID", "Nombre", "Email" y "Edad".
 - Cada renglón de la cuadrícula contendría la información de un estudiante específico.
 
 ¡Felicidades, acabas de diseñar la estructura básica de una base de datos relacional! Esta organización es intuitiva, eficiente y la base de todo lo que haremos con SQL.
@@ -20,18 +20,18 @@ Imagina que quieres almacenar información sobre los estudiantes de una universi
 
 1.  **Tabla (Table):**
     - **¿Qué es?** Es el contenedor principal de los datos sobre un tema específico o *entidad*.
-    - **Analogía:** Piensa en una tabla como una **hoja de cálculo** dentro de un libro de Excel. Puedes tener una hoja para "Estudiantes", otra para "Cursos" y otra para "Profesores".
-    - **Ejemplo:** La tabla `ALUMNOS`.
+    - **Analogía:** Piensa en una tabla como una **hoja de cálculo** dentro de un libro de Excel. Puedes tener una hoja para "Estudiantes", otra para "Cursos" y otra para "Departamentos".
+    - **Ejemplo:** La tabla `ESTUDIANTES`.
 
 2.  **Columna (Column):**
     - **¿Qué es?** Define un **atributo** o una característica de la entidad que la tabla representa. Cada columna tiene un nombre y un tipo de dato específico (número, texto, fecha, etc.).
     - **Analogía:** Es la **cabecera de una columna** en tu hoja de cálculo.
-    - **Ejemplo:** En la tabla `ALUMNOS`, las columnas serían `ID_ALUMNO`, `NOMBRE`, `APELLIDO` y `FECHA_NACIMIENTO`.
+    - **Ejemplo:** En la tabla `ESTUDIANTES`, algunas columnas serían `ID`, `NOMBRE`, `EMAIL` y `FECHA_MATRICULA`.
 
 3.  **Fila (Row):**
     - **¿Qué es?** Es un **registro** único de datos que representa una instancia de la entidad. Contiene un valor para cada columna de la tabla.
     - **Analogía:** Es una **fila completa** de datos en tu hoja de cálculo.
-    - **Ejemplo:** Una fila en la tabla `ALUMNOS` sería `(101, 'Ana', 'Solís', '15-MAY-2002')`.
+    - **Ejemplo:** Una fila en la tabla `ESTUDIANTES` sería `(1, 'Alice Johnson', 'alice@email.com', 20, '01-SEP-2025')`.
 
 ### Ejemplo en Oracle SQL
 
@@ -58,6 +58,6 @@ CREATE TABLE ALUMNOS (
 ### Resumen de la Lección 4
 
 - Las bases de datos relacionales organizan los datos en **tablas**.
-- Una **tabla** representa una entidad (como `ALUMNOS`).
+- Una **tabla** representa una entidad (como `ESTUDIANTES`).
 - Una **columna** representa un atributo de esa entidad (como `NOMBRE`).
-- Una **fila** representa un registro único de esa entidad (un alumno específico).
+- Una **fila** representa un registro único de esa entidad (un estudiante específico).

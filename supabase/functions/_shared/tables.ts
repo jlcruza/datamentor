@@ -1,6 +1,6 @@
-export const DEPARTMENTS = 'DEPARTMENTS';
-export const STUDENTS = 'STUDENTS';
-export const COURSES = 'COURSES';
-export const ENROLLMENTS = 'ENROLLMENTS';
+export const DEPARTMENTS = 'DEPARTAMENTOS';
+export const STUDENTS = 'ESTUDIANTES';
+export const COURSES = 'CURSOS';
+export const ENROLLMENTS = 'MATRICULAS';
 
 export const ALL_TABLES = [DEPARTMENTS, STUDENTS, COURSES, ENROLLMENTS]
