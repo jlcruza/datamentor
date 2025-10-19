@@ -6,6 +6,19 @@ Las funciones de agregación son geniales para resumir una tabla entera. Pero, �
 
 ---
 
+### Términos Clave
+
+Antes de aprender a agrupar datos, entendamos estos conceptos:
+
+- **GROUP BY:** Cláusula SQL que agrupa filas que tienen valores idénticos en columnas especificadas, permitiendo aplicar funciones de agregación a cada grupo.
+- **HAVING:** Cláusula que filtra grupos creados por GROUP BY, basada en el resultado de funciones de agregación. Es como WHERE, pero para grupos en lugar de filas individuales.
+- **Agregación por Grupo:** El proceso de calcular valores resumen (COUNT, SUM, AVG, etc.) para cada grupo de filas en lugar de para toda la tabla.
+- **Diferencia WHERE vs HAVING:**
+  - **WHERE:** Filtra filas individuales ANTES de agrupar
+  - **HAVING:** Filtra grupos DESPUÉS de agrupar y agregar
+
+---
+
 ### Agrupando con `GROUP BY`
 
 La cláusula `GROUP BY` se usa con funciones de agregación. Consolida todas las filas que tienen el mismo valor en una columna (o columnas) en una sola fila de resumen.

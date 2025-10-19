@@ -5,6 +5,18 @@ Una imagen vale más que mil líneas de código `CREATE TABLE`. Un Diagrama Enti
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre diagramas, entendamos estos conceptos:
+
+- **DER/ERD (Diagrama Entidad-Relación / Entity-Relationship Diagram):** Una representación gráfica del diseño de una base de datos que muestra entidades, atributos y relaciones.
+- **Notación Crow's Foot (Pata de Gallo):** Un estilo estándar de notación para DER que usa símbolos específicos para indicar la cardinalidad de las relaciones.
+- **Cardinalidad:** El número de instancias que pueden participar en una relación (uno-a-uno, uno-a-muchos, muchos-a-muchos).
+- **Obligatoriedad (Mandatory):** Indica si la participación en una relación es requerida (obligatoria) u opcional.
+- **Stakeholder (Parte Interesada):** Personas involucradas o afectadas por un proyecto, como clientes, usuarios finales, gerentes, etc.
+
+---
+
 ### Explicación del Concepto
 Un **DER** es una representación gráfica de las entidades, sus atributos y las relaciones que existen entre ellas.
 

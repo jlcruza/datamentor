@@ -5,6 +5,20 @@ En el mundo real, las cosas no existen de forma aislada. Los clientes hacen pedi
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre las relaciones, entendamos estos conceptos:
+
+- **Relación:** Una conexión lógica entre dos tablas que refleja cómo los datos de una tabla se asocian con los datos de otra.
+- **Cardinalidad:** El número de instancias de una entidad que pueden asociarse con instancias de otra entidad. Define el "cuántos" en una relación.
+- **Relación Uno a Uno (1:1):** Un registro en una tabla se relaciona con como máximo un registro en otra tabla.
+- **Relación Uno a Muchos (1:N o 1:M):** Un registro en una tabla puede relacionarse con múltiples registros en otra tabla, pero cada registro de la segunda tabla solo se relaciona con uno de la primera.
+- **Relación Muchos a Muchos (M:N o M:M):** Múltiples registros en una tabla pueden relacionarse con múltiples registros en otra tabla.
+- **Tabla de Unión (o Tabla Puente/Intermedia):** Una tabla que se crea para resolver relaciones muchos a muchos, conteniendo las claves foráneas de ambas tablas relacionadas.
+- **Primera Forma Normal (1NF):** Una regla de normalización que establece que cada columna debe contener valores atómicos (indivisibles), no listas o conjuntos.
+
+---
+
 ### Explicación del Concepto
 Existen tres tipos principales de relaciones entre tablas:
 
@@ -34,7 +48,7 @@ CREATE TABLE Inscripciones (
 
 ### Consejos de los Expertos
 *   **La Relación Uno a Muchos es la Columna Vertebral:** La mayoría de los diseños de bases de datos relacionales se construyen alrededor de relaciones 1:N. Domínalas bien.
-*   **Resuelve Siempre las Relaciones M:N con una Tabla de Unión:** No intentes "hacer trampa" metiendo una lista de IDs en una columna de texto. Esto viola la primera forma normal y es una pésima práctica.
+*   **Resuelve Siempre las Relaciones M:N con una Tabla de Unión:** No intentes "hacer trampa" metiendo una lista de IDs en una columna de texto. Esto viola la Primera Forma Normal (un principio de diseño que veremos más adelante) y es una pésima práctica que causa problemas de rendimiento e integridad.
 *   **Piensa en la Cardinalidad:** Al diseñar, pregúntate: "¿Un libro *debe* tener un autor?" (relación obligatoria) o "¿Un autor *puede* no tener libros?" (relación opcional).
 
 ---

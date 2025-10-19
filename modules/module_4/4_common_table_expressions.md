@@ -8,6 +8,20 @@ Te permite crear una especie de **tabla temporal con nombre** que existe solo du
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre CTEs, entendamos estos conceptos:
+
+- **CTE (Common Table Expression - Expresión de Tabla Común):** Un conjunto de resultados temporal con nombre que se define usando la cláusula WITH y que existe solo durante la ejecución de una consulta.
+- **WITH:** Cláusula SQL que se utiliza para definir uno o más CTEs al inicio de una consulta.
+- **Tabla Temporal:** Un conjunto de resultados que existe temporalmente durante la ejecución de una consulta o sesión.
+- **Pipeline de Datos:** Una secuencia de operaciones de procesamiento de datos donde la salida de una operación es la entrada de la siguiente.
+- **CTE Recursivo:** Un CTE que se referencia a sí mismo, utilizado para consultar datos jerárquicos (como estructuras de árbol o grafos).
+- **Datos Jerárquicos:** Datos organizados en una estructura de árbol donde cada elemento tiene un padre (excepto la raíz) y puede tener hijos. Ejemplos: organigramas, categorías de productos.
+- **Refactorizar:** Reestructurar código existente para mejorar su legibilidad, mantenibilidad o rendimiento sin cambiar su funcionalidad.
+
+---
+
 ### Sintaxis y Comandos Fundamentales
 
 Un CTE se define usando la cláusula `WITH` al inicio de una consulta. Puedes definir uno o varios CTEs, y luego referenciarlos en tu consulta principal como si fueran tablas normales.

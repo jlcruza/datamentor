@@ -5,6 +5,19 @@ Ya sabemos que las tablas se relacionan, pero ¿cómo se implementa esa conexió
 
 ---
 
+### Términos Clave
+
+Antes de profundizar en las claves, entendamos estos conceptos:
+
+- **Clave Primaria (Primary Key - PK):** Una columna (o conjunto de columnas) que identifica de forma única cada fila en una tabla. No puede contener valores NULL ni duplicados.
+- **Clave Foránea (Foreign Key - FK):** Una columna (o conjunto de columnas) en una tabla que hace referencia a la clave primaria de otra tabla, estableciendo una relación entre ambas.
+- **Integridad Referencial:** Un conjunto de reglas que garantiza que las relaciones entre tablas permanezcan consistentes. Por ejemplo, no puedes tener un libro que apunte a un autor que no existe.
+- **Clave Subrogada (Surrogate Key):** Una clave primaria artificial, generalmente un número autoincremental, que no tiene significado en el mundo real pero sirve únicamente para identificar registros.
+- **Clave Natural (Natural Key):** Una clave primaria basada en datos del mundo real que tienen significado, como un número de documento de identidad o un código de producto.
+- **CONSTRAINT:** Una restricción o regla que se aplica a los datos de una tabla para garantizar su integridad.
+
+---
+
 ### Explicación del Concepto
 *   **Clave Primaria (Primary Key - PK):** Es una columna (o un conjunto de columnas) que identifica de forma única cada fila en una tabla.
     *   **Reglas:** No puede contener valores `NULL` y su valor debe ser único para toda la tabla.
@@ -36,9 +49,9 @@ CREATE TABLE Libros (
 ```
 
 ### Consejos de los Expertos
-*   **Prefiere Claves Primarias Numéricas ("Surrogadas"):** Es una práctica común y muy recomendada usar una simple columna numérica autoincremental como PK (en Oracle se logra con secuencias e identificadores). Son más eficientes que usar un "valor natural" como un email o un nombre de usuario.
+*   **Prefiere Claves Primarias Numéricas (Subrogadas):** Es una práctica común y muy recomendada usar una simple columna numérica autoincremental como PK (en Oracle se logra con secuencias o columnas de identidad). Las claves subrogadas son más eficientes y estables que usar claves naturales como un email o un nombre de usuario, ya que estos valores del mundo real pueden cambiar.
 *   **Nombra tus Constraints (Restricciones):** Dar un nombre explícito a tu clave foránea como `fk_libros_autores` hace que los mensajes de error de la base de datos sean mucho más fáciles de entender.
-*   **Las Claves Foráneas Protegen tus Datos:** Este mecanismo, llamado **integridad referencial**, impide que crees un libro con un `autor_id` que no existe en la tabla `Autores`. ¡La base de datos se convierte en tu guardián!
+*   **Las Claves Foráneas Protegen tus Datos:** Este mecanismo de integridad referencial impide que crees un libro con un `autor_id` que no existe en la tabla `Autores`. ¡La base de datos valida automáticamente que las relaciones sean válidas, previniendo datos huérfanos o inconsistentes!
 
 ---
 

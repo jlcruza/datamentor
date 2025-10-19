@@ -6,6 +6,18 @@ El ciclo de vida de los datos no siempre es para siempre. La información puede 
 
 ---
 
+### Términos Clave
+
+Antes de aprender a eliminar datos, entendamos estos conceptos importantes:
+
+- **DELETE:** Comando SQL para eliminar una o más filas de una tabla de forma permanente.
+- **WHERE:** Cláusula que especifica qué filas deben eliminarse. Sin WHERE, se eliminan TODAS las filas.
+- **Transacción:** Una secuencia de operaciones de base de datos que se ejecutan como una unidad. Si algo sale mal, puedes deshacer todas las operaciones de la transacción.
+- **COMMIT:** Comando que confirma y hace permanentes todos los cambios realizados en la transacción actual.
+- **ROLLBACK:** Comando que deshace todos los cambios realizados en la transacción actual, regresando la base de datos al estado anterior.
+
+---
+
 ### Eliminando Filas con `DELETE FROM`
 
 El comando `DELETE` se usa para eliminar una o más filas de una tabla. Su sintaxis es simple, pero debe usarse con extremo cuidado.
@@ -42,7 +54,7 @@ DELETE FROM Estudiantes
 WHERE ID_Estudiante = 1;
 ```
 
-- **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite "deshacer" (`ROLLBACK`) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (`COMMIT`).
+- **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite deshacer (ROLLBACK) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (COMMIT). Las transacciones serán explicadas en detalle en módulos posteriores.
 
 ---
 

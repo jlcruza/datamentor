@@ -8,6 +8,21 @@ Los `JOIN` son la herramienta principal y más explícita para combinar tablas. 
 
 ---
 
+### Términos Clave
+
+Antes de aprender los diferentes tipos de JOIN, entendamos estos conceptos:
+
+- **JOIN (Unión):** Operación SQL que combina filas de dos o más tablas basada en una columna relacionada entre ellas.
+- **ON:** Cláusula que especifica la condición de unión entre tablas, generalmente comparando claves primarias con claves foráneas.
+- **INNER JOIN (Unión Interna):** Devuelve solo las filas que tienen coincidencias en ambas tablas.
+- **LEFT JOIN / LEFT OUTER JOIN (Unión Izquierda):** Devuelve todas las filas de la tabla izquierda y las coincidencias de la derecha. Si no hay coincidencia, las columnas de la derecha tendrán NULL.
+- **RIGHT JOIN / RIGHT OUTER JOIN (Unión Derecha):** Devuelve todas las filas de la tabla derecha y las coincidencias de la izquierda. Si no hay coincidencia, las columnas de la izquierda tendrán NULL.
+- **FULL OUTER JOIN (Unión Externa Completa):** Devuelve todas las filas de ambas tablas. Si no hay coincidencia, las columnas de la tabla sin coincidencia tendrán NULL.
+- **Estándar ANSI:** Conjunto de especificaciones estándar para SQL definidas por el American National Standards Institute, adoptadas internacionalmente.
+- **Diagrama de Venn:** Representación gráfica usando círculos superpuestos para mostrar relaciones lógicas entre conjuntos.
+
+---
+
 ### Sintaxis y Comandos Fundamentales
 
 La sintaxis moderna de `JOIN` separa la lógica de combinación (`ON`) de la lógica de filtrado (`WHERE`), haciendo las consultas mucho más claras.
@@ -101,7 +116,7 @@ El resultado incluiría tanto a `Juan` (empleado sin departamento) como a "Innov
 ### Consejos de los Expertos
 - **Prefiere `JOIN` explícito:** Usa siempre la sintaxis `INNER JOIN`, `LEFT JOIN`, etc., en lugar de la sintaxis antigua con comas en el `FROM` y condiciones en el `WHERE`. Es el estándar ANSI, más seguro y mucho más legible.
 - **`LEFT` vs. `RIGHT`:** La mayoría de los desarrolladores usan `LEFT JOIN` por convención. Un `RIGHT JOIN` siempre puede reescribirse como un `LEFT JOIN` simplemente invirtiendo el orden de las tablas. Esto hace que el código sea más consistente.
-- **Piensa en diagramas de Venn:** Si te confundes, dibuja dos círculos que se solapan. `INNER` es la parte solapada. `LEFT` es todo el círculo izquierdo. `FULL` es ambos círculos completos.
+- **Piensa en diagramas de Venn:** Si te confundes, dibuja dos círculos que se solapan (diagramas usados en matemáticas para representar conjuntos). `INNER JOIN` es la parte solapada (intersección). `LEFT JOIN` es todo el círculo izquierdo. `FULL JOIN` es ambos círculos completos (unión).
 
 ---
 

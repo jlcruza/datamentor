@@ -8,6 +8,19 @@ Esa es la misión de la **clave primaria** (*Primary Key*).
 
 ---
 
+### Términos Clave
+
+Antes de profundizar en las claves primarias, definamos conceptos importantes:
+
+- **Clave Primaria (Primary Key):** Una columna (o conjunto de columnas) que identifica de forma única cada fila en una tabla. Garantiza que no haya registros duplicados.
+- **NULL (Nulo):** Un valor especial que indica la ausencia de datos. Significa "sin valor" o "desconocido", no es lo mismo que cero o una cadena vacía.
+- **CONSTRAINT (Restricción):** Una regla que se aplica a los datos de una tabla para garantizar su integridad. Ejemplos: PRIMARY KEY, UNIQUE, NOT NULL, FOREIGN KEY.
+- **Clave Subrogada (Surrogate Key):** Una clave primaria artificial (generalmente un número autoincremental) que no tiene significado en el mundo real pero sirve únicamente para identificar registros en la base de datos.
+- **SEQUENCE (Secuencia):** Un objeto de Oracle que genera números únicos de forma automática, comúnmente usado para crear valores de claves primarias.
+- **IDENTITY COLUMN (Columna de Identidad):** Una característica de Oracle que permite que una columna genere valores únicos automáticamente sin necesidad de crear una secuencia por separado.
+
+---
+
 ### ¿Por qué las claves son la pieza más importante del puzzle?
 
 Sin un identificador único, puede ocurrir:
@@ -44,14 +57,15 @@ CREATE TABLE ALUMNOS (
     FECHA_NACIMIENTO DATE
 );
 -- El "CONSTRAINT pk_alumnos" es simplemente una forma de darle un nombre
--- a nuestra regla de clave primaria, lo cual es una buena práctica.
+-- a nuestra restricción de clave primaria, lo cual es una buena práctica.
+-- Esto hace que los errores sean más fáciles de identificar.
 ```
 
 Si ahora intentáramos insertar dos alumnos con el mismo `ID_ALUMNO`, Oracle nos daría un error. ¡La base de datos está protegiendo la integridad de nuestros datos!
 
 ### Consejos de los Experts
 
-> A menudo, el mejor tipo de clave primaria es un número entero que se incrementa automáticamente por cada nueva fila. Esto se conoce como **clave subrogada** (*surrogate key*). No tiene ningún significado "de negocio", pero es perfecta para la base de datos porque es simple, numérica y su unicidad está garantizada. En Oracle, esto se logra con un objeto llamado `SEQUENCE` y/o con columnas de identidad (`IDENTITY COLUMNS`).
+> A menudo, el mejor tipo de clave primaria es un número entero que se incrementa automáticamente por cada nueva fila. Esto se conoce como clave subrogada. No tiene ningún significado "de negocio", pero es perfecta para la base de datos porque es simple, numérica y su unicidad está garantizada. En Oracle, esto se logra con secuencias (SEQUENCE) o con columnas de identidad (IDENTITY COLUMNS), que generan valores únicos automáticamente.
 
 ---
 

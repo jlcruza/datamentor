@@ -6,6 +6,17 @@ Por defecto, una base de datos no te garantiza que los resultados de una consult
 
 ---
 
+### Términos Clave
+
+Antes de aprender a ordenar resultados, entendamos estos conceptos:
+
+- **ORDER BY:** Cláusula SQL que especifica cómo se deben ordenar los resultados de una consulta.
+- **ASC (Ascending - Ascendente):** Orden de menor a mayor (A-Z, 0-9, fechas más antiguas primero). Es el orden por defecto.
+- **DESC (Descending - Descendente):** Orden de mayor a menor (Z-A, 9-0, fechas más recientes primero).
+- **Ordenación Múltiple:** Ordenar por más de una columna. Si dos filas tienen el mismo valor en la primera columna, se usa la segunda para desempatar.
+
+---
+
 ### ¿Cómo Funciona `ORDER BY`?
 
 La cláusula `ORDER BY` es casi siempre la última cláusula en una sentencia `SELECT`. Le dices por qué columna (o columnas) quieres ordenar los resultados.

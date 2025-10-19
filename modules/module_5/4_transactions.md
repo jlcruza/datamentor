@@ -12,6 +12,27 @@ Las transacciones garantizan la integridad de los datos siguiendo el principio d
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre transacciones, entendamos estos conceptos:
+
+- **Transacción:** Una secuencia de operaciones de base de datos que se ejecutan como una unidad indivisible. O todas se completan con éxito o ninguna se aplica.
+- **Atómica (Atomic):** Propiedad que garantiza que una transacción se trata como una unidad indivisible: todo o nada.
+- **ACID:** Acrónimo que define las cuatro propiedades que garantizan transacciones confiables:
+  - **A**tomicity (Atomicidad): Todo o nada
+  - **C**onsistency (Consistencia): Los datos siempre quedan en un estado válido
+  - **I**solation (Aislamiento): Las transacciones no interfieren entre sí
+  - **D**urability (Durabilidad): Los cambios confirmados son permanentes
+- **COMMIT:** Comando que confirma y hace permanentes todos los cambios de la transacción actual.
+- **ROLLBACK:** Comando que deshace todos los cambios de la transacción actual.
+- **SAVEPOINT (Punto de Guardado):** Marca dentro de una transacción a la que puedes regresar con ROLLBACK sin deshacer toda la transacción.
+- **DML (Data Manipulation Language):** Comandos que modifican datos (INSERT, UPDATE, DELETE).
+- **SYSDATE:** Función de Oracle que devuelve la fecha y hora actual del sistema.
+- **Concurrencia:** Capacidad de múltiples usuarios de acceder y modificar datos simultáneamente.
+- **Bloqueo (Lock):** Mecanismo que impide que múltiples transacciones modifiquen los mismos datos simultáneamente.
+
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 En Oracle, una transacción comienza implícitamente con la primera instrucción DML (`INSERT`, `UPDATE`, `DELETE`). No necesitas un comando `BEGIN TRANSACTION` como en otros sistemas.
