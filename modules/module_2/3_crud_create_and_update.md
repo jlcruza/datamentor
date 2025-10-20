@@ -24,19 +24,19 @@ Antes de comenzar a manipular datos, definamos los comandos y conceptos importan
 El comando `INSERT INTO` te permite añadir nuevos registros (filas) a una tabla.
 
 **Sintaxis 1: Especificando columnas** (la forma más segura)
-```oracle
+```sql
 INSERT INTO nombre_de_la_tabla (columna1, columna2, columna3)
 VALUES (valor1, valor2, valor3);
 ```
 
 **Sintaxis 2: Sin especificar columnas** (requiere que los valores estén en el orden exacto de la tabla)
-```oracle
+```sql
 INSERT INTO nombre_de_la_tabla
 VALUES (valor1, valor2, valor3, ...);
 ```
 
 **Ejemplo:** Añadamos un estudiante a nuestra tabla.
-```oracle
+```sql
 INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
 VALUES (9, 'Carlos Santana', 'carlos@email.com', 1, 22, TO_DATE('2025-09-01', 'YYYY-MM-DD'));
 ```
@@ -46,7 +46,7 @@ Nota: Para las fechas, usamos la función `TO_DATE` para convertir una cadena de
 ### Modificando Filas con `UPDATE`
 
 El comando `UPDATE` se usa para modificar registros que ya existen en la tabla.
-```oracle
+```sql
 UPDATE nombre_de_la_tabla
 SET columna1 = nuevo_valor1,
     columna2 = nuevo_valor2
@@ -56,7 +56,7 @@ WHERE condicion;
 La cláusula `WHERE` es **crucial**. Especifica *qué* filas quieres actualizar. Si la omites, ¡Oracle actualizará **todas** las filas de la tabla, lo cual generalmente no es lo que deseas!
 
 **Ejemplo:** Carlos Santana se ha cambiado el email.
-```oracle
+```sql
 UPDATE ESTUDIANTES
 SET email = 'carlos.nuevo@email.com'
 WHERE id = 9;

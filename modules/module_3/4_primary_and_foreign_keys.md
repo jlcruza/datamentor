@@ -28,7 +28,7 @@ Antes de profundizar en las claves, entendamos estos conceptos:
 
 ### Ejemplo en SQL
 Vamos a ver las tablas `DEPARTAMENTOS` y `ESTUDIANTES`, donde un departamento puede tener muchos estudiantes (relación 1:N).
-```oracle
+```sql
 -- La tabla de "uno" (departamento)
 CREATE TABLE DEPARTAMENTOS (
     id           NUMBER PRIMARY KEY,

@@ -33,21 +33,21 @@ Estas funciones toman múltiples valores de una columna y los "agregan" en un ú
 ### Ejemplos Ilustrativos
 
 - **Pregunta:** "¿Cuántos estudiantes tengo en total?"
-```oracle
+```sql
 SELECT COUNT(*)
 FROM ESTUDIANTES;
 ```
 
 - **Pregunta:** "¿Cuál es la edad del estudiante más joven y del más viejo?"
 
-```oracle
+```sql
 SELECT MIN(edad) AS edad_minima, MAX(edad) AS edad_maxima
 FROM ESTUDIANTES;
 ```
 
 - **Pregunta:** "¿Cuál es la nota promedio de todas las matrículas?"
 
-```oracle
+```sql
 SELECT AVG(nota) AS nota_promedio
 FROM MATRICULAS;
 ```

@@ -45,7 +45,7 @@ En Oracle, una transacción comienza implícitamente con la primera instrucción
 
 **Ejemplo de COMMIT:**
 Vamos a matricular un estudiante en un curso y registrar su nota inicial. Queremos que ambos registros se guarden o ninguno.
-```oracle
+```sql
 -- La transacción comienza automáticamente aquí
 INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
 VALUES (9, 'María García', 'maria@email.com', 1, 20, SYSDATE);
@@ -59,7 +59,7 @@ COMMIT;
 
 **Ejemplo de ROLLBACK:**
 Supongamos que intentamos actualizar la nota de un estudiante, pero nos damos cuenta de que cometimos un error.
-```oracle
+```sql
 UPDATE MATRICULAS
 SET nota = 100
 WHERE id = 1;

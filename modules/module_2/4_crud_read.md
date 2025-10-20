@@ -21,19 +21,19 @@ Antes de aprender a consultar datos, entendamos estos conceptos:
 ### La Anatomía de `SELECT`
 
 `SELECT` es el comando más versátil de SQL. En su forma más simple, se ve así:
-```oracle
+```sql
 SELECT columna1, columna2, ...
 FROM nombre_de_la_tabla;
 ```
 
 - Para obtener todas las columnas, puedes usar el comodín `*`:
-```oracle
+```sql
 SELECT *
 FROM ESTUDIANTES;
 ```
 
 - Para obtener solo columnas específicas:
-```oracle
+```sql
 SELECT nombre, email, edad
 FROM ESTUDIANTES;
 ```
@@ -41,13 +41,13 @@ FROM ESTUDIANTES;
 ### Ejemplos Ilustrativos
 
 - **Pregunta:** "¿Cuáles son los nombres y emails de todos mis estudiantes?"
-```oracle
+```sql
 SELECT nombre, email
 FROM ESTUDIANTES;
 ```
 
 - **Pregunta:** "Necesito toda la información disponible sobre los estudiantes."
-```oracle
+```sql
 SELECT *
 FROM ESTUDIANTES;
 ```
@@ -58,7 +58,7 @@ FROM ESTUDIANTES;
     1. **Rendimiento:** Pides más datos de los que necesitas, lo que aumenta el tráfico de red y la carga en la base de datos.
     2. **Fragilidad:** Si alguien añade o elimina una columna de la tabla, el código de tu aplicación que espera un número específico de columnas podría romperse.
 - **Usa Alias para Mayor Claridad:** Puedes renombrar las columnas en los resultados de tu consulta usando la palabra clave `AS` (aunque es opcional en Oracle). Esto hace que los resultados sean más legibles.
-```oracle
+```sql
 SELECT nombre AS nombre_estudiante, email AS correo_electronico
 FROM ESTUDIANTES;
 ```

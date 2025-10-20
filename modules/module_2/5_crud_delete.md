@@ -21,7 +21,7 @@ Antes de aprender a eliminar datos, entendamos estos conceptos importantes:
 ### Eliminando Filas con `DELETE FROM`
 
 El comando `DELETE` se usa para eliminar una o más filas de una tabla. Su sintaxis es simple, pero debe usarse con extremo cuidado.
-```oracle
+```sql
 DELETE FROM nombre_de_la_tabla
 WHERE condicion;
 ```
@@ -33,7 +33,7 @@ Al igual que con `UPDATE`, la cláusula `WHERE` es tu red de seguridad. Determin
 ### Ejemplo Ilustrativo
 
 Supongamos que el estudiante con ID `9` se ha dado de baja.
-```oracle
+```sql
 DELETE FROM ESTUDIANTES
 WHERE id = 9;
 ```
@@ -43,7 +43,7 @@ Esta instrucción buscará en la tabla `ESTUDIANTES` la fila (o filas) donde `id
 ### Consejos de los Expertos
 
 - **Verifica Antes de Eliminar:** Esta es una de las prácticas más importantes en SQL. Antes de ejecutar un `DELETE`, escribe un `SELECT` con la misma cláusula `WHERE` para previsualizar exactamente los registros que estás a punto de borrar.
-```oracle
+```sql
 -- Paso 1: Verificar qué se va a borrar
 SELECT *
 FROM ESTUDIANTES

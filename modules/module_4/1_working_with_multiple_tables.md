@@ -32,7 +32,7 @@ Supongamos que tenemos dos tablas: `EMPLEADOS` y `DEPARTAMENTOS`.
 | 102             | Marketing    |
 
 Para obtener el nombre de cada empleado junto con el nombre de su departamento, necesitamos combinar ambas tablas usando `ID_DEPARTAMENTO`.
-```oracle
+```sql
 SELECT
     e.nombre,
     d.nombre AS departamento

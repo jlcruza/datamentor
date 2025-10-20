@@ -20,7 +20,7 @@ Antes de aprender a ordenar resultados, entendamos estos conceptos:
 ### ¿Cómo Funciona `ORDER BY`?
 
 La cláusula `ORDER BY` es casi siempre la última cláusula en una sentencia `SELECT`. Le dices por qué columna (o columnas) quieres ordenar los resultados.
-```oracle
+```sql
 SELECT columnas
 FROM tabla
 WHERE condicion
@@ -33,21 +33,21 @@ ORDER BY columna_a_ordenar [ASC | DESC];
 ### Ejemplos Ilustrativos
 
 - **Ordenar estudiantes alfabéticamente por nombre:**
-```oracle
+```sql
 SELECT nombre, email
 FROM ESTUDIANTES
 ORDER BY nombre; -- ASC es implícito
 ```
 
 - **Ver los estudiantes de mayor a menor edad:**
-```oracle
+```sql
 SELECT nombre, edad
 FROM ESTUDIANTES
 ORDER BY edad DESC;
 ```
 
 - **Ordenar por múltiples columnas:** Si hay empates en la primera columna, se usa la segunda para desempatar. Por ejemplo, ordenar por edad y luego por nombre.
-```oracle
+```sql
 SELECT nombre, edad
 FROM ESTUDIANTES
 ORDER BY edad DESC, nombre ASC;

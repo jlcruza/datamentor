@@ -33,7 +33,7 @@ Devuelve solo las filas que tienen una coincidencia en ambas tablas. Es el tipo 
 **Analogía:** La intersección de dos conjuntos. Solo lo que tienen en común.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 SELECT
     e.nombre,
     d.nombre AS departamento
@@ -51,7 +51,7 @@ Devuelve **todas** las filas de la tabla de la izquierda (la primera tabla menci
 **¿Para qué sirve?** Para encontrar registros en una tabla que *no tienen* una correspondencia en otra. Por ejemplo, encontrar estudiantes que no han sido asignados a un departamento de especialidad.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 SELECT
     e.nombre,
     d.nombre AS departamento
@@ -75,7 +75,7 @@ Es lo opuesto a `LEFT JOIN`. Devuelve **todas** las filas de la tabla de la dere
 **¿Para qué sirve?** Para encontrar registros en la tabla derecha que no tienen correspondencia en la izquierda. Por ejemplo, departamentos que no tienen ningún estudiante.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 SELECT
     e.nombre,
     d.nombre AS departamento
@@ -93,7 +93,7 @@ Devuelve **todas** las filas cuando hay una coincidencia en una de las tablas. C
 **¿Para qué sirve?** Para ver todos los datos de ambas tablas y dónde se superponen y dónde no.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 SELECT
     e.nombre,
     d.nombre AS departamento

@@ -26,7 +26,7 @@ Antes de aprender a filtrar datos, entendamos estos operadores y conceptos:
 ### ¿Cómo Funciona `WHERE`?
 
 La cláusula `WHERE` se coloca después de la cláusula `FROM` y antes de otras como `ORDER BY`. Contiene una o más condiciones que deben ser verdaderas para que una fila se incluya en el resultado.
-```oracle
+```sql
 SELECT columnas
 FROM tabla
 WHERE condicion;
@@ -53,21 +53,21 @@ WHERE condicion;
 ### Ejemplos Ilustrativos
 
 - **Pregunta:** "Mostrar los estudiantes mayores de 21 años."
-```oracle
+```sql
 SELECT nombre, edad
 FROM ESTUDIANTES
 WHERE edad > 21;
 ```
 
 - **Pregunta:** "Mostrar los estudiantes que se matricularon en septiembre de 2025."
-```oracle
+```sql
 SELECT nombre, fecha_matricula
 FROM ESTUDIANTES
 WHERE fecha_matricula BETWEEN TO_DATE('2025-09-01', 'YYYY-MM-DD') AND TO_DATE('2025-09-30', 'YYYY-MM-DD');
 ```
 
 - **Pregunta:** "Encontrar estudiantes cuyo email termine en `@email.com`."
-```oracle
+```sql
 SELECT nombre, email
 FROM ESTUDIANTES
 WHERE email LIKE '%@email.com';
@@ -76,7 +76,7 @@ WHERE email LIKE '%@email.com';
 ### Consejos de los Expertos
 
 - **Manejo de NULL:** Un valor NULL significa "desconocido" o "no aplicable". No puedes compararlo con `=` o `!=` porque NULL no es igual a nada, ni siquiera a sí mismo. En su lugar, debes usar `IS NULL` o `IS NOT NULL`.
-  ```oracle
+  ```sql
   WHERE id_especialidad IS NULL  -- Encuentra estudiantes sin especialidad asignada
   ```
 - **Orden de los Operadores:** Usa paréntesis `()` para agrupar condiciones `AND` y `OR` y asegurar que se evalúen en el orden que deseas, evitando ambigüedades.

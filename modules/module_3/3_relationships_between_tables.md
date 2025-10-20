@@ -37,7 +37,7 @@ Existen tres tipos principales de relaciones entre tablas:
 *   **Relación M:N (Actores y Películas):** Un actor puede participar en múltiples películas, y una película tiene múltiples actores. La tabla de unión sería `Reparto`, almacenando pares de `id_actor` y `id_pelicula`.
 
 Para el ejemplo de ESTUDIANTES y CURSOS (M:N), la tabla de unión es `MATRICULAS`:
-```oracle
+```sql
 CREATE TABLE MATRICULAS (
     id                NUMBER PRIMARY KEY,
     id_estudiante     NUMBER NOT NULL,

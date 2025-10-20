@@ -47,7 +47,7 @@ Una clave primaria es una columna (o un conjunto de columnas) que identifica de 
 
 Ahora, modifiquemos nuestra tabla para definir `id` como la clave primaria.
 
-```oracle
+```sql
 -- Al añadir "PRIMARY KEY", le decimos a Oracle que esta columna
 -- debe ser única y no nula. Oracle forzará esta regla automáticamente.
 CREATE TABLE ESTUDIANTES (

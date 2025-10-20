@@ -25,13 +25,13 @@ Antes de aprender sobre índices, entendamos estos conceptos:
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 Crear un índice es muy sencillo. La sintaxis básica es la siguiente:
-```oracle
+```sql
 CREATE INDEX nombre_del_indice
 ON nombre_de_la_tabla (columna1, columna2, ...);
 ```
 
 Para eliminar un índice que ya no necesitas:
-```oracle
+```sql
 DROP INDEX nombre_del_indice;
 ```
 
@@ -43,13 +43,13 @@ Supongamos que tenemos una tabla `empleados` y frecuentemente buscamos empleados
 **Con índice:** La búsqueda sería casi instantánea.
 
 Vamos a crear un índice en la columna `apellido`:
-```oracle
+```sql
 CREATE INDEX idx_empleados_apellido
 ON empleados (apellido);
 ```
 
 Ahora, cuando ejecutes una consulta como esta, Oracle usará el índice para encontrar a 'Smith' rápidamente, en lugar de escanear toda la tabla.
-```oracle
+```sql
 SELECT *
 FROM empleados
 WHERE apellido = 'Smith';

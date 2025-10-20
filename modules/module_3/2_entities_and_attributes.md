@@ -16,7 +16,7 @@ Para construir nuestro "plano", necesitamos los bloques de construcción fundame
     *   **Atributos:** `id`, `titulo`, `creditos`, `id_departamento`, `instructor`.
 
 Así es como la entidad `ESTUDIANTES` se traduce a una tabla en SQL:
-```oracle
+```sql
 CREATE TABLE ESTUDIANTES (
     id               NUMBER PRIMARY KEY,
     nombre           VARCHAR2(100) NOT NULL,

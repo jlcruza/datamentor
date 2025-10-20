@@ -48,7 +48,7 @@ Imagina que quieres almacenar información sobre los estudiantes de una universi
 
 Así es como esta estructura se traduce a código. ¡No te preocupes por memorizar la sintaxis ahora, solo observa cómo se conectan los conceptos!
 
-```oracle
+```sql
 -- Este código crea la estructura de nuestra tabla en una base de datos Oracle.
 -- CREATE TABLE es el comando para crear una nueva tabla.
 CREATE TABLE ESTUDIANTES (

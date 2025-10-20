@@ -30,7 +30,7 @@ Los comandos de SQL se dividen en varias categorías, pero las más importantes 
 ### Sintaxis Básica
 
 Una consulta SQL se compone de cláusulas y se termina con un punto y coma (`;`).
-```oracle
+```sql
 SELECT columna1, columna2
 FROM nombre_de_la_tabla
 WHERE condicion;

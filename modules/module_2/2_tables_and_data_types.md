@@ -25,7 +25,7 @@ Antes de crear tablas, es importante entender estos conceptos:
 ### Creando una Tabla con `CREATE TABLE`
 
 El comando `CREATE TABLE` te permite construir la estructura de una tabla. Para cada columna, debes especificar un nombre y un tipo de dato.
-```oracle
+```sql
 CREATE TABLE nombre_de_la_tabla (
     nombre_columna1 TIPO_DE_DATO RESTRICCIONES,
     nombre_columna2 TIPO_DE_DATO,
@@ -44,7 +44,7 @@ CREATE TABLE nombre_de_la_tabla (
 
 Vamos a crear una tabla para almacenar información de nuestros estudiantes.
 
-```oracle
+```sql
 CREATE TABLE ESTUDIANTES (
     id               NUMBER PRIMARY KEY,
     nombre           VARCHAR2(100) NOT NULL,

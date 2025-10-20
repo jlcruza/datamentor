@@ -22,7 +22,7 @@ Antes de aprender a agrupar datos, entendamos estos conceptos:
 ### Agrupando con `GROUP BY`
 
 La cláusula `GROUP BY` se usa con funciones de agregación. Consolida todas las filas que tienen el mismo valor en una columna (o columnas) en una sola fila de resumen.
-```oracle
+```sql
 SELECT columna_para_agrupar, FUNCION_DE_AGREGACION(columna)
 FROM tabla
 GROUP BY columna_para_agrupar;
@@ -31,7 +31,7 @@ GROUP BY columna_para_agrupar;
 **Regla de Oro de `GROUP BY`:** Cualquier columna en la cláusula `SELECT` que no sea una función de agregación **debe** estar en la cláusula `GROUP BY`.
 
 **Ejemplo:** Contar cuántos estudiantes hay por cada especialidad.
-```oracle
+```sql
 SELECT id_especialidad, COUNT(*) AS numero_estudiantes
 FROM ESTUDIANTES
 GROUP BY id_especialidad;
@@ -44,7 +44,7 @@ Este query devolverá una fila por cada especialidad distinta, con el conteo de 
 Ya sabes cómo `WHERE` filtra filas individuales. Pero, ¿qué pasa si quieres filtrar los *resultados de los grupos*? Por ejemplo, "¿qué ciudades tienen *más de 50 estudiantes*?". No puedes usar `WHERE COUNT(*) > 50` porque `WHERE` se ejecuta antes de que se formen los grupos.
 
 Aquí es donde entra `HAVING`. `HAVING` es como un `WHERE`, pero para los grupos creados por `GROUP BY`. Se ejecuta *después* de la agregación.
-```oracle
+```sql
 SELECT columna_para_agrupar, FUNCION_DE_AGREGACION(columna)
 FROM tabla
 GROUP BY columna_para_agrupar
@@ -52,7 +52,7 @@ HAVING condicion_sobre_agregacion;
 ```
 
 **Ejemplo:** Mostrar solo las especialidades con más de 2 estudiantes.
-```oracle
+```sql
 SELECT id_especialidad, COUNT(*) AS total
 FROM ESTUDIANTES
 GROUP BY id_especialidad
@@ -63,7 +63,7 @@ HAVING COUNT(*) > 2;
 
 - `WHERE` filtra **filas** (antes de agrupar).
 - `HAVING` filtra **grupos** (después de agrupar).
-```oracle
+```sql
 SELECT id_curso, AVG(nota) AS promedio
 FROM MATRICULAS
 WHERE semestre = 'Otoño 2025' -- Filtra filas: solo matrículas del semestre Otoño 2025

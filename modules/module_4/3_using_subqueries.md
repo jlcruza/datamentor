@@ -30,7 +30,7 @@ Esta subconsulta se ejecuta **una sola vez**, antes que la consulta principal. S
 **Ejemplo Ilustrativo:** Encontrar los empleados que trabajan en el departamento de "Ventas".
 
 Primero, necesitamos el `ID_DEPARTAMENTO` de "Ventas". Luego, buscamos los empleados con ese ID.
-```oracle
+```sql
 SELECT
     NOMBRE
 FROM
@@ -44,7 +44,7 @@ WHERE
 La subconsulta `(SELECT ID_DEPARTAMENTO ...)` se ejecuta primero y devuelve `101`. Luego, la consulta principal se convierte en: `SELECT NOMBRE FROM EMPLEADOS WHERE ID_DEPARTAMENTO = 101;`.
 
 Las subconsultas también pueden devolver múltiples filas usando operadores como `IN`:
-```oracle
+```sql
 -- Empleados que están en CUALQUIER departamento ubicado en el edificio 'A'
 SELECT
     NOMBRE
@@ -62,7 +62,7 @@ Esta subconsulta está vinculada a la consulta externa y se ejecuta **una vez po
 **Analogía:** Es como si, para cada empleado en una lista, tuvieras que hacer una pregunta específica sobre él. Por ejemplo, para cada empleado, preguntar: "¿Cuál es el salario promedio *de su propio departamento*?".
 
 **Ejemplo Ilustrativo:** Encontrar empleados cuyo salario es mayor que el promedio *de su respectivo departamento*.
-```oracle
+```sql
 SELECT
     e1.NOMBRE,
     e1.SALARIO
