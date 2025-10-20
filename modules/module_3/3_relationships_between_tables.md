@@ -26,23 +26,30 @@ Existen tres tipos principales de relaciones entre tablas:
     *   **Ejemplo:** Una persona y su número de pasaporte. Una tabla `Usuarios` y una tabla `PerfilesDeUsuario`.
 
 2.  **Uno a Muchos (1:N):** Un registro en la Tabla A puede estar relacionado con muchos registros en la Tabla B, pero cada registro de la Tabla B solo se relaciona con uno de la Tabla A. Es la relación más común.
-    *   **Ejemplo:** Un `Autor` puede escribir muchos `Libros`.
+    *   **Ejemplo:** Un `DEPARTAMENTO` puede tener muchos `ESTUDIANTES` (a través de la especialidad), y un `DEPARTAMENTO` puede ofrecer muchos `CURSOS`.
 
 3.  **Muchos a Muchos (M:N):** Un registro en la Tabla A puede relacionarse con muchos registros en la Tabla B, y viceversa.
-    *   **Ejemplo:** Un `Estudiante` puede inscribirse en muchos `Cursos`, y un `Curso` puede tener muchos `Estudiantes`.
-    *   **Solución:** Este tipo de relación no se puede implementar directamente. Se resuelve creando una tercera tabla, llamada **tabla de unión** (o tabla puente), que conecta las dos.
+    *   **Ejemplo:** Un `ESTUDIANTE` puede inscribirse en muchos `CURSOS`, y un `CURSO` puede tener muchos `ESTUDIANTES`.
+    *   **Solución:** Este tipo de relación no se puede implementar directamente. Se resuelve creando una tercera tabla, llamada **tabla de unión** (o tabla puente), que conecta las dos. En nuestro caso, la tabla `MATRICULAS`.
 
 ### Ejemplos Ilustrativos y Analogías
 *   **Relación 1:N (Madre e Hijos):** Una madre puede tener varios hijos, pero cada hijo tiene una sola madre biológica.
 *   **Relación M:N (Actores y Películas):** Un actor puede participar en múltiples películas, y una película tiene múltiples actores. La tabla de unión sería `Reparto`, almacenando pares de `id_actor` y `id_pelicula`.
 
-Para el ejemplo de Estudiantes y Cursos (M:N), crearíamos una tabla de unión:
+Para el ejemplo de ESTUDIANTES y CURSOS (M:N), la tabla de unión es `MATRICULAS`:
 ```oracle
-CREATE TABLE Inscripciones (
-    estudiante_id  NUMBER(10),
-    curso_id       NUMBER(10),
-    fecha_inscripcion DATE
-    -- Aquí se definirían las claves foráneas para conectar con Estudiantes y Cursos
+CREATE TABLE MATRICULAS (
+    id                NUMBER PRIMARY KEY,
+    id_estudiante     NUMBER NOT NULL,
+    id_curso          NUMBER NOT NULL,
+    nota              NUMBER(5,2),
+    semestre          VARCHAR2(50) NOT NULL,
+    fecha_matricula   DATE NOT NULL,
+    -- Las claves foráneas conectan con ESTUDIANTES y CURSOS
+    CONSTRAINT fk_matriculas_estudiante
+        FOREIGN KEY (id_estudiante) REFERENCES ESTUDIANTES(id),
+    CONSTRAINT fk_matriculas_curso
+        FOREIGN KEY (id_curso) REFERENCES CURSOS(id)
 );
 ```
 

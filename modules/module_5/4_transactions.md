@@ -44,31 +44,31 @@ En Oracle, una transacción comienza implícitamente con la primera instrucción
 ### Ejemplos Ilustrativos
 
 **Ejemplo de COMMIT:**
-Vamos a registrar un nuevo empleado y su puesto en dos tablas diferentes. Queremos que ambos registros se guarden o ninguno.
+Vamos a matricular un estudiante en un curso y registrar su nota inicial. Queremos que ambos registros se guarden o ninguno.
 ```oracle
 -- La transacción comienza automáticamente aquí
-INSERT INTO empleados (empleado_id, nombre, apellido, id_puesto)
-VALUES (207, 'Ana', 'Perez', 10);
+INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
+VALUES (9, 'María García', 'maria@email.com', 1, 20, SYSDATE);
 
-INSERT INTO historial_puestos (empleado_id, id_puesto, fecha_inicio)
-VALUES (207, 10, SYSDATE);
+INSERT INTO MATRICULAS (id, id_estudiante, id_curso, nota, semestre, fecha_matricula)
+VALUES (14, 9, 101, NULL, 'Primavera 2026', SYSDATE);
 
 -- Si todo fue bien, confirmamos los cambios
 COMMIT;
 ```
 
 **Ejemplo de ROLLBACK:**
-Supongamos que intentamos actualizar el salario de un empleado, pero nos damos cuenta de que cometimos un error.
+Supongamos que intentamos actualizar la nota de un estudiante, pero nos damos cuenta de que cometimos un error.
 ```oracle
-UPDATE empleados
-SET salario = 50000
-WHERE empleado_id = 10;
+UPDATE MATRICULAS
+SET nota = 100
+WHERE id = 1;
 
--- Nos damos cuenta del error (¡era demasiado!). Deshacemos el cambio.
+-- Nos damos cuenta del error (¡era demasiado alta!). Deshacemos el cambio.
 ROLLBACK;
 ```
 
--- El salario del empleado 10 vuelve a su valor original.
+-- La nota de la matrícula 1 vuelve a su valor original.
 
 ### Consejos de los Expertos
 

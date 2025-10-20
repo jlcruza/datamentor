@@ -10,18 +10,20 @@ Para construir nuestro "plano", necesitamos los bloques de construcción fundame
 *   **Atributo:** Es una propiedad o característica que describe a una entidad. **En una base de datos, un atributo se convierte en una columna dentro de una tabla.**
 
 ### Ejemplos Ilustrativos y Analogías
-*   **Entidad:** `Estudiante`
-    *   **Atributos:** `id_estudiante`, `nombre`, `apellido`, `fecha_nacimiento`, `email`.
-*   **Entidad:** `Producto`
-    *   **Atributos:** `id_producto`, `nombre_producto`, `precio`, `descripcion`.
+*   **Entidad:** `ESTUDIANTES`
+    *   **Atributos:** `id`, `nombre`, `email`, `id_especialidad`, `edad`, `fecha_matricula`.
+*   **Entidad:** `CURSOS`
+    *   **Atributos:** `id`, `titulo`, `creditos`, `id_departamento`, `instructor`.
 
-Así es como la entidad `Estudiante` se traduce a una tabla en SQL:
+Así es como la entidad `ESTUDIANTES` se traduce a una tabla en SQL:
 ```oracle
-CREATE TABLE Estudiantes (
-    estudiante_id    NUMBER(10) NOT NULL,
-    nombre           VARCHAR2(50),
-    apellido         VARCHAR2(50),
-    fecha_nacimiento DATE
+CREATE TABLE ESTUDIANTES (
+    id               NUMBER PRIMARY KEY,
+    nombre           VARCHAR2(100) NOT NULL,
+    email            VARCHAR2(255) NOT NULL UNIQUE,
+    id_especialidad  NUMBER,
+    edad             NUMBER(3),
+    fecha_matricula  DATE NOT NULL
 );
 ```
 

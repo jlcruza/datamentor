@@ -35,65 +35,57 @@ Devuelve solo las filas que tienen una coincidencia en ambas tablas. Es el tipo 
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-    e.NOMBRE,
-    d.NOMBRE_DEPTO
+    e.nombre,
+    d.nombre AS departamento
 FROM
-    EMPLEADOS e
+    ESTUDIANTES e
 INNER JOIN
-    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.id_especialidad = d.id;
 ```
 
-Este código produce el mismo resultado que el ejemplo de la lección anterior, pero es más legible y es la forma estándar de escribir uniones.
+Este código muestra los nombres de los estudiantes junto con el nombre de su departamento de especialidad. Solo muestra estudiantes que tienen una especialidad asignada.
 
 #### 2. `LEFT JOIN` (Unión Izquierda)
 Devuelve **todas** las filas de la tabla de la izquierda (la primera tabla mencionada) y las filas coincidentes de la tabla de la derecha. Si no hay coincidencia, las columnas de la tabla derecha tendrán valores `NULL`.
 
-**¿Para qué sirve?** Para encontrar registros en una tabla que *no tienen* una correspondencia en otra. Por ejemplo, encontrar empleados que no han sido asignados a un departamento.
+**¿Para qué sirve?** Para encontrar registros en una tabla que *no tienen* una correspondencia en otra. Por ejemplo, encontrar estudiantes que no han sido asignados a un departamento de especialidad.
 
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-    e.NOMBRE,
-    d.NOMBRE_DEPTO
+    e.nombre,
+    d.nombre AS departamento
 FROM
-    EMPLEADOS e
+    ESTUDIANTES e
 LEFT JOIN
-    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.id_especialidad = d.id;
 ```
 
-Si tuviéramos un empleado `Juan` con `ID_DEPARTAMENTO` igual a `NULL`, el resultado sería:
+Este query mostrará TODOS los estudiantes. Si un estudiante no tiene especialidad (id_especialidad es NULL), el departamento aparecerá como NULL:
 
-| NOMBRE | NOMBRE_DEPTO |
-|--------|--------------|
-| Ana    | Ventas       |
-| Luis   | Marketing    |
-| Pedro  | Ventas       |
-| Juan   | (null)       |
+| nombre | departamento |
+|--------|------------------------|
+| Alice Johnson | Ciencia de la Computación |
+| Bob Smith     | Matemáticas           |
+| (estudiante sin especialidad) | (null) |
 
 #### 3. `RIGHT JOIN` (Unión Derecha)
 Es lo opuesto a `LEFT JOIN`. Devuelve **todas** las filas de la tabla de la derecha y las coincidentes de la izquierda. Si no hay coincidencia, las columnas de la tabla izquierda serán `NULL`.
 
-**¿Para qué sirve?** Para encontrar registros en la tabla derecha que no tienen correspondencia en la izquierda. Por ejemplo, departamentos que no tienen ningún empleado asignado.
+**¿Para qué sirve?** Para encontrar registros en la tabla derecha que no tienen correspondencia en la izquierda. Por ejemplo, departamentos que no tienen ningún estudiante.
 
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-    e.NOMBRE,
-    d.NOMBRE_DEPTO
+    e.nombre,
+    d.nombre AS departamento
 FROM
-    EMPLEADOS e
+    ESTUDIANTES e
 RIGHT JOIN
-    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    DEPARTAMENTOS d ON e.id_especialidad = d.id;
 ```
 
-Si tuviéramos un departamento de "Innovación" sin empleados, el resultado sería:
-
-| NOMBRE | NOMBRE_DEPTO |
-|--------|--------------|
-| Ana    | Ventas       |
-| Luis   | Marketing    |
-| Pedro  | Ventas       |
-| (null) | Innovación   |
+Este query mostrará TODOS los departamentos. Si un departamento no tiene estudiantes, el nombre del estudiante aparecerá como NULL.
 
 #### 4. `FULL OUTER JOIN` (Unión Externa Completa)
 Devuelve **todas** las filas cuando hay una coincidencia en una de las tablas. Combina la funcionalidad de `LEFT JOIN` y `RIGHT JOIN`. Si no hay coincidencia para una fila, las columnas de la otra tabla serán `NULL`.
@@ -103,15 +95,14 @@ Devuelve **todas** las filas cuando hay una coincidencia en una de las tablas. C
 **Sintaxis de Oracle:**
 ```oracle
 SELECT
-    e.NOMBRE,
-    d.NOMBRE_DEPTO
+    e.nombre,
+    d.nombre AS departamento
 FROM
-    EMPLEADOS e
+    ESTUDIANTES e
 FULL OUTER JOIN
-    DEPARTAMENTOS d ON e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
-
+    DEPARTAMENTOS d ON e.id_especialidad = d.id;
 ```
-El resultado incluiría tanto a `Juan` (empleado sin departamento) como a "Innovación" (departamento sin empleados).
+El resultado incluiría tanto estudiantes sin especialidad como departamentos sin estudiantes.
 
 ### Consejos de los Expertos
 - **Prefiere `JOIN` explícito:** Usa siempre la sintaxis `INNER JOIN`, `LEFT JOIN`, etc., en lugar de la sintaxis antigua con comas en el `FROM` y condiciones en el `WHERE`. Es el estándar ANSI, más seguro y mucho más legible.

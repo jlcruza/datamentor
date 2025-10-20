@@ -27,24 +27,29 @@ Antes de profundizar en las claves, entendamos estos conceptos:
     *   **Analogía:** Si tienes una tabla `Pedidos`, la columna `id_cliente` en esa tabla es una clave foránea que "apunta" al cliente específico en la tabla `Clientes`.
 
 ### Ejemplo en SQL
-Vamos a crear las tablas `Autores` y `Libros`, definiendo sus claves para establecer una relación 1:N (un autor, muchos libros).
+Vamos a ver las tablas `DEPARTAMENTOS` y `ESTUDIANTES`, donde un departamento puede tener muchos estudiantes (relación 1:N).
 ```oracle
--- La tabla de "uno"
-CREATE TABLE Autores (
-    autor_id    NUMBER(10) NOT NULL,
-    nombre      VARCHAR2(100),
-    CONSTRAINT pk_autores PRIMARY KEY (autor_id) -- Definición de la Clave Primaria
+-- La tabla de "uno" (departamento)
+CREATE TABLE DEPARTAMENTOS (
+    id           NUMBER PRIMARY KEY,
+    nombre       VARCHAR2(100) NOT NULL UNIQUE,
+    director     VARCHAR2(100),
+    presupuesto  NUMBER(12,2),
+    edificio     VARCHAR2(100)
 );
 
--- La tabla de "muchos"
-CREATE TABLE Libros (
-    libro_id    NUMBER(10) NOT NULL,
-    titulo      VARCHAR2(255),
-    autor_id    NUMBER(10), -- Esta columna contendrá el ID del autor
-    CONSTRAINT pk_libros PRIMARY KEY (libro_id),
-    CONSTRAINT fk_libros_autores -- Dando un nombre a la Clave Foránea
-        FOREIGN KEY (autor_id) -- La columna en *esta* tabla
-        REFERENCES Autores(autor_id) -- Apunta a la PK de la tabla Autores
+-- La tabla de "muchos" (estudiantes)
+CREATE TABLE ESTUDIANTES (
+    id                NUMBER PRIMARY KEY,
+    nombre            VARCHAR2(100) NOT NULL,
+    email             VARCHAR2(255) NOT NULL UNIQUE,
+    id_especialidad   NUMBER, -- Esta columna contendrá el ID del departamento
+    edad              NUMBER(3),
+    fecha_matricula   DATE NOT NULL,
+    CONSTRAINT fk_estudiantes_departamento -- Dando un nombre a la Clave Foránea
+        FOREIGN KEY (id_especialidad) -- La columna en *esta* tabla
+        REFERENCES DEPARTAMENTOS(id) -- Apunta a la PK de la tabla DEPARTAMENTOS
+        ON DELETE SET NULL -- Si se elimina un departamento, la especialidad se pone en NULL
 );
 ```
 
