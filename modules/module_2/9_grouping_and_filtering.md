@@ -30,14 +30,14 @@ GROUP BY columna_para_agrupar;
 
 **Regla de Oro de `GROUP BY`:** Cualquier columna en la cláusula `SELECT` que no sea una función de agregación **debe** estar en la cláusula `GROUP BY`.
 
-**Ejemplo:** Suponiendo que nuestra tabla `Estudiantes` tiene una columna `Ciudad`.
+**Ejemplo:** Contar cuántos estudiantes hay por cada especialidad.
 ```oracle
-SELECT Ciudad, COUNT(*) AS Numero_De_Estudiantes
-FROM Estudiantes
-GROUP BY Ciudad;
+SELECT id_especialidad, COUNT(*) AS numero_estudiantes
+FROM ESTUDIANTES
+GROUP BY id_especialidad;
 ```
 
-Este query devolverá una fila por cada ciudad distinta, con el conteo de estudiantes en esa ciudad.
+Este query devolverá una fila por cada especialidad distinta, con el conteo de estudiantes en esa especialidad.
 
 ### Filtrando Grupos con `HAVING`
 
@@ -51,12 +51,12 @@ GROUP BY columna_para_agrupar
 HAVING condicion_sobre_agregacion;
 ```
 
-**Ejemplo:** Mostrar solo las ciudades con más de 50 estudiantes.
+**Ejemplo:** Mostrar solo las especialidades con más de 2 estudiantes.
 ```oracle
-SELECT Ciudad, COUNT(*)
-FROM Estudiantes
-GROUP BY Ciudad
-HAVING COUNT(*) > 50;
+SELECT id_especialidad, COUNT(*) AS total
+FROM ESTUDIANTES
+GROUP BY id_especialidad
+HAVING COUNT(*) > 2;
 ```
 
 ### `WHERE` vs. `HAVING`: La Gran Diferencia
@@ -64,11 +64,11 @@ HAVING COUNT(*) > 50;
 - `WHERE` filtra **filas** (antes de agrupar).
 - `HAVING` filtra **grupos** (después de agrupar).
 ```oracle
-SELECT Ciudad, AVG(Nota)
-FROM Calificaciones
-WHERE Anio = 2023 -- Filtra filas: solo calificaciones del año 2023
-GROUP BY Ciudad
-HAVING AVG(Nota) > 7.5; -- Filtra grupos: solo ciudades cuyo promedio fue mayor a 7.5
+SELECT id_curso, AVG(nota) AS promedio
+FROM MATRICULAS
+WHERE semestre = 'Otoño 2025' -- Filtra filas: solo matrículas del semestre Otoño 2025
+GROUP BY id_curso
+HAVING AVG(nota) > 90; -- Filtra grupos: solo cursos cuyo promedio fue mayor a 90
 ```
 
 ---

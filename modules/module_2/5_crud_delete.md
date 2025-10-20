@@ -32,13 +32,13 @@ Al igual que con `UPDATE`, la cláusula `WHERE` es tu red de seguridad. Determin
 
 ### Ejemplo Ilustrativo
 
-Supongamos que el estudiante con ID `1` se ha dado de baja.
+Supongamos que el estudiante con ID `9` se ha dado de baja.
 ```oracle
-DELETE FROM Estudiantes
-WHERE ID_Estudiante = 1;
+DELETE FROM ESTUDIANTES
+WHERE id = 9;
 ```
 
-Esta instrucción buscará en la tabla `Estudiantes` la fila (o filas) donde `ID_Estudiante` sea `1` y la eliminará permanentemente.
+Esta instrucción buscará en la tabla `ESTUDIANTES` la fila (o filas) donde `id` sea `9` y la eliminará permanentemente.
 
 ### Consejos de los Expertos
 
@@ -46,12 +46,12 @@ Esta instrucción buscará en la tabla `Estudiantes` la fila (o filas) donde `ID
 ```oracle
 -- Paso 1: Verificar qué se va a borrar
 SELECT *
-FROM Estudiantes
-WHERE ID_Estudiante = 1;
+FROM ESTUDIANTES
+WHERE id = 9;
 
 -- Paso 2: Si el resultado es correcto, ejecutar el DELETE
-DELETE FROM Estudiantes
-WHERE ID_Estudiante = 1;
+DELETE FROM ESTUDIANTES
+WHERE id = 9;
 ```
 
 - **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite deshacer (ROLLBACK) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (COMMIT). Las transacciones serán explicadas en detalle en módulos posteriores.

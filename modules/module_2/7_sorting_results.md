@@ -32,25 +32,25 @@ ORDER BY columna_a_ordenar [ASC | DESC];
 
 ### Ejemplos Ilustrativos
 
-- **Ordenar estudiantes alfabéticamente por apellido:**
+- **Ordenar estudiantes alfabéticamente por nombre:**
 ```oracle
-SELECT Nombre, Apellido
-FROM Estudiantes
-ORDER BY Apellido; -- ASC es implícito
+SELECT nombre, email
+FROM ESTUDIANTES
+ORDER BY nombre; -- ASC es implícito
 ```
 
-- **Ver los estudiantes más jóvenes primero (ordenados por fecha de nacimiento descendente):**
+- **Ver los estudiantes de mayor a menor edad:**
 ```oracle
-SELECT Nombre, Apellido, Fecha_Nacimiento
-FROM Estudiantes
-ORDER BY Fecha_Nacimiento DESC;
+SELECT nombre, edad
+FROM ESTUDIANTES
+ORDER BY edad DESC;
 ```
 
-- **Ordenar por múltiples columnas:** Si hay empates en la primera columna, se usa la segunda para desempatar. Por ejemplo, ordenar por apellido y luego por nombre.
+- **Ordenar por múltiples columnas:** Si hay empates en la primera columna, se usa la segunda para desempatar. Por ejemplo, ordenar por edad y luego por nombre.
 ```oracle
-SELECT Nombre, Apellido
-FROM Estudiantes
-ORDER BY Apellido ASC, Nombre ASC;
+SELECT nombre, edad
+FROM ESTUDIANTES
+ORDER BY edad DESC, nombre ASC;
 ```
 
 ### Consejos de los Expertos

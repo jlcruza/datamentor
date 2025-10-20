@@ -45,21 +45,23 @@ CREATE TABLE nombre_de_la_tabla (
 Vamos a crear una tabla para almacenar información de nuestros estudiantes.
 
 ```oracle
-CREATE TABLE Estudiantes (
-    ID_Estudiante NUMBER(10) PRIMARY KEY,
-    Nombre VARCHAR2(50) NOT NULL,
-    Apellido VARCHAR2(50),
-    Fecha_Nacimiento DATE,
-    Email VARCHAR2(100) UNIQUE
+CREATE TABLE ESTUDIANTES (
+    id               NUMBER PRIMARY KEY,
+    nombre           VARCHAR2(100) NOT NULL,
+    email            VARCHAR2(255) NOT NULL UNIQUE,
+    id_especialidad  NUMBER,
+    edad             NUMBER(3),
+    fecha_matricula  DATE NOT NULL
 );
 ```
 
 En este ejemplo:
-- `ID_Estudiante` es un número que servirá como identificador único (`PRIMARY KEY`).
-- `Nombre` es un texto obligatorio (`NOT NULL`).
-- `Apellido` es un texto opcional.
-- `Fecha_Nacimiento` almacenará la fecha.
-- `Email` debe ser único para cada estudiante (`UNIQUE`).
+- `id` es un número que servirá como identificador único (`PRIMARY KEY`).
+- `nombre` es un texto obligatorio (`NOT NULL`).
+- `email` es texto obligatorio y debe ser único para cada estudiante (`UNIQUE`).
+- `id_especialidad` es opcional y se conectará con la tabla DEPARTAMENTOS.
+- `edad` almacena la edad del estudiante.
+- `fecha_matricula` almacenará la fecha de inscripción.
 
 ### Consejos de los Expertos
 

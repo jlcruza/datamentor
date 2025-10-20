@@ -51,12 +51,13 @@ Así es como esta estructura se traduce a código. ¡No te preocupes por memoriz
 ```oracle
 -- Este código crea la estructura de nuestra tabla en una base de datos Oracle.
 -- CREATE TABLE es el comando para crear una nueva tabla.
-CREATE TABLE ALUMNOS (
+CREATE TABLE ESTUDIANTES (
     -- Aquí definimos las columnas y sus tipos de datos.
-    ID_ALUMNO           NUMBER,         -- NUMBER para números enteros.
-    NOMBRE              VARCHAR2(50),   -- VARCHAR2 para texto de longitud variable.
-    APELLIDO            VARCHAR2(50),
-    FECHA_NACIMIENTO    DATE            -- DATE para fechas.
+    id                  NUMBER,         -- NUMBER para números enteros.
+    nombre              VARCHAR2(100),  -- VARCHAR2 para texto de longitud variable.
+    email               VARCHAR2(255),
+    edad                NUMBER(3),
+    fecha_matricula     DATE            -- DATE para fechas.
 );
 ```
 

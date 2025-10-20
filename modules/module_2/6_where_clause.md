@@ -52,32 +52,32 @@ WHERE condicion;
 
 ### Ejemplos Ilustrativos
 
-- **Pregunta:** "Mostrar los estudiantes cuyo apellido es 'Perez'."
+- **Pregunta:** "Mostrar los estudiantes mayores de 21 años."
 ```oracle
-SELECT Nombre, Apellido
-FROM Estudiantes
-WHERE Apellido = 'Perez';
+SELECT nombre, edad
+FROM ESTUDIANTES
+WHERE edad > 21;
 ```
 
-- **Pregunta:** "Mostrar los estudiantes que nacieron en 1999."
+- **Pregunta:** "Mostrar los estudiantes que se matricularon en septiembre de 2025."
 ```oracle
-SELECT Nombre, Fecha_Nacimiento
-FROM Estudiantes
-WHERE Fecha_Nacimiento BETWEEN TO_DATE('1999-01-01', 'YYYY-MM-DD') AND TO_DATE('1999-12-31', 'YYYY-MM-DD');
+SELECT nombre, fecha_matricula
+FROM ESTUDIANTES
+WHERE fecha_matricula BETWEEN TO_DATE('2025-09-01', 'YYYY-MM-DD') AND TO_DATE('2025-09-30', 'YYYY-MM-DD');
 ```
 
-- **Pregunta:** "Encontrar estudiantes cuyo email termine en `@example.com`."
+- **Pregunta:** "Encontrar estudiantes cuyo email termine en `@email.com`."
 ```oracle
-SELECT Nombre, Email
-FROM Estudiantes
-WHERE Email LIKE '%@example.com';
+SELECT nombre, email
+FROM ESTUDIANTES
+WHERE email LIKE '%@email.com';
 ```
 
 ### Consejos de los Expertos
 
 - **Manejo de NULL:** Un valor NULL significa "desconocido" o "no aplicable". No puedes compararlo con `=` o `!=` porque NULL no es igual a nada, ni siquiera a sí mismo. En su lugar, debes usar `IS NULL` o `IS NOT NULL`.
   ```oracle
-  WHERE Apellido IS NULL  -- Encuentra estudiantes sin apellido registrado
+  WHERE id_especialidad IS NULL  -- Encuentra estudiantes sin especialidad asignada
   ```
 - **Orden de los Operadores:** Usa paréntesis `()` para agrupar condiciones `AND` y `OR` y asegurar que se evalúen en el orden que deseas, evitando ambigüedades.
 

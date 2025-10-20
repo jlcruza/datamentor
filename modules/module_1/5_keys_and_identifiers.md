@@ -2,7 +2,7 @@
 
 ### ¿Cómo encontramos una aguja en un pajar?
 
-Imagina nuestra tabla `ALUMNOS` con 30,000 estudiantes. Si hay dos estudiantes llamados "Carlos Pérez", ¿cómo sabemos a cuál de ellos debemos actualizarle la calificación? Necesitamos una forma de identificar **inequívocamente** cada fila.
+Imagina nuestra tabla `ESTUDIANTES` con 30,000 estudiantes. Si hay dos estudiantes llamados "Carlos Pérez", ¿cómo sabemos a cuál de ellos debemos actualizarle la nota? Necesitamos una forma de identificar **inequívocamente** cada fila.
 
 Esa es la misión de la **clave primaria** (*Primary Key*).
 
@@ -41,27 +41,28 @@ Una clave primaria es una columna (o un conjunto de columnas) que identifica de 
 
 - **El DNI o Cédula de Identidad:** Dos personas pueden llamarse igual, pero nunca tendrán el mismo número de identificación. Ese número es una clave primaria en la "base de datos" de un país.
 - **El número de serie de un producto:** Identifica un dispositivo específico de forma única en todo el mundo.
-- **El `ID_ALUMNO`:** En nuestra tabla `ALUMNOS`, la columna `ID_ALUMNO` es la candidata perfecta para ser la clave primaria. Cada estudiante tendrá un número único e irrepetible.
+- **El `id` del estudiante:** En nuestra tabla `ESTUDIANTES`, la columna `id` es la candidata perfecta para ser la clave primaria. Cada estudiante tendrá un número único e irrepetible.
 
 ### Ejemplo en Oracle SQL
 
-Ahora, modifiquemos nuestra tabla para definir `ID_ALUMNO` como la clave primaria.
+Ahora, modifiquemos nuestra tabla para definir `id` como la clave primaria.
 
 ```oracle
 -- Al añadir "PRIMARY KEY", le decimos a Oracle que esta columna
 -- debe ser única y no nula. Oracle forzará esta regla automáticamente.
-CREATE TABLE ALUMNOS (
-    ID_ALUMNO        NUMBER CONSTRAINT pk_alumnos PRIMARY KEY,
-    NOMBRE           VARCHAR2(50),
-    APELLIDO         VARCHAR2(50),
-    FECHA_NACIMIENTO DATE
+CREATE TABLE ESTUDIANTES (
+    id                NUMBER CONSTRAINT pk_estudiantes PRIMARY KEY,
+    nombre            VARCHAR2(100),
+    email             VARCHAR2(255),
+    edad              NUMBER(3),
+    fecha_matricula   DATE
 );
--- El "CONSTRAINT pk_alumnos" es simplemente una forma de darle un nombre
+-- El "CONSTRAINT pk_estudiantes" es simplemente una forma de darle un nombre
 -- a nuestra restricción de clave primaria, lo cual es una buena práctica.
 -- Esto hace que los errores sean más fáciles de identificar.
 ```
 
-Si ahora intentáramos insertar dos alumnos con el mismo `ID_ALUMNO`, Oracle nos daría un error. ¡La base de datos está protegiendo la integridad de nuestros datos!
+Si ahora intentáramos insertar dos estudiantes con el mismo `id`, Oracle nos daría un error. ¡La base de datos está protegiendo la integridad de nuestros datos!
 
 ### Consejos de los Experts
 

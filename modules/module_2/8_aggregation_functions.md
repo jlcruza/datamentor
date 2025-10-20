@@ -35,23 +35,21 @@ Estas funciones toman múltiples valores de una columna y los "agregan" en un ú
 - **Pregunta:** "¿Cuántos estudiantes tengo en total?"
 ```oracle
 SELECT COUNT(*)
-FROM Estudiantes;
+FROM ESTUDIANTES;
 ```
 
-- **Pregunta:** "¿Cuál es la fecha de nacimiento del estudiante más viejo y del más joven?"
+- **Pregunta:** "¿Cuál es la edad del estudiante más joven y del más viejo?"
 
 ```oracle
-SELECT MIN(Fecha_Nacimiento) AS Mas_Viejo, MAX(Fecha_Nacimiento) AS Mas_Joven
-FROM Estudiantes;
+SELECT MIN(edad) AS edad_minima, MAX(edad) AS edad_maxima
+FROM ESTUDIANTES;
 ```
 
-  (Nota: Para fechas, un valor "menor" es una fecha más antigua).
-
-- **Pregunta:** Supongamos que tenemos una tabla `Calificaciones` con una columna `Nota`. "¿Cuál es la nota promedio?"
+- **Pregunta:** "¿Cuál es la nota promedio de todas las matrículas?"
 
 ```oracle
-SELECT AVG(Nota)
-FROM Calificaciones;
+SELECT AVG(nota) AS nota_promedio
+FROM MATRICULAS;
 ```
 
 ### Consejos de los Expertos

@@ -37,8 +37,8 @@ VALUES (valor1, valor2, valor3, ...);
 
 **Ejemplo:** Añadamos un estudiante a nuestra tabla.
 ```oracle
-INSERT INTO Estudiantes (ID_Estudiante, Nombre, Apellido, Fecha_Nacimiento, Email)
-VALUES (1, 'Carlos', 'Santana', TO_DATE('1998-07-20', 'YYYY-MM-DD'), 'carlos.s@example.com');
+INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
+VALUES (9, 'Carlos Santana', 'carlos@email.com', 1, 22, TO_DATE('2025-09-01', 'YYYY-MM-DD'));
 ```
 
 Nota: Para las fechas, usamos la función `TO_DATE` para convertir una cadena de texto a un formato de fecha que Oracle entienda. El primer parámetro es la fecha como texto, el segundo es el formato que sigue esa fecha.
@@ -57,9 +57,9 @@ La cláusula `WHERE` es **crucial**. Especifica *qué* filas quieres actualizar.
 
 **Ejemplo:** Carlos Santana se ha cambiado el email.
 ```oracle
-UPDATE Estudiantes
-SET Email = 'c.santana.new@example.com'
-WHERE ID_Estudiante = 1;
+UPDATE ESTUDIANTES
+SET email = 'carlos.nuevo@email.com'
+WHERE id = 9;
 ```
 
 ### Consejos de los Expertos

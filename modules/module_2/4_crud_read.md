@@ -29,27 +29,27 @@ FROM nombre_de_la_tabla;
 - Para obtener todas las columnas, puedes usar el comodín `*`:
 ```oracle
 SELECT *
-FROM Estudiantes;
+FROM ESTUDIANTES;
 ```
 
 - Para obtener solo columnas específicas:
 ```oracle
-SELECT Nombre, Apellido, Email
-FROM Estudiantes;
+SELECT nombre, email, edad
+FROM ESTUDIANTES;
 ```
 
 ### Ejemplos Ilustrativos
 
-- **Pregunta:** "¿Cuáles son los nombres y apellidos de todos mis estudiantes?"
+- **Pregunta:** "¿Cuáles son los nombres y emails de todos mis estudiantes?"
 ```oracle
-SELECT Nombre, Apellido
-FROM Estudiantes;
+SELECT nombre, email
+FROM ESTUDIANTES;
 ```
 
 - **Pregunta:** "Necesito toda la información disponible sobre los estudiantes."
 ```oracle
 SELECT *
-FROM Estudiantes;
+FROM ESTUDIANTES;
 ```
 
 ### Consejos de los Expertos
@@ -59,8 +59,8 @@ FROM Estudiantes;
     2. **Fragilidad:** Si alguien añade o elimina una columna de la tabla, el código de tu aplicación que espera un número específico de columnas podría romperse.
 - **Usa Alias para Mayor Claridad:** Puedes renombrar las columnas en los resultados de tu consulta usando la palabra clave `AS` (aunque es opcional en Oracle). Esto hace que los resultados sean más legibles.
 ```oracle
-SELECT Nombre AS Nombre_Estudiante, Email AS Correo_Electronico
-FROM Estudiantes;
+SELECT nombre AS nombre_estudiante, email AS correo_electronico
+FROM ESTUDIANTES;
 ```
 
 ---
