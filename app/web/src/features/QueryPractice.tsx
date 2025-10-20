@@ -175,12 +175,12 @@ const QueryPractice: React.FC = () => {
               )}
 
               {error && (
-                <div className="bg-red-900/30 border border-red-500/30 rounded-lg p-4">
-                  <div className="flex items-center space-x-2 text-red-400">
+                <div className="bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-500/30 rounded-lg p-4">
+                  <div className="flex items-center space-x-2 text-red-700 dark:text-red-400">
                     <XCircle className="h-5 w-5" />
                     <span className="font-medium">{t('queryPractice.queryError')}</span>
                   </div>
-                  <p className="text-red-300 mt-1 font-mono text-sm">{error}</p>
+                  <p className="text-red-800 dark:text-red-300 mt-1 font-mono text-sm">{error}</p>
                 </div>
               )}
 

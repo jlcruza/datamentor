@@ -135,7 +135,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose, isRequired = 
 
   return (
     <div className={`${isRequired ? '' : 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4'}`}>
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 mx-auto max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md md:max-w-xl border border-gray-200 dark:border-gray-700 mx-auto max-h-[90vh] overflow-y-auto">
         <div className="flex justify-center pt-4 sm:pt-6 pb-2">
           <img
             src={logo}

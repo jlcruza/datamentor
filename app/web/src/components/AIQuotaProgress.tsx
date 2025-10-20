@@ -8,7 +8,7 @@ interface AIQuotaProgressProps {
 }
 
 const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
-    useTranslation();
+    const { t } = useTranslation();
 
     const percentageUsed = quota?.percentageUsed ?? 0;
     const usedTokens = quota?.usedTokens ?? 0;
@@ -16,8 +16,8 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
     const isUnderLimit = quota?.isUnderLimit ?? true;
 
     const getProgressFillClass = (percentage: number) => {
-        if (percentage >= 90) return 'bg-red-600';
-        if (percentage >= 70) return 'bg-yellow-500';
+        if (percentage >= 90) return 'h-full bg-red-600 rounded-full transition-all duration-500 ease-out';
+        if (percentage >= 70) return 'h-full bg-yellow-600 rounded-full transition-all duration-500 ease-out';
         return 'progress-fill';
     };
 
@@ -46,7 +46,7 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
                                 : 'text-blue-600 dark:text-blue-400'
                     }`} />
                     <span className="text-sm font-medium text-gray-900 dark:text-white">
-                        AI Usage
+                        {t('aiAssistant.aiUsage')}
                     </span>
                 </div>
                 <span className={`text-sm font-semibold ${
@@ -69,12 +69,12 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
 
             <div className="flex items-center justify-between text-xs">
                 <span className="text-gray-600 dark:text-gray-400">
-                    {usedTokens.toLocaleString()} / {totalTokens.toLocaleString()} tokens
+                    {usedTokens.toLocaleString()} / {totalTokens.toLocaleString()} {t('aiAssistant.tokens')}
                 </span>
                 {isAtLimit && (
                     <div className="flex items-center space-x-1 text-red-600 dark:text-red-400">
                         <AlertCircle className="h-3 w-3" />
-                        <span className="font-medium">Limit reached</span>
+                        <span className="font-medium">{t('aiAssistant.limitReached')}</span>
                     </div>
                 )}
             </div>

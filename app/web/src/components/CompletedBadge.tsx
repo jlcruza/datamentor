@@ -14,7 +14,7 @@ const CompletedBadge: React.FC<CompletedBadgeProps> = (
 
     if (show) {
         return  (
-            <div className="flex items-center space-x-2 bg-green-900/30 text-green-400 px-3 py-1 rounded-full border border-green-500/30">
+            <div className="flex items-center space-x-2 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full border border-green-300 dark:border-green-500/30">
                 <CheckCircle className="h-4 w-4" />
                 <span className="text-sm font-medium">{t('learningContent.completedBadge')}</span>
             </div>
