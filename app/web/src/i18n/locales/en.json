@@ -134,6 +134,9 @@
     "studyTipText": "Practice queries in the Query Practice section after learning concepts here!",
     "alwaysReady": "Always ready to help with database questions",
     "askAboutDatabases": "Ask me about databases, SQL, or any related topic...",
+    "aiUsage": "AI Usage",
+    "limitReached": "Limit reached",
+    "tokens": "tokens",
     "welcomeMessage": "Hello! I'm your AI database assistant. I can help you with SQL queries, database concepts, normalization, relationships, and much more. What would you like to learn about?",
     "helpWith": "I'm here to help with:",
     "helpTopics": [
