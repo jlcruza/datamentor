@@ -12,6 +12,27 @@ Las transacciones garantizan la integridad de los datos siguiendo el principio d
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre transacciones, entendamos estos conceptos:
+
+- **Transacción:** Una secuencia de operaciones de base de datos que se ejecutan como una unidad indivisible. O todas se completan con éxito o ninguna se aplica.
+- **Atómica (Atomic):** Propiedad que garantiza que una transacción se trata como una unidad indivisible: todo o nada.
+- **ACID:** Acrónimo que define las cuatro propiedades que garantizan transacciones confiables:
+  - **A**tomicity (Atomicidad): Todo o nada
+  - **C**onsistency (Consistencia): Los datos siempre quedan en un estado válido
+  - **I**solation (Aislamiento): Las transacciones no interfieren entre sí
+  - **D**urability (Durabilidad): Los cambios confirmados son permanentes
+- **COMMIT:** Comando que confirma y hace permanentes todos los cambios de la transacción actual.
+- **ROLLBACK:** Comando que deshace todos los cambios de la transacción actual.
+- **SAVEPOINT (Punto de Guardado):** Marca dentro de una transacción a la que puedes regresar con ROLLBACK sin deshacer toda la transacción.
+- **DML (Data Manipulation Language):** Comandos que modifican datos (INSERT, UPDATE, DELETE).
+- **SYSDATE:** Función de Oracle que devuelve la fecha y hora actual del sistema.
+- **Concurrencia:** Capacidad de múltiples usuarios de acceder y modificar datos simultáneamente.
+- **Bloqueo (Lock):** Mecanismo que impide que múltiples transacciones modifiquen los mismos datos simultáneamente.
+
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 En Oracle, una transacción comienza implícitamente con la primera instrucción DML (`INSERT`, `UPDATE`, `DELETE`). No necesitas un comando `BEGIN TRANSACTION` como en otros sistemas.
@@ -23,31 +44,31 @@ En Oracle, una transacción comienza implícitamente con la primera instrucción
 ### Ejemplos Ilustrativos
 
 **Ejemplo de COMMIT:**
-Vamos a registrar un nuevo empleado y su puesto en dos tablas diferentes. Queremos que ambos registros se guarden o ninguno.
-```oracle
+Vamos a matricular un estudiante en un curso y registrar su nota inicial. Queremos que ambos registros se guarden o ninguno.
+```sql
 -- La transacción comienza automáticamente aquí
-INSERT INTO empleados (empleado_id, nombre, apellido, id_puesto)
-VALUES (207, 'Ana', 'Perez', 10);
+INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
+VALUES (9, 'María García', 'maria@email.com', 1, 20, SYSDATE);
 
-INSERT INTO historial_puestos (empleado_id, id_puesto, fecha_inicio)
-VALUES (207, 10, SYSDATE);
+INSERT INTO MATRICULAS (id, id_estudiante, id_curso, nota, semestre, fecha_matricula)
+VALUES (14, 9, 101, NULL, 'Primavera 2026', SYSDATE);
 
 -- Si todo fue bien, confirmamos los cambios
 COMMIT;
 ```
 
 **Ejemplo de ROLLBACK:**
-Supongamos que intentamos actualizar el salario de un empleado, pero nos damos cuenta de que cometimos un error.
-```oracle
-UPDATE empleados
-SET salario = 50000
-WHERE empleado_id = 10;
+Supongamos que intentamos actualizar la nota de un estudiante, pero nos damos cuenta de que cometimos un error.
+```sql
+UPDATE MATRICULAS
+SET nota = 100
+WHERE id = 1;
 
--- Nos damos cuenta del error (¡era demasiado!). Deshacemos el cambio.
+-- Nos damos cuenta del error (¡era demasiado alta!). Deshacemos el cambio.
 ROLLBACK;
 ```
 
--- El salario del empleado 10 vuelve a su valor original.
+-- La nota de la matrícula 1 vuelve a su valor original.
 
 ### Consejos de los Expertos
 

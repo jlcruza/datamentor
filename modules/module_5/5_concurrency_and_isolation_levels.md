@@ -32,7 +32,7 @@ Oracle proporciona principalmente dos niveles de aislamiento estándar del SQL:
 ### Sintaxis y Ejemplo
 
 Puedes establecer el nivel de aislamiento al comienzo de una transacción.
-```oracle
+```sql
 SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 
 -- Tus consultas y DMLs aquí...
@@ -41,7 +41,7 @@ COMMIT;
 ```
 
 **Ejemplo de `READ COMMITTED` (defecto):**
-```oracle
+```sql
 -- Sesión 1 (Tú)
 SELECT COUNT(*) FROM empleados WHERE salario > 5000; -- Resultado: 50
 

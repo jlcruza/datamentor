@@ -6,47 +6,60 @@ Tener tablas vacías no es muy útil. El verdadero poder de una base de datos se
 
 ---
 
+### Términos Clave
+
+Antes de comenzar a manipular datos, definamos los comandos y conceptos importantes:
+
+- **INSERT INTO:** Comando SQL para agregar nuevas filas (registros) a una tabla.
+- **VALUES:** Cláusula que especifica los valores que se insertarán en cada columna.
+- **UPDATE:** Comando SQL para modificar datos existentes en una o más filas de una tabla.
+- **SET:** Cláusula que especifica qué columnas se modificarán y sus nuevos valores.
+- **WHERE:** Cláusula que filtra qué filas se verán afectadas por un UPDATE o DELETE. Sin WHERE, ¡se afectan TODAS las filas!
+- **TO_DATE:** Función de Oracle que convierte una cadena de texto en un valor de tipo DATE. Ejemplo: `TO_DATE('2025-01-15', 'YYYY-MM-DD')`.
+
+---
+
 ### Insertando Filas con `INSERT INTO`
 
 El comando `INSERT INTO` te permite añadir nuevos registros (filas) a una tabla.
 
 **Sintaxis 1: Especificando columnas** (la forma más segura)
-```oracle
+```sql
 INSERT INTO nombre_de_la_tabla (columna1, columna2, columna3)
 VALUES (valor1, valor2, valor3);
 ```
 
 **Sintaxis 2: Sin especificar columnas** (requiere que los valores estén en el orden exacto de la tabla)
-```oracle
+```sql
 INSERT INTO nombre_de_la_tabla
 VALUES (valor1, valor2, valor3, ...);
 ```
 
 **Ejemplo:** Añadamos un estudiante a nuestra tabla.
-```oracle
-INSERT INTO Estudiantes (ID_Estudiante, Nombre, Apellido, Fecha_Nacimiento, Email)
-VALUES (1, 'Carlos', 'Santana', TO_DATE('1998-07-20', 'YYYY-MM-DD'), 'carlos.s@example.com');
+```sql
+INSERT INTO ESTUDIANTES (id, nombre, email, id_especialidad, edad, fecha_matricula)
+VALUES (9, 'Carlos Santana', 'carlos@email.com', 1, 22, TO_DATE('2025-09-01', 'YYYY-MM-DD'));
 ```
 
-Nota: Para las fechas, usamos la función `TO_DATE` para convertir una cadena de texto a un formato de fecha que Oracle entienda.
+Nota: Para las fechas, usamos la función `TO_DATE` para convertir una cadena de texto a un formato de fecha que Oracle entienda. El primer parámetro es la fecha como texto, el segundo es el formato que sigue esa fecha.
 
 ### Modificando Filas con `UPDATE`
 
 El comando `UPDATE` se usa para modificar registros que ya existen en la tabla.
-```oracle
+```sql
 UPDATE nombre_de_la_tabla
 SET columna1 = nuevo_valor1,
     columna2 = nuevo_valor2
 WHERE condicion;
 ```
 
-La cláusula `WHERE` es **crucial**. Especifica *qué* filas quieres actualizar. Si la omites, ¡actualizarás **todas** las filas de la tabla!
+La cláusula `WHERE` es **crucial**. Especifica *qué* filas quieres actualizar. Si la omites, ¡Oracle actualizará **todas** las filas de la tabla, lo cual generalmente no es lo que deseas!
 
 **Ejemplo:** Carlos Santana se ha cambiado el email.
-```oracle
-UPDATE Estudiantes
-SET Email = 'c.santana.new@example.com'
-WHERE ID_Estudiante = 1;
+```sql
+UPDATE ESTUDIANTES
+SET email = 'carlos.nuevo@email.com'
+WHERE id = 9;
 ```
 
 ### Consejos de los Expertos

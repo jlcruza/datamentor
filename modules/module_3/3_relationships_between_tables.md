@@ -5,6 +5,20 @@ En el mundo real, las cosas no existen de forma aislada. Los clientes hacen pedi
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre las relaciones, entendamos estos conceptos:
+
+- **Relación:** Una conexión lógica entre dos tablas que refleja cómo los datos de una tabla se asocian con los datos de otra.
+- **Cardinalidad:** El número de instancias de una entidad que pueden asociarse con instancias de otra entidad. Define el "cuántos" en una relación.
+- **Relación Uno a Uno (1:1):** Un registro en una tabla se relaciona con como máximo un registro en otra tabla.
+- **Relación Uno a Muchos (1:N o 1:M):** Un registro en una tabla puede relacionarse con múltiples registros en otra tabla, pero cada registro de la segunda tabla solo se relaciona con uno de la primera.
+- **Relación Muchos a Muchos (M:N o M:M):** Múltiples registros en una tabla pueden relacionarse con múltiples registros en otra tabla.
+- **Tabla de Unión (o Tabla Puente/Intermedia):** Una tabla que se crea para resolver relaciones muchos a muchos, conteniendo las claves foráneas de ambas tablas relacionadas.
+- **Primera Forma Normal (1NF):** Una regla de normalización que establece que cada columna debe contener valores atómicos (indivisibles), no listas o conjuntos.
+
+---
+
 ### Explicación del Concepto
 Existen tres tipos principales de relaciones entre tablas:
 
@@ -12,29 +26,36 @@ Existen tres tipos principales de relaciones entre tablas:
     *   **Ejemplo:** Una persona y su número de pasaporte. Una tabla `Usuarios` y una tabla `PerfilesDeUsuario`.
 
 2.  **Uno a Muchos (1:N):** Un registro en la Tabla A puede estar relacionado con muchos registros en la Tabla B, pero cada registro de la Tabla B solo se relaciona con uno de la Tabla A. Es la relación más común.
-    *   **Ejemplo:** Un `Autor` puede escribir muchos `Libros`.
+    *   **Ejemplo:** Un `DEPARTAMENTO` puede tener muchos `ESTUDIANTES` (a través de la especialidad), y un `DEPARTAMENTO` puede ofrecer muchos `CURSOS`.
 
 3.  **Muchos a Muchos (M:N):** Un registro en la Tabla A puede relacionarse con muchos registros en la Tabla B, y viceversa.
-    *   **Ejemplo:** Un `Estudiante` puede inscribirse en muchos `Cursos`, y un `Curso` puede tener muchos `Estudiantes`.
-    *   **Solución:** Este tipo de relación no se puede implementar directamente. Se resuelve creando una tercera tabla, llamada **tabla de unión** (o tabla puente), que conecta las dos.
+    *   **Ejemplo:** Un `ESTUDIANTE` puede inscribirse en muchos `CURSOS`, y un `CURSO` puede tener muchos `ESTUDIANTES`.
+    *   **Solución:** Este tipo de relación no se puede implementar directamente. Se resuelve creando una tercera tabla, llamada **tabla de unión** (o tabla puente), que conecta las dos. En nuestro caso, la tabla `MATRICULAS`.
 
 ### Ejemplos Ilustrativos y Analogías
 *   **Relación 1:N (Madre e Hijos):** Una madre puede tener varios hijos, pero cada hijo tiene una sola madre biológica.
 *   **Relación M:N (Actores y Películas):** Un actor puede participar en múltiples películas, y una película tiene múltiples actores. La tabla de unión sería `Reparto`, almacenando pares de `id_actor` y `id_pelicula`.
 
-Para el ejemplo de Estudiantes y Cursos (M:N), crearíamos una tabla de unión:
-```oracle
-CREATE TABLE Inscripciones (
-    estudiante_id  NUMBER(10),
-    curso_id       NUMBER(10),
-    fecha_inscripcion DATE
-    -- Aquí se definirían las claves foráneas para conectar con Estudiantes y Cursos
+Para el ejemplo de ESTUDIANTES y CURSOS (M:N), la tabla de unión es `MATRICULAS`:
+```sql
+CREATE TABLE MATRICULAS (
+    id                NUMBER PRIMARY KEY,
+    id_estudiante     NUMBER NOT NULL,
+    id_curso          NUMBER NOT NULL,
+    nota              NUMBER(5,2),
+    semestre          VARCHAR2(50) NOT NULL,
+    fecha_matricula   DATE NOT NULL,
+    -- Las claves foráneas conectan con ESTUDIANTES y CURSOS
+    CONSTRAINT fk_matriculas_estudiante
+        FOREIGN KEY (id_estudiante) REFERENCES ESTUDIANTES(id),
+    CONSTRAINT fk_matriculas_curso
+        FOREIGN KEY (id_curso) REFERENCES CURSOS(id)
 );
 ```
 
 ### Consejos de los Expertos
 *   **La Relación Uno a Muchos es la Columna Vertebral:** La mayoría de los diseños de bases de datos relacionales se construyen alrededor de relaciones 1:N. Domínalas bien.
-*   **Resuelve Siempre las Relaciones M:N con una Tabla de Unión:** No intentes "hacer trampa" metiendo una lista de IDs en una columna de texto. Esto viola la primera forma normal y es una pésima práctica.
+*   **Resuelve Siempre las Relaciones M:N con una Tabla de Unión:** No intentes "hacer trampa" metiendo una lista de IDs en una columna de texto. Esto viola la Primera Forma Normal (un principio de diseño que veremos más adelante) y es una pésima práctica que causa problemas de rendimiento e integridad.
 *   **Piensa en la Cardinalidad:** Al diseñar, pregúntate: "¿Un libro *debe* tener un autor?" (relación obligatoria) o "¿Un autor *puede* no tener libros?" (relación opcional).
 
 ---

@@ -8,13 +8,29 @@ Ese software es el **Sistema de Gestión de Bases de Datos** o **SGBD** (en ingl
 
 ---
 
+### Términos Clave
+
+Antes de profundizar, familiaricémonos con estos conceptos importantes:
+
+- **SGBD (Sistema de Gestión de Bases de Datos):** Software que actúa como intermediario entre los usuarios y la base de datos, permitiendo crear, leer, actualizar y administrar los datos de forma eficiente y segura.
+- **CRUD:** Acrónimo que representa las cuatro operaciones básicas con datos:
+  - **C**reate (Crear): Añadir nuevos datos
+  - **R**ead (Leer): Consultar datos existentes
+  - **U**pdate (Actualizar): Modificar datos existentes
+  - **D**elete (Borrar): Eliminar datos
+- **Concurrencia:** La capacidad de un sistema para permitir que múltiples usuarios o aplicaciones accedan y modifiquen los datos simultáneamente sin que unos interfieran con otros o corrompan la información.
+- **SQL (Structured Query Language - Lenguaje de Consulta Estructurado):** El lenguaje estándar utilizado para comunicarse con bases de datos relacionales.
+- **NoSQL (Not Only SQL - No Solo SQL):** Término que agrupa bases de datos que no siguen el modelo relacional tradicional, ofreciendo mayor flexibilidad en la estructura de los datos.
+
+---
+
 ### ¿Por qué necesitamos un SGBD? El cerebro de la operación.
 
 Un SGBD es el intermediario entre tú (o una aplicación) y los datos. Sin él, la base de datos es solo una colección de archivos sin sentido.
 
 El SGBD se encarga de todo el trabajo pesado:
-- **Definición de datos:** Crear la estructura de la base de datos.
-- **Manipulación de datos:** Permitir leer, insertar, actualizar y borrar datos (lo que se conoce como CRUD: *Create, Read, Update, Delete*).
+- **Definición de datos:** Crear la estructura de la base de datos (tablas, columnas, relaciones).
+- **Manipulación de datos:** Permitir realizar operaciones CRUD (Crear, Leer, Actualizar y Borrar datos).
 - **Seguridad:** Controlar quién puede ver o modificar la información.
 - **Concurrencia:** Asegurarse de que si dos personas intentan modificar el mismo dato a la vez, no se corrompa la información.
 - **Copias de seguridad y recuperación:** Proteger los datos contra fallos del sistema.

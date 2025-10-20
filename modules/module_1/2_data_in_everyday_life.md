@@ -6,6 +6,16 @@ Muchos de nosotros usamos hojas de cálculo (como Microsoft Excel o Google Sheet
 
 ---
 
+### Términos Clave
+
+Antes de comenzar, es importante entender algunos conceptos que usaremos en esta lección:
+
+- **Integridad de los datos:** La exactitud, consistencia y confiabilidad de los datos almacenados. Una base de datos con buena integridad garantiza que los datos sean correctos y no contengan errores o contradicciones.
+- **Escalabilidad:** La capacidad de un sistema para crecer y manejar mayores cantidades de datos o usuarios sin perder rendimiento. Un sistema escalable puede adaptarse al crecimiento de tu negocio.
+- **Acceso multiusuario:** La capacidad de permitir que varias personas o aplicaciones trabajen con los mismos datos simultáneamente sin causar conflictos o pérdida de información.
+
+---
+
 ### ¿Cuándo es suficiente una hoja de cálculo?
 
 Imagina que estás organizando una pequeña fiesta. Una hoja de cálculo es perfecta para esto:

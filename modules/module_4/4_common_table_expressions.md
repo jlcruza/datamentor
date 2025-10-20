@@ -8,12 +8,26 @@ Te permite crear una especie de **tabla temporal con nombre** que existe solo du
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre CTEs, entendamos estos conceptos:
+
+- **CTE (Common Table Expression - Expresión de Tabla Común):** Un conjunto de resultados temporal con nombre que se define usando la cláusula WITH y que existe solo durante la ejecución de una consulta.
+- **WITH:** Cláusula SQL que se utiliza para definir uno o más CTEs al inicio de una consulta.
+- **Tabla Temporal:** Un conjunto de resultados que existe temporalmente durante la ejecución de una consulta o sesión.
+- **Pipeline de Datos:** Una secuencia de operaciones de procesamiento de datos donde la salida de una operación es la entrada de la siguiente.
+- **CTE Recursivo:** Un CTE que se referencia a sí mismo, utilizado para consultar datos jerárquicos (como estructuras de árbol o grafos).
+- **Datos Jerárquicos:** Datos organizados en una estructura de árbol donde cada elemento tiene un padre (excepto la raíz) y puede tener hijos. Ejemplos: organigramas, categorías de productos.
+- **Refactorizar:** Reestructurar código existente para mejorar su legibilidad, mantenibilidad o rendimiento sin cambiar su funcionalidad.
+
+---
+
 ### Sintaxis y Comandos Fundamentales
 
 Un CTE se define usando la cláusula `WITH` al inicio de una consulta. Puedes definir uno o varios CTEs, y luego referenciarlos en tu consulta principal como si fueran tablas normales.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 WITH nombre_cte AS (
 -- Tu consulta SELECT va aquí
 SELECT columna1, columna2 FROM alguna_tabla
@@ -32,7 +46,7 @@ WHERE
 Supongamos que queremos encontrar los departamentos donde el salario promedio es mayor a 50,000 y luego mostrar los empleados de esos departamentos.
 
 **Sin CTE (usando subconsultas):**
-```oracle
+```sql
 SELECT
     *
 FROM
@@ -47,7 +61,7 @@ WHERE
 Esta consulta es correcta, pero la lógica está anidada. Ahora, veamos cómo se ve con un CTE.
 
 **Con CTE (más legible):**
-```oracle
+```sql
 WITH DepartamentosConSalarioAlto AS (
     -- Paso 1: Encontrar los IDs de los departamentos con salario promedio > 50k
     SELECT
@@ -74,7 +88,7 @@ Como puedes ver, el CTE (`DepartamentosConSalarioAlto`) define claramente el pri
 ### Consejos de los Expertos
 - **Nombra tus CTEs con claridad:** El objetivo de un CTE es la legibilidad. Dale un nombre que describa exactamente qué datos contiene (ej., `ClientesActivos`, `VentasPorRegion`, etc.).
 - **Encadena múltiples CTEs:** Puedes definir varios CTEs secuencialmente, separados por comas. Un CTE posterior puede incluso hacer referencia a un CTE anterior, lo que te permite construir pipelines de datos complejos de forma muy ordenada.
-    ```oracle
+    ```sql
     WITH
       Ventas2023 AS (...),
       Ventas2024 AS (...)

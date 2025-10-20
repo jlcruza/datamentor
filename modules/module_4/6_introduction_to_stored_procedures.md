@@ -23,7 +23,7 @@ Un **Procedimiento Almacenado** (*Stored Procedure*) es un conjunto de comandos 
 Oracle utiliza un lenguaje llamado **PL/SQL** (Procedural Language/SQL) para escribir procedimientos, funciones y triggers.
 
 **Sintaxis Básica para Crear un Procedimiento:**
-```oracle
+```sql
 CREATE OR REPLACE PROCEDURE nombre_procedimiento (
 parametro1 IN TIPO_DATO,
 parametro2 OUT TIPO_DATO
@@ -47,7 +47,7 @@ END;
 -   `IN OUT`: El parámetro puede ser leído y modificado.
 
 **Ejemplo Ilustrativo:** Crear un procedimiento para reasignar un empleado a un nuevo departamento.
-```oracle
+```sql
 CREATE OR REPLACE PROCEDURE reasignar_empleado (
     p_id_empleado IN EMPLEADOS.ID_EMPLEADO%TYPE,
     p_id_nuevo_depto IN EMPLEADOS.ID_DEPARTAMENTO%TYPE
@@ -71,7 +71,7 @@ END;
 
 #### Ejecutar un Procedimiento
 Desde una herramienta SQL, se usa el comando `EXECUTE` o un bloque anónimo.
-```oracle
+```sql
 -- Usando EXECUTE
 EXECUTE reasignar_empleado(p_id_empleado => 1, p_id_nuevo_depto => 102);
 

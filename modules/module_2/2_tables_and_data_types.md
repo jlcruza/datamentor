@@ -6,10 +6,26 @@ Antes de poder guardar tus cosas en cajas, necesitas las cajas. Y no usarías un
 
 ---
 
+### Términos Clave
+
+Antes de crear tablas, es importante entender estos conceptos:
+
+- **CREATE TABLE:** Comando SQL para crear una nueva tabla en la base de datos.
+- **Tipo de Dato (Data Type):** Define qué clase de información puede almacenarse en una columna (números, texto, fechas, etc.).
+- **VARCHAR2(size):** Tipo de dato de Oracle para texto de longitud variable. El número entre paréntesis indica el tamaño máximo en caracteres.
+- **NUMBER(precision, scale):** Tipo de dato para números. *Precision* es el total de dígitos, *scale* es el número de dígitos después del punto decimal.
+- **DATE:** Tipo de dato que almacena fechas y horas completas (siglo, año, mes, día, hora, minuto, segundo).
+- **CLOB (Character Large Object - Objeto Grande de Caracteres):** Tipo de dato para almacenar textos muy extensos (hasta 4 GB).
+- **PRIMARY KEY:** Restricción que identifica de forma única cada fila de la tabla.
+- **NOT NULL:** Restricción que obliga a que una columna siempre tenga un valor (no puede estar vacía).
+- **UNIQUE:** Restricción que garantiza que todos los valores en una columna sean diferentes entre sí.
+
+---
+
 ### Creando una Tabla con `CREATE TABLE`
 
 El comando `CREATE TABLE` te permite construir la estructura de una tabla. Para cada columna, debes especificar un nombre y un tipo de dato.
-```oracle
+```sql
 CREATE TABLE nombre_de_la_tabla (
     nombre_columna1 TIPO_DE_DATO RESTRICCIONES,
     nombre_columna2 TIPO_DE_DATO,
@@ -19,31 +35,33 @@ CREATE TABLE nombre_de_la_tabla (
 ```
 
 **Tipos de Datos Comunes en Oracle:**
-- `VARCHAR2(size)`: Para texto de longitud variable, como nombres o direcciones. ¡Es el tipo de texto más común y recomendado en Oracle!
-- `NUMBER(precision, scale)`: Para números. `precision` es el número total de dígitos y `scale` es el número de dígitos después del punto decimal. Por ejemplo, `NUMBER(5, 2)` puede almacenar `123.45`. `NUMBER(10)` almacena un entero de hasta 10 dígitos.
-- `DATE`: Para almacenar fechas y horas (siglo, año, mes, día, hora, minuto y segundo).
-- `CLOB (Character Large Object)`: Para textos muy largos, como descripciones de productos o artículos de blog.
+- `VARCHAR2(size)`: Para texto de longitud variable, como nombres o direcciones. ¡Es el tipo de texto más común y recomendado en Oracle! Ejemplo: `VARCHAR2(50)` permite hasta 50 caracteres.
+- `NUMBER(precision, scale)`: Para números. La precisión es el número total de dígitos y la escala es el número de dígitos después del punto decimal. Por ejemplo, `NUMBER(5, 2)` puede almacenar `123.45`. `NUMBER(10)` almacena un entero de hasta 10 dígitos.
+- `DATE`: Para almacenar fechas y horas completas (siglo, año, mes, día, hora, minuto y segundo).
+- `CLOB (Character Large Object - Objeto Grande de Caracteres)`: Para textos muy largos (hasta 4 GB), como descripciones de productos o artículos de blog.
 
 ### Ejemplo Ilustrativo
 
 Vamos a crear una tabla para almacenar información de nuestros estudiantes.
 
-```oracle
-CREATE TABLE Estudiantes (
-    ID_Estudiante NUMBER(10) PRIMARY KEY,
-    Nombre VARCHAR2(50) NOT NULL,
-    Apellido VARCHAR2(50),
-    Fecha_Nacimiento DATE,
-    Email VARCHAR2(100) UNIQUE
+```sql
+CREATE TABLE ESTUDIANTES (
+    id               NUMBER PRIMARY KEY,
+    nombre           VARCHAR2(100) NOT NULL,
+    email            VARCHAR2(255) NOT NULL UNIQUE,
+    id_especialidad  NUMBER,
+    edad             NUMBER(3),
+    fecha_matricula  DATE NOT NULL
 );
 ```
 
 En este ejemplo:
-- `ID_Estudiante` es un número que servirá como identificador único (`PRIMARY KEY`).
-- `Nombre` es un texto obligatorio (`NOT NULL`).
-- `Apellido` es un texto opcional.
-- `Fecha_Nacimiento` almacenará la fecha.
-- `Email` debe ser único para cada estudiante (`UNIQUE`).
+- `id` es un número que servirá como identificador único (`PRIMARY KEY`).
+- `nombre` es un texto obligatorio (`NOT NULL`).
+- `email` es texto obligatorio y debe ser único para cada estudiante (`UNIQUE`).
+- `id_especialidad` es opcional y se conectará con la tabla DEPARTAMENTOS.
+- `edad` almacena la edad del estudiante.
+- `fecha_matricula` almacenará la fecha de inscripción.
 
 ### Consejos de los Expertos
 

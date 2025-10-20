@@ -8,16 +8,30 @@ En una base de datos, un **índice** funciona de la misma manera. En lugar de es
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre índices, entendamos estos conceptos:
+
+- **Índice (Index):** Una estructura de datos que mejora la velocidad de las operaciones de búsqueda en una tabla, similar al índice de un libro.
+- **Full Table Scan (Escaneo Completo de Tabla):** Operación donde la base de datos lee cada fila de una tabla secuencialmente para encontrar los datos solicitados. Es lento en tablas grandes.
+- **CREATE INDEX:** Comando SQL para crear un índice en una o más columnas de una tabla.
+- **DROP INDEX:** Comando SQL para eliminar un índice existente.
+- **Índice Compuesto (Composite Index):** Un índice creado sobre múltiples columnas, útil cuando se busca frecuentemente por varias columnas juntas.
+- **Operaciones de Escritura:** Operaciones que modifican datos (INSERT, UPDATE, DELETE).
+- **Overhead (Sobrecarga):** Recursos adicionales (tiempo, memoria, espacio en disco) requeridos para mantener estructuras auxiliares como índices.
+
+---
+
 ### Sintaxis y Comandos Clave (Oracle SQL)
 
 Crear un índice es muy sencillo. La sintaxis básica es la siguiente:
-```oracle
+```sql
 CREATE INDEX nombre_del_indice
 ON nombre_de_la_tabla (columna1, columna2, ...);
 ```
 
 Para eliminar un índice que ya no necesitas:
-```oracle
+```sql
 DROP INDEX nombre_del_indice;
 ```
 
@@ -29,13 +43,13 @@ Supongamos que tenemos una tabla `empleados` y frecuentemente buscamos empleados
 **Con índice:** La búsqueda sería casi instantánea.
 
 Vamos a crear un índice en la columna `apellido`:
-```oracle
+```sql
 CREATE INDEX idx_empleados_apellido
 ON empleados (apellido);
 ```
 
 Ahora, cuando ejecutes una consulta como esta, Oracle usará el índice para encontrar a 'Smith' rápidamente, en lugar de escanear toda la tabla.
-```oracle
+```sql
 SELECT *
 FROM empleados
 WHERE apellido = 'Smith';

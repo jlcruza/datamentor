@@ -6,6 +6,17 @@ Hemos hablado de que las bases de datos relacionales (como Oracle) organizan los
 
 ---
 
+### Términos Clave
+
+Antes de continuar, definamos los conceptos fundamentales que utilizaremos:
+
+- **Entidad:** Un objeto, persona, lugar o concepto del mundo real sobre el que queremos almacenar información. En una base de datos, cada entidad se representa como una tabla. Ejemplos: Estudiante, Curso, Departamento.
+- **Atributo:** Una propiedad o característica que describe a una entidad. En una base de datos, cada atributo se convierte en una columna de la tabla. Ejemplos: nombre, edad, email.
+- **Registro:** Una instancia específica de una entidad, representada como una fila en la tabla. Ejemplo: un estudiante específico llamado "Carlos Pérez".
+- **Tipo de dato:** La categoría que define qué tipo de información puede almacenarse en una columna (números, texto, fechas, etc.).
+
+---
+
 ### ¿Por qué esta estructura?
 
 Imagina que quieres almacenar información sobre los estudiantes de una universidad. ¿Cómo lo harías? Probablemente crearías una cuadrícula, ¿verdad?
@@ -19,17 +30,17 @@ Imagina que quieres almacenar información sobre los estudiantes de una universi
 ### Los tres pilares: Tabla, Columna y Fila
 
 1.  **Tabla (Table):**
-    - **¿Qué es?** Es el contenedor principal de los datos sobre un tema específico o *entidad*.
+    - **¿Qué es?** Es el contenedor principal de los datos sobre un tema específico o entidad.
     - **Analogía:** Piensa en una tabla como una **hoja de cálculo** dentro de un libro de Excel. Puedes tener una hoja para "Estudiantes", otra para "Cursos" y otra para "Departamentos".
     - **Ejemplo:** La tabla `ESTUDIANTES`.
 
 2.  **Columna (Column):**
-    - **¿Qué es?** Define un **atributo** o una característica de la entidad que la tabla representa. Cada columna tiene un nombre y un tipo de dato específico (número, texto, fecha, etc.).
+    - **¿Qué es?** Define un atributo o una característica de la entidad que la tabla representa. Cada columna tiene un nombre y un tipo de dato específico (número, texto, fecha, etc.).
     - **Analogía:** Es la **cabecera de una columna** en tu hoja de cálculo.
     - **Ejemplo:** En la tabla `ESTUDIANTES`, algunas columnas serían `ID`, `NOMBRE`, `EMAIL` y `FECHA_MATRICULA`.
 
 3.  **Fila (Row):**
-    - **¿Qué es?** Es un **registro** único de datos que representa una instancia de la entidad. Contiene un valor para cada columna de la tabla.
+    - **¿Qué es?** Es un registro único de datos que representa una instancia de la entidad. Contiene un valor para cada columna de la tabla.
     - **Analogía:** Es una **fila completa** de datos en tu hoja de cálculo.
     - **Ejemplo:** Una fila en la tabla `ESTUDIANTES` sería `(1, 'Alice Johnson', 'alice@email.com', 20, '01-SEP-2025')`.
 
@@ -37,15 +48,16 @@ Imagina que quieres almacenar información sobre los estudiantes de una universi
 
 Así es como esta estructura se traduce a código. ¡No te preocupes por memorizar la sintaxis ahora, solo observa cómo se conectan los conceptos!
 
-```oracle
+```sql
 -- Este código crea la estructura de nuestra tabla en una base de datos Oracle.
 -- CREATE TABLE es el comando para crear una nueva tabla.
-CREATE TABLE ALUMNOS (
+CREATE TABLE ESTUDIANTES (
     -- Aquí definimos las columnas y sus tipos de datos.
-    ID_ALUMNO           NUMBER,         -- NUMBER para números enteros.
-    NOMBRE              VARCHAR2(50),   -- VARCHAR2 para texto de longitud variable.
-    APELLIDO            VARCHAR2(50),
-    FECHA_NACIMIENTO    DATE            -- DATE para fechas.
+    id                  NUMBER,         -- NUMBER para números enteros.
+    nombre              VARCHAR2(100),  -- VARCHAR2 para texto de longitud variable.
+    email               VARCHAR2(255),
+    edad                NUMBER(3),
+    fecha_matricula     DATE            -- DATE para fechas.
 );
 ```
 

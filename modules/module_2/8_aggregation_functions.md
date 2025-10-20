@@ -6,6 +6,19 @@ A veces no necesitas la lista completa de datos, sino un resumen de ellos. Quier
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre agregaciones, entendamos estos conceptos:
+
+- **Función de Agregación:** Una función SQL que realiza un cálculo sobre un conjunto de valores y devuelve un único valor resumen.
+- **COUNT():** Función que cuenta el número de filas o valores no nulos.
+- **SUM():** Función que suma todos los valores de una columna numérica.
+- **AVG() (Average):** Función que calcula el promedio (media aritmética) de los valores de una columna numérica.
+- **MAX() (Maximum):** Función que devuelve el valor máximo de una columna (funciona con números, fechas y texto).
+- **MIN() (Minimum):** Función que devuelve el valor mínimo de una columna (funciona con números, fechas y texto).
+
+---
+
 ### ¿Qué son las Funciones de Agregación?
 
 Estas funciones toman múltiples valores de una columna y los "agregan" en un único resultado.
@@ -20,30 +33,28 @@ Estas funciones toman múltiples valores de una columna y los "agregan" en un ú
 ### Ejemplos Ilustrativos
 
 - **Pregunta:** "¿Cuántos estudiantes tengo en total?"
-```oracle
+```sql
 SELECT COUNT(*)
-FROM Estudiantes;
+FROM ESTUDIANTES;
 ```
 
-- **Pregunta:** "¿Cuál es la fecha de nacimiento del estudiante más viejo y del más joven?"
+- **Pregunta:** "¿Cuál es la edad del estudiante más joven y del más viejo?"
 
-```oracle
-SELECT MIN(Fecha_Nacimiento) AS Mas_Viejo, MAX(Fecha_Nacimiento) AS Mas_Joven
-FROM Estudiantes;
+```sql
+SELECT MIN(edad) AS edad_minima, MAX(edad) AS edad_maxima
+FROM ESTUDIANTES;
 ```
 
-  (Nota: Para fechas, un valor "menor" es una fecha más antigua).
+- **Pregunta:** "¿Cuál es la nota promedio de todas las matrículas?"
 
-- **Pregunta:** Supongamos que tenemos una tabla `Calificaciones` con una columna `Nota`. "¿Cuál es la nota promedio?"
-
-```oracle
-SELECT AVG(Nota)
-FROM Calificaciones;
+```sql
+SELECT AVG(nota) AS nota_promedio
+FROM MATRICULAS;
 ```
 
 ### Consejos de los Expertos
 
-- **`COUNT(*)` vs `COUNT(columna)`:** `COUNT(*)` cuenta todas las filas del grupo, sin excepción. `COUNT(nombre_columna)` cuenta solo las filas donde `nombre_columna` tiene un valor no nulo (`NULL`). Esta diferencia es sutil pero importante.
+- **`COUNT(*)` vs `COUNT(columna)`:** `COUNT(*)` cuenta todas las filas del grupo, sin excepción. `COUNT(nombre_columna)` cuenta solo las filas donde `nombre_columna` tiene un valor no nulo (no NULL). Esta diferencia es sutil pero importante para obtener resultados precisos.
 - **Usa Alias con `AS`:** Las columnas calculadas por funciones de agregación no tienen un nombre por defecto. Usa `AS` para darles un nombre descriptivo y que sea fácil de referenciar en tu aplicación.
 - **Tipos de Datos:** Asegúrate de usar `SUM` y `AVG` solo en columnas numéricas. `MIN` y `MAX` funcionan en números, fechas y texto (orden alfabético).
 

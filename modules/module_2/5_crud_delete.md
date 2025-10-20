@@ -6,10 +6,22 @@ El ciclo de vida de los datos no siempre es para siempre. La información puede 
 
 ---
 
+### Términos Clave
+
+Antes de aprender a eliminar datos, entendamos estos conceptos importantes:
+
+- **DELETE:** Comando SQL para eliminar una o más filas de una tabla de forma permanente.
+- **WHERE:** Cláusula que especifica qué filas deben eliminarse. Sin WHERE, se eliminan TODAS las filas.
+- **Transacción:** Una secuencia de operaciones de base de datos que se ejecutan como una unidad. Si algo sale mal, puedes deshacer todas las operaciones de la transacción.
+- **COMMIT:** Comando que confirma y hace permanentes todos los cambios realizados en la transacción actual.
+- **ROLLBACK:** Comando que deshace todos los cambios realizados en la transacción actual, regresando la base de datos al estado anterior.
+
+---
+
 ### Eliminando Filas con `DELETE FROM`
 
 El comando `DELETE` se usa para eliminar una o más filas de una tabla. Su sintaxis es simple, pero debe usarse con extremo cuidado.
-```oracle
+```sql
 DELETE FROM nombre_de_la_tabla
 WHERE condicion;
 ```
@@ -20,29 +32,29 @@ Al igual que con `UPDATE`, la cláusula `WHERE` es tu red de seguridad. Determin
 
 ### Ejemplo Ilustrativo
 
-Supongamos que el estudiante con ID `1` se ha dado de baja.
-```oracle
-DELETE FROM Estudiantes
-WHERE ID_Estudiante = 1;
+Supongamos que el estudiante con ID `9` se ha dado de baja.
+```sql
+DELETE FROM ESTUDIANTES
+WHERE id = 9;
 ```
 
-Esta instrucción buscará en la tabla `Estudiantes` la fila (o filas) donde `ID_Estudiante` sea `1` y la eliminará permanentemente.
+Esta instrucción buscará en la tabla `ESTUDIANTES` la fila (o filas) donde `id` sea `9` y la eliminará permanentemente.
 
 ### Consejos de los Expertos
 
 - **Verifica Antes de Eliminar:** Esta es una de las prácticas más importantes en SQL. Antes de ejecutar un `DELETE`, escribe un `SELECT` con la misma cláusula `WHERE` para previsualizar exactamente los registros que estás a punto de borrar.
-```oracle
+```sql
 -- Paso 1: Verificar qué se va a borrar
 SELECT *
-FROM Estudiantes
-WHERE ID_Estudiante = 1;
+FROM ESTUDIANTES
+WHERE id = 9;
 
 -- Paso 2: Si el resultado es correcto, ejecutar el DELETE
-DELETE FROM Estudiantes
-WHERE ID_Estudiante = 1;
+DELETE FROM ESTUDIANTES
+WHERE id = 9;
 ```
 
-- **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite "deshacer" (`ROLLBACK`) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (`COMMIT`).
+- **Transacciones:** Para operaciones críticas, puedes envolver tu comando `DELETE` en una transacción. Esto te permite deshacer (ROLLBACK) la eliminación si cometes un error, siempre y cuando no hayas confirmado la transacción (COMMIT). Las transacciones serán explicadas en detalle en módulos posteriores.
 
 ---
 

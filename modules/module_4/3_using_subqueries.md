@@ -8,6 +8,20 @@ Una **subconsulta** (o *subquery*) es una consulta `SELECT` anidada dentro de ot
 
 ---
 
+### Términos Clave
+
+Antes de aprender sobre subconsultas, entendamos estos conceptos:
+
+- **Subconsulta (Subquery):** Una consulta SELECT anidada dentro de otra consulta SQL (puede estar en WHERE, FROM, SELECT, etc.).
+- **Subconsulta Anidada (No Correlacionada):** Subconsulta que se ejecuta una sola vez de forma independiente, antes de la consulta principal.
+- **Subconsulta Correlacionada:** Subconsulta que se ejecuta una vez por cada fila de la consulta externa y hace referencia a columnas de la consulta externa.
+- **IN:** Operador que verifica si un valor existe en un conjunto de valores o en el resultado de una subconsulta.
+- **EXISTS:** Operador que verifica si una subconsulta devuelve al menos una fila. Más eficiente que IN en muchos casos.
+- **CTE (Common Table Expression - Expresión de Tabla Común):** Alternativa más legible a las subconsultas, que será explicada en la siguiente lección.
+- **Rendimiento (Performance):** La velocidad y eficiencia con la que se ejecuta una consulta.
+
+---
+
 ### Tipos de Subconsultas
 
 #### 1. Subconsulta Anidada (o No Correlacionada)
@@ -16,7 +30,7 @@ Esta subconsulta se ejecuta **una sola vez**, antes que la consulta principal. S
 **Ejemplo Ilustrativo:** Encontrar los empleados que trabajan en el departamento de "Ventas".
 
 Primero, necesitamos el `ID_DEPARTAMENTO` de "Ventas". Luego, buscamos los empleados con ese ID.
-```oracle
+```sql
 SELECT
     NOMBRE
 FROM
@@ -30,7 +44,7 @@ WHERE
 La subconsulta `(SELECT ID_DEPARTAMENTO ...)` se ejecuta primero y devuelve `101`. Luego, la consulta principal se convierte en: `SELECT NOMBRE FROM EMPLEADOS WHERE ID_DEPARTAMENTO = 101;`.
 
 Las subconsultas también pueden devolver múltiples filas usando operadores como `IN`:
-```oracle
+```sql
 -- Empleados que están en CUALQUIER departamento ubicado en el edificio 'A'
 SELECT
     NOMBRE
@@ -48,7 +62,7 @@ Esta subconsulta está vinculada a la consulta externa y se ejecuta **una vez po
 **Analogía:** Es como si, para cada empleado en una lista, tuvieras que hacer una pregunta específica sobre él. Por ejemplo, para cada empleado, preguntar: "¿Cuál es el salario promedio *de su propio departamento*?".
 
 **Ejemplo Ilustrativo:** Encontrar empleados cuyo salario es mayor que el promedio *de su respectivo departamento*.
-```oracle
+```sql
 SELECT
     e1.NOMBRE,
     e1.SALARIO

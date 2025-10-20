@@ -15,7 +15,7 @@ Para ver el plan de ejecución en Oracle, se usan dos comandos:
 
 1.  **`EXPLAIN PLAN FOR ...`**: Le pide a Oracle que genere el plan para una consulta sin ejecutarla.
 2.  **`DBMS_XPLAN.DISPLAY`**: Muestra el plan generado en un formato legible.
-```oracle
+```sql
 -- Paso 1: Generar el plan
 EXPLAIN PLAN FOR
 SELECT * FROM empleados WHERE empleado_id = 10;
@@ -30,7 +30,7 @@ Veamos dos escenarios para la tabla `empleados`:
 
 **Escenario A: Búsqueda por clave primaria (con índice)**
 `empleado_id` es la clave primaria, por lo que tiene un índice único automáticamente.
-```oracle
+```sql
 EXPLAIN PLAN FOR SELECT * FROM empleados WHERE empleado_id = 10;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
@@ -45,7 +45,7 @@ El plan de ejecución mostrará algo como:
 Esto es muy eficiente. Significa que usó el índice (`INDEX UNIQUE SCAN`) para encontrar la fila directamente.
 
 **Escenario B: Búsqueda en columna sin índice con una función**
-```oracle
+```sql
 EXPLAIN PLAN FOR SELECT * FROM empleados WHERE UPPER(apellido) = 'SMITH';
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 ```

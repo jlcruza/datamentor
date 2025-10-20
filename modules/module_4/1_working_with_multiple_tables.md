@@ -32,15 +32,15 @@ Supongamos que tenemos dos tablas: `EMPLEADOS` y `DEPARTAMENTOS`.
 | 102             | Marketing    |
 
 Para obtener el nombre de cada empleado junto con el nombre de su departamento, necesitamos combinar ambas tablas usando `ID_DEPARTAMENTO`.
-```oracle
+```sql
 SELECT
-    e.NOMBRE,
-    d.NOMBRE_DEPTO
+    e.nombre,
+    d.nombre AS departamento
 FROM
-    EMPLEADOS e,
+    ESTUDIANTES e,
     DEPARTAMENTOS d
 WHERE
-    e.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO;
+    e.id_especialidad = d.id;
 ```
 
 **Resultado:**
@@ -52,7 +52,7 @@ WHERE
 | Pedro  | Ventas       |
 
 ### Consejos de los Expertos
-- **Usa Alias de Tabla:** Al trabajar con múltiples tablas, los nombres de las columnas pueden ser ambiguos. Usa alias cortos y descriptivos para las tablas (como `e` para `EMPLEADOS` y `d` para `DEPARTAMENTOS`) para hacer tu código más legible y corto.
+- **Usa Alias de Tabla:** Al trabajar con múltiples tablas, los nombres de las columnas pueden ser ambiguos. Usa alias cortos y descriptivos para las tablas (como `e` para `ESTUDIANTES` y `d` para `DEPARTAMENTOS`) para hacer tu código más legible y corto.
 - **Califica los Nombres de Columna:** Siempre especifica de qué tabla proviene una columna (`tabla.columna` o `alias.columna`), incluso si el nombre no es ambiguo. Esto evita errores y facilita la comprensión de la consulta.
 
 ---

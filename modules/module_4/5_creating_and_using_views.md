@@ -18,7 +18,7 @@ Eso es exactamente lo que hace una **Vista** (o *View*). Una vista es una **cons
 Se utiliza el comando `CREATE VIEW`. Opcionalmente, `CREATE OR REPLACE VIEW` actualizará la vista si ya existe.
 
 **Sintaxis de Oracle:**
-```oracle
+```sql
 CREATE OR REPLACE VIEW vista_empleados_departamento AS
 SELECT
     e.NOMBRE AS NOMBRE_EMPLEADO,
@@ -36,7 +36,7 @@ Una vez creada, esta vista se comporta como una tabla.
 
 #### Usar una Vista
 Simplemente haz una consulta `SELECT` sobre ella.
-```oracle
+```sql
 -- Obtener todos los empleados de Ventas y Marketing
 SELECT * FROM vista_empleados_departamento;
 

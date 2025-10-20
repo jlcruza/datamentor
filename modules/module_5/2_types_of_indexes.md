@@ -15,7 +15,7 @@ En Oracle, el concepto de "índice agrupado" se implementa a través de **Tablas
 
 **Índice No Agrupado (Non-Clustered - El estándar en Oracle):**
 Es una estructura separada que contiene la clave del índice y un puntero (el `ROWID`) a la ubicación física de la fila. Una tabla puede tener muchos índices no agrupados.
-```oracle
+```sql
 -- Este es un índice no agrupado
 CREATE INDEX idx_dept_nombre
 ON departamentos (nombre_departamento);
@@ -23,7 +23,7 @@ ON departamentos (nombre_departamento);
 
 **Índice Agrupado (Clustered - Implementado como IOT en Oracle):**
 La tabla misma está almacenada en el orden del índice. No hay una estructura de tabla separada. Por lo tanto, una tabla solo puede ser organizada por un índice (solo puede tener un orden físico).
-```oracle
+```sql
 -- Crear una tabla organizada por índice (similar a un índice agrupado)
 CREATE TABLE paises (
     id_pais CHAR(2) PRIMARY KEY,
