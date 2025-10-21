@@ -96,12 +96,6 @@ app/web/
 │   ├── hooks/                # Custom React hooks
 │   │   └── useSupabaseAuth.ts
 │   │
-│   ├── i18n/                 # Internationalization
-│   │   ├── locales/
-│   │   │   ├── en.json
-│   │   │   └── es.json
-│   │   └── index.ts
-│   │
 │   ├── types/                # TypeScript type definitions
 │   │   ├── question.ts
 │   │   └── user.ts
