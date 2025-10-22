@@ -75,7 +75,7 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
                                 <Bot className="h-4 w-4 text-white" />
                             </div>
                             <div>
-                                <h3 className="font-semibold text-gray-900 dark:text-white">AI Assistant</h3>
+                                <h3 className="font-semibold text-gray-900 dark:text-white">{t("aiAssistant.chatTitle")}</h3>
                                 <p className="text-xs text-gray-600 dark:text-gray-400">{t("aiAssistant.helpWith")}{selectedLesson.lesson_name}</p>
                             </div>
                         </div>
@@ -133,8 +133,8 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
                             onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
                             placeholder={
                                 aiQuota && !aiQuota.isUnderLimit
-                                    ? "AI quota limit reached"
-                                    : "Ask about this lesson..."
+                                    ? t("aiAssistant.quotaLimitReached")
+                                    : t("aiAssistant.askAboutLesson")
                             }
                             className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent text-sm"
                             disabled={isChatLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
