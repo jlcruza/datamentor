@@ -22,8 +22,13 @@ function App() {
   const [aiQuota, setAiQuota] = useState<AIQuotaInfoDto | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Load lessons on mount; service already handles errors and returns []
+  // Load lessons when user is available
   useEffect(() => {
+    if (!user) {
+      setLessons([]);
+      return;
+    }
+
     let isMounted = true;
     (async () => {
       const data = await LearningContentService.getAllLearningContent();
@@ -32,7 +37,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [user]);
 
   // Load AI quota when user is available
   useEffect(() => {
