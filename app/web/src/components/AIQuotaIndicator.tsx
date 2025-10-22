@@ -4,9 +4,10 @@ import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 interface AIQuotaIndicatorProps {
     quota: AIQuotaInfoDto | null;
+    className?: string;
 }
 
-const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota }) => {
+const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota, className = '' }) => {
     const percentageUsed = quota?.percentageUsed ?? 0;
 
     const getColorClasses = (percentage: number) => {
@@ -36,7 +37,7 @@ const AIQuotaIndicator: React.FC<AIQuotaIndicatorProps> = ({ quota }) => {
     const colors = getColorClasses(percentageUsed);
 
     return (
-        <div className={`flex items-center space-x-2 ${colors.bg} px-3 py-1.5 rounded-lg border ${colors.border}`}>
+        <div className={`flex items-center space-x-2 ${colors.bg} px-3 py-1.5 rounded-lg border ${colors.border} ${className}`}>
             <Sparkles className={`h-4 w-4 ${colors.icon}`} />
             <span className={`text-sm font-medium ${colors.text}`}>
                 {percentageUsed}%

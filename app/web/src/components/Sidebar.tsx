@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 import { BookOpen, Database, MessageCircle, ChevronRight, TrendingUp } from 'lucide-react';
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
+import AIQuotaProgress from './AIQuotaProgress';
+import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
 
 type ActiveSection = 'learn' | 'practice' | 'chat';
 
@@ -10,9 +12,10 @@ interface SidebarProps {
   activeSection: ActiveSection;
   onSectionChange: (section: ActiveSection) => void;
   lessons: LearningContentDto[];
+  aiQuota?: AIQuotaInfoDto | null;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons, aiQuota }) => {
     const { t } = useTranslation();
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -127,6 +130,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
                     })}
                   </ul>
                 </nav>
+
+                {/* AI Usage on Mobile */}
+                {aiQuota && (
+                  <div className="px-4 pb-4">
+                    <AIQuotaProgress quota={aiQuota} />
+                  </div>
+                )}
 
                 {/* Progress Overview */}
                 <div className="p-4 border-t border-gray-200 dark:border-gray-700">

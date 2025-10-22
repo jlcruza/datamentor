@@ -117,6 +117,7 @@ function App() {
           activeSection={activeSection}
           onSectionChange={setActiveSection}
           lessons={lessons}
+          aiQuota={aiQuota}
         />
 
         <main className="flex-1 p-4 lg:p-6 md:ml-64 lg:ml-72 bg-gray-50 dark:bg-gray-900">
