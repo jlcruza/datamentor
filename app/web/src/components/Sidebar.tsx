@@ -13,11 +13,12 @@ interface SidebarProps {
   onSectionChange: (section: ActiveSection) => void;
   lessons: LearningContentDto[];
   aiQuota?: AIQuotaInfoDto | null;
+  mobileOpen: boolean;
+  setMobileOpen: (open: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons, aiQuota }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lessons, aiQuota, mobileOpen, setMobileOpen }) => {
     const { t } = useTranslation();
-    const [mobileOpen, setMobileOpen] = useState(false);
 
     const categories = [
         ...new Map(
@@ -47,17 +48,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, lesso
 
   return (
     <>
-      {/* Mobile hamburger button */}
-      <button
-        onClick={() => setMobileOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-40 p-2 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 shadow-lg"
-        aria-label="Open menu"
-      >
-        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
       {/* Headless UI Dialog for mobile */}
       <Transition.Root show={mobileOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 md:hidden" onClose={setMobileOpen}>

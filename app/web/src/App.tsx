@@ -20,6 +20,7 @@ function App() {
   const { user, initializing, handleLogin, handleLogout: signOut } = useSupabaseAuth();
   const [lessons, setLessons] = useState<LearningContentDto[]>([]);
   const [aiQuota, setAiQuota] = useState<AIQuotaInfoDto | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Load lessons on mount; service already handles errors and returns []
   useEffect(() => {
@@ -110,6 +111,7 @@ function App() {
         user={user}
         onLogout={handleLogout}
         aiQuota={aiQuota}
+        onMenuClick={() => setMobileMenuOpen(true)}
       />
 
       <div className="flex flex-1">
@@ -118,6 +120,8 @@ function App() {
           onSectionChange={setActiveSection}
           lessons={lessons}
           aiQuota={aiQuota}
+          mobileOpen={mobileMenuOpen}
+          setMobileOpen={setMobileMenuOpen}
         />
 
         <main className="flex-1 p-4 lg:p-6 md:ml-64 lg:ml-72 bg-gray-50 dark:bg-gray-900">
