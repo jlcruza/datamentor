@@ -35,21 +35,21 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
     const isAtLimit = !isUnderLimit;
 
     return (
-        <div className={`p-3 rounded-lg border ${getContainerColor(percentageUsed)}`}>
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
-                    <Sparkles className={`h-4 w-4 ${
+        <div className={`p-2 sm:p-3 rounded-lg border ${getContainerColor(percentageUsed)}`}>
+            <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <div className="flex items-center space-x-1.5 sm:space-x-2">
+                    <Sparkles className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${
                         isAtLimit
                             ? 'text-red-600 dark:text-red-400'
                             : isNearLimit
                                 ? 'text-yellow-600 dark:text-yellow-400'
                                 : 'text-blue-600 dark:text-blue-400'
                     }`} />
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                         {t('aiAssistant.aiUsage')}
                     </span>
                 </div>
-                <span className={`text-sm font-semibold ${
+                <span className={`text-xs sm:text-sm font-semibold ${
                     isAtLimit
                         ? 'text-red-700 dark:text-red-300'
                         : isNearLimit
@@ -60,7 +60,7 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
                 </span>
             </div>
 
-            <div className="progress-bar mb-2">
+            <div className="progress-bar mb-1.5 sm:mb-2">
                 <div
                     className={getProgressFillClass(percentageUsed)}
                     style={{ width: `${Math.min(percentageUsed, 100)}%` }}
@@ -74,7 +74,7 @@ const AIQuotaProgress: React.FC<AIQuotaProgressProps> = ({ quota }) => {
                 {isAtLimit && (
                     <div className="flex items-center space-x-1 text-red-600 dark:text-red-400">
                         <AlertCircle className="h-3 w-3" />
-                        <span className="font-medium">{t('aiAssistant.limitReached')}</span>
+                        <span className="font-medium hidden sm:inline">{t('aiAssistant.limitReached')}</span>
                     </div>
                 )}
             </div>
