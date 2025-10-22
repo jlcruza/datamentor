@@ -57,26 +57,26 @@ const AuthCallback: React.FC = () => {
     };
   }, []);
 
-  const baseClasses = 'min-h-screen bg-gray-900 flex items-center justify-center p-4';
+  const baseClasses = 'min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4';
   const panelClasses =
-    'bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-700 p-6 text-center';
+    'bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 p-6 text-center';
   const statusClass =
     status === 'success'
-      ? 'text-green-400'
+      ? 'text-green-600 dark:text-green-400'
       : status === 'error'
-      ? 'text-red-400'
-      : 'text-gray-300';
+      ? 'text-red-600 dark:text-red-400'
+      : 'text-gray-600 dark:text-gray-300';
 
   return (
     <div className={baseClasses}>
       <div className={panelClasses}>
-        <h1 className="text-xl font-semibold text-white mb-2">{t('auth.emailConfirmation')}</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('auth.emailConfirmation')}</h1>
         <p className={`text-sm ${statusClass}`}>{message}</p>
         {status !== 'loading' && (
           <div className="mt-6">
             <a
               href="/"
-              className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition"
+              className="inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white transition-all duration-300 shadow-lg"
             >
               {t('auth.goToApp')}
             </a>
