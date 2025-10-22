@@ -62,8 +62,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
         messages: updatedMessages
       });
 
+      const response = [...updatedMessages, aiResponse];
+
       // Add AI response to the list
-      setMessages(prev => [...prev, aiResponse]);
+      setMessages(response);
 
       // Refresh quota after successful AI response
       if (onRefreshQuota) {

@@ -37,10 +37,18 @@ const CustomReactViewer: React.FC<CustomReactViewerProps> = (
             }
             else
             {
-                const { data, error } = await supabase.storage.from(VITE_SUPABASE_BUCKET_NAME).download(selectedLesson.content_path);
-                if (!error && data && isMounted) {
-                    const text = await data.text();
-                    setMd(text);
+                if (selectedLesson == null || selectedLesson.content_path == null)
+                {
+                    setMd("");
+                }
+                else{
+                    const { data, error } = await supabase.storage.from(VITE_SUPABASE_BUCKET_NAME)
+                        .download(selectedLesson.content_path);
+
+                    if (!error && data && isMounted) {
+                        const text = await data.text();
+                        setMd(text);
+                    }
                 }
             }
         })();
