@@ -74,15 +74,15 @@ const ResetComplete: React.FC = () => {
     }
   };
 
-  const baseClasses = 'min-h-screen bg-gray-900 flex items-center justify-center p-4';
+  const baseClasses = 'min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4';
   const panelClasses =
-    'bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-700 p-6';
+    'bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 p-6';
   const msgClass =
     variant === 'success'
-      ? 'bg-green-900/30 border-green-500/30 text-green-400'
+      ? 'bg-green-50 dark:bg-green-900/30 border-green-500/50 dark:border-green-500/30 text-green-800 dark:text-green-400'
       : variant === 'error'
-      ? 'bg-red-900/30 border-red-500/30 text-red-400'
-      : 'bg-blue-900/30 border-blue-500/30 text-blue-300';
+      ? 'bg-red-50 dark:bg-red-900/30 border-red-500/50 dark:border-red-500/30 text-red-800 dark:text-red-400'
+      : 'bg-blue-50 dark:bg-blue-900/30 border-blue-500/50 dark:border-blue-500/30 text-blue-800 dark:text-blue-300';
 
   return (
     <div className={baseClasses}>
@@ -94,7 +94,7 @@ const ResetComplete: React.FC = () => {
                   className="h-16 w-auto"
               />
           </div>
-        <h1 className="text-xl font-semibold text-white mb-4">{t('auth.setNewPassword')}</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t('auth.setNewPassword')}</h1>
 
         {message && (
           <div className={`p-3 rounded-lg border mb-4 ${msgClass}`}>
@@ -103,20 +103,20 @@ const ResetComplete: React.FC = () => {
         )}
 
         {isValidSession === null && (
-          <p className="text-gray-300 text-sm">{t('auth.verifyingResetLink')}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">{t('auth.verifyingResetLink')}</p>
         )}
 
         {isValidSession === true && (
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {t('auth.newPassword')}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
                 placeholder={t('auth.enterNewPassword')}
                 minLength={6}
@@ -124,14 +124,14 @@ const ResetComplete: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {t('auth.confirmNewPassword')}
               </label>
               <input
                 type="password"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
                 placeholder={t('auth.reenterNewPassword')}
                 minLength={6}
@@ -152,7 +152,7 @@ const ResetComplete: React.FC = () => {
           <div className="mt-6">
             <a
               href="/"
-              className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition"
+              className="inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white transition-all duration-300 shadow-lg"
             >
               {t('auth.returnToApp')}
             </a>
