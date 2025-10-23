@@ -50,9 +50,6 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
 
-    // Small delay to ensure the UI updates before making the API call
-    await new Promise(resolve => setTimeout(resolve, 50));
-
     try {
       // Send request with the updated messages list (without id property)
       const aiResponse = await askTutor({
@@ -60,6 +57,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
         hint: "",
         messages: updatedMessages
       });
+
+      // Small delay to ensure the UI updates before making the API call
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       // Add AI response to the list
       setMessages(prevMessages => [...prevMessages, aiResponse]);
