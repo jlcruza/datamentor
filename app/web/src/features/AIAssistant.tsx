@@ -42,27 +42,22 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
       role: USER_ROLE
     };
 
-    const currentInput = inputMessage;
+    setMessages((prev: Msg[]) => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
 
-    // Add user message to the list
-    const updatedMessages = [...messages, userMessage];
-    setMessages(updatedMessages);
 
     try {
       // Send request with the updated messages list (without id property)
       const aiResponse = await askTutor({
-        prompt: currentInput,
+        prompt: inputMessage,
         hint: "",
-        messages: updatedMessages
+        messages: messages
       });
-
-      // Small delay to ensure the UI updates before making the API call
-      await new Promise(resolve => setTimeout(resolve, 200));
 
       // Add AI response to the list
       setMessages(prevMessages => [...prevMessages, aiResponse]);
+      setIsLoading(false);
 
       // Refresh quota after successful AI response
       if (onRefreshQuota) {
@@ -70,8 +65,6 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
       }
     } catch (error) {
       console.error("Error getting AI response:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -152,16 +145,25 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
                   >
                     <div className="flex items-start space-x-2">
                       {message.role === ASSISTANT_ROLE && (
-                        <Bot className="h-4 w-4 mt-0.5 flex-shrink-0 text-gray-600 dark:text-gray-400" />
+                          <><Bot className="h-4 w-4 mt-0.5 flex-shrink-0 text-gray-600 dark:text-gray-400"/>
+                              <div className="flex-1 min-w-0 overflow-hidden">
+                                  <div className="text-sm">
+                                      <CustomReactViewer fitParent selectedLesson={null}
+                                                         markdownText={message.content}/>
+                                  </div>
+                              </div>
+                          </>
                       )}
                       {message.role === USER_ROLE && (
-                        <User className="h-4 w-4 mt-0.5 flex-shrink-0 text-white/80" />
+                          <><User className="h-4 w-4 mt-0.5 flex-shrink-0 text-white/80"/>
+                              <div className="flex-1 min-w-0 overflow-hidden">
+                                  <div className="text-sm">
+                                      <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                  </div>
+                              </div>
+                          </>
                       )}
-                      <div className="flex-1 min-w-0 overflow-hidden">
-                        <div className="text-sm">
-                            <CustomReactViewer fitParent selectedLesson={null} markdownText={message.content}/>
-                        </div>
-                      </div>
+
                     </div>
                   </div>
                 </div>

@@ -1,11 +1,12 @@
 import {Bot, Send, X} from "lucide-react";
 import React, {useState} from "react";
-import {askTutor, Msg, USER_ROLE} from "../services/OpenAiService.ts";
+import {askTutor, ASSISTANT_ROLE, Msg, USER_ROLE} from "../services/OpenAiService.ts";
 import {LearningContentDto} from "../repository/db_types/learningContentDto.ts";
 import {useTranslation} from "react-i18next";
 import {useTheme} from "../contexts/ThemeContext.tsx";
 import AIQuotaProgress from "./AIQuotaProgress.tsx";
 import {AIQuotaInfoDto} from "../services/dto/aiQuotaInfoDto.ts";
+import CustomReactViewer from "./CustomReactViewer.tsx";
 
 type AIChatMessageBoxProps = {
     selectedLesson: LearningContentDto;
@@ -103,7 +104,13 @@ const AIChatMessageBox: React.FC<AIChatMessageBoxProps> = (
                                         : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
                                 } rounded-lg px-3 py-2 shadow-lg`}
                             >
-                                <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                {message.role === ASSISTANT_ROLE && (
+                                    <CustomReactViewer fitParent selectedLesson={null} markdownText={message.content}/>
+                                )}
+                                {message.role === USER_ROLE && (
+                                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                )}
+
                             </div>
                         </div>
                     ))}
