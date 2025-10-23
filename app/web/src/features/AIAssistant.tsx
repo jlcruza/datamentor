@@ -22,7 +22,6 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-    useRef(0);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,10 +61,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
         messages: updatedMessages
       });
 
-      const response = [...updatedMessages, aiResponse];
-
       // Add AI response to the list
-      setMessages(response);
+      setMessages(prevMessages => [...prevMessages, aiResponse]);
 
       // Refresh quota after successful AI response
       if (onRefreshQuota) {
@@ -143,7 +140,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
                 <div
-                  key={`${message.role}-${index}-${message.content.substring(0, 20)}`}
+                  key={index}
                   className={`flex ${message.role === USER_ROLE ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
@@ -184,7 +181,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
                   </div>
                 </div>
               )}
-              
+
               <div ref={messagesEndRef} />
             </div>
 
