@@ -60,6 +60,19 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
     return () => { isMounted = false; };
   }, [selectedLesson, user]);
 
+  // Reset AI chat when the selected lesson changes and the chat is open,
+  // and clear messages when the chat is closed to avoid leaking context.
+  useEffect(() => {
+    if (showAIChat && selectedLesson) {
+      setChatMessages([{
+        content: t('aiAssistant.contextualHelp', { lessonTitle: selectedLesson.lesson_name }),
+        role: ASSISTANT_ROLE
+      }]);
+    } else if (!showAIChat) {
+      setChatMessages([]);
+    }
+  }, [selectedLesson?.lesson_id, showAIChat, t]);
+
   const handleGenerateAIQuestions = async () => {
     if (!selectedLesson || isGeneratingQuestions || (aiQuota && !aiQuota.isUnderLimit)) {
       return;
@@ -228,7 +241,8 @@ const LearningContent: React.FC<LearningContentProps> = ({ lessons, onLessonsSet
 
         {/* AI Chat Popup */}
         {showAIChat && (
-            <AIChatMessageBox selectedLesson={selectedLesson}
+            <AIChatMessageBox key={selectedLesson.lesson_id}
+                              selectedLesson={selectedLesson}
                               chatMessages={chatMessages}
                               setShowAIChat={setShowAIChat}
                               setChatMessages={setChatMessages}
