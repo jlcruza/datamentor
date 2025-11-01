@@ -196,9 +196,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ aiQuota, onRefreshQuota }) =>
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder={
-                    aiQuota && !aiQuota.isUnderLimit
-                      ? "AI quota limit reached"
-                      : t('aiAssistant.askAboutDatabases')
+                      aiQuota && !aiQuota.isUnderLimit
+                          ? t("aiAssistant.quotaLimitReached")
+                          : t("aiAssistant.askAboutLesson")
                   }
                   className="flex-1 px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent"
                   disabled={isLoading || (aiQuota !== null && !aiQuota?.isUnderLimit)}
